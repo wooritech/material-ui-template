@@ -1,0 +1,22 @@
+# 의존 패키지
+node_modules/
+/.pnp
+.pnp.js
+
+# 테스트
+/coverage
+
+# 빌드 결과물
+.next/
+dist/
+build/
+out/
+
+# misc
+.DS_Store
+.env*
+
+# 디버깅
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
