@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 3,
   },
   toolbar: {
-    minHeight: 64,
+    minHeight: theme.custom.homeHeaderHeight,
     // alignItems: 'flex-start',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),

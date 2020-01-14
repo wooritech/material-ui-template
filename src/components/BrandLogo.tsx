@@ -1,14 +1,10 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: 240,
-    height: 64,
-  },
+const useStyles = makeStyles(() => ({
   logo: {
-    height: 36,
+    height: 42,
   },
 }));
 

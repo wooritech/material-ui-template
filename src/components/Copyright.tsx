@@ -4,7 +4,7 @@ import { ComponentBaseProps } from './types';
 
 export interface CopyrightProps extends ComponentBaseProps {}
 
-const Copyright: React.FC<CopyrightProps> = (props) => {
+const Copyright: React.FC<CopyrightProps> = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
