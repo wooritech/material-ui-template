@@ -3,9 +3,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles({
   root: {
-    // display: 'flex',
-    // minHeight: '100vh',
-    minHeight: 2020,
+    display: 'flex',
+    background: 'white',
+    minHeight: 200,
   },
 });
 
