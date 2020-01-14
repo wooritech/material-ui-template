@@ -1,7 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import LayoutBlank from '~/layouts/LayoutBlank';
@@ -12,7 +11,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(4),
   },
   header: {
-    margin: theme.spacing(3),
+    // margin: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    marginTop: theme.spacing(3),
+    fontWeight: 500,
+  },
+  logo: {
+    height: 80,
   },
   signinBox: {
     align: 'center',
@@ -28,12 +33,16 @@ const SigninPage: NextPage = () => {
         <Grid item className={classes.signinBox}>
           <Grid container justify="center">
             <Grid item>
-              <LockOpenOutlined style={{ fontSize: 80 }} />
+              <img
+                src="/images/logo-fafafa.png"
+                alt="Real Document Director"
+                className={classes.logo}
+              />
             </Grid>
           </Grid>
-          <Grid container justify="center" className={classes.header}>
+          <Grid container justify="center">
             <Grid item>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h4" gutterBottom className={classes.header}>
                 RealDocs 사용자 로그인
               </Typography>
             </Grid>

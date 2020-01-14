@@ -1,8 +1,13 @@
 export default {
   primary: {
-    light: '#63ccff',
-    main: '#009be5',
-    dark: '#006db3',
+    light: '#629FFF',
+    main: '#0671DD',
+    dark: '#0047AA',
+  },
+  secondary: {
+    light: '#B0FF57',
+    main: '#76FF03',
+    dark: '#32CB00',
   },
   background: {
     default: '#fafafa',
