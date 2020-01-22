@@ -67,9 +67,9 @@ interface HomeHeaderProps extends ComponentBaseProps {
   isLoggedIn?: boolean;
 }
 
-const HomeHeader: React.FC<HomeHeaderProps> = (props) => {
+const HeaderHome: React.FC<HomeHeaderProps> = (props) => {
   const classes = useStyles();
-  const { isLoggedIn } = props;
+  const { isLoggedIn = false } = props;
 
   return (
     <ElevationScroll>
@@ -135,4 +135,4 @@ const HomeHeader: React.FC<HomeHeaderProps> = (props) => {
   );
 };
 
-export default HomeHeader;
+export default HeaderHome;
