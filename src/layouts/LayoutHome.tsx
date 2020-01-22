@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Copyright from '~/components/Copyright';
-import HomeHeader from '~/components/HomeHeader';
+import HeaderHome from '~/components/HeaderHome';
 import { LayoutBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,7 +29,7 @@ const LayoutHome: React.FC<LayoutHomeProps> = (props) => {
 
   return (
     <div className={classes.app}>
-      <HomeHeader {...props} />
+      <HeaderHome {...props} />
       <main className={classes.main}>{children}</main>
       <footer className={classes.footer}>
         <Copyright />

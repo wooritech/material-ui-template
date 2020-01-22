@@ -64,8 +64,6 @@ const SigninForm: React.FC<SigninFormProps> = (props) => {
                 autoFocus
                 required
               />
-            </FormControl>
-            <FormControl margin="none" fullWidth>
               <TextField
                 id="password"
                 label="암호"
@@ -89,18 +87,6 @@ const SigninForm: React.FC<SigninFormProps> = (props) => {
 
             <FormControl margin="dense">
               <FormControlLabel checked={clipped} control={<Checkbox />} label="암호 저장" />
-            </FormControl>
-            <FormControl margin="dense">
-              <FormControlLabel
-                checked={clipped}
-                control={<Checkbox />}
-                label="개인정보 보호 및 약관에 동의"
-              />
-              <FormHelperText>
-                체크 할 경우
-                <Link href="/privacy">개인정보 보호</Link> 및 <Link href="/terms">약관</Link> 에
-                동의함을 의미합니다.
-              </FormHelperText>
             </FormControl>
           </form>
         </div>
