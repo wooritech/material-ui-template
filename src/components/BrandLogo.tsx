@@ -14,7 +14,8 @@ const BrandLogo: React.FC = () => {
     <Typography variant="h5">
       <Link color="inherit" href="/">
         <img
-          src="/images/logo-title-blue-noboarder-camel.png"
+          // src="/images/logo-title-blue-noboarder-camel.png"
+          src="/images/logo-title-21243D.png"
           alt="Real Document Director"
           className={classes.logo}
         />

@@ -38,13 +38,13 @@ const theme = createMuiTheme({
   },
   mixins: {
     toolbar: {
-      minHeight: 48,
+      minHeight: 96,
     },
   },
   // 커스텀 변수
   custom: {
-    drawerWidth: 256,
-    headerHomeHeight: 90,
+    drawerWidth: 400,
+    headerHomeHeight: 96,
     // landingWidth: 800,
   },
 });

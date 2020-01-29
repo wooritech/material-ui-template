@@ -4,7 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LayoutBlank from '~/layouts/LayoutBlank';
 import HeaderBlank from '~/components/HeaderBlank';
-import SignupForm from '~/components/SignupForm';
+import FormSignup from '~/components/FormSignup';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -23,7 +23,7 @@ const SignupPage: NextPage = () => {
       <Grid container className={classes.root} justify="center" alignItems="baseline">
         <Grid item className={classes.signinBox}>
           <HeaderBlank title="RealDocs 사용자 등록" showLogo />
-          <SignupForm linkSigin="/signin" />
+          <FormSignup linkSigin="/signin" />
         </Grid>
       </Grid>
     </LayoutBlank>

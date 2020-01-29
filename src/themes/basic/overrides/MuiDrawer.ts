@@ -1,5 +1,5 @@
 export default {
   paper: {
-    backgroundColor: '#18202c',
+    backgroundColor: '#21243D',
   },
 };

@@ -1,5 +1,5 @@
 export default {
   root: {
-    backgroundColor: '#404854',
+    backgroundColor: '#707070',
   },
 };

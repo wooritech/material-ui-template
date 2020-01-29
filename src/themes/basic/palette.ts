@@ -10,6 +10,6 @@ export default {
     dark: '#32CB00',
   },
   background: {
-    default: '#fafafa',
+    default: '#F2F3F8',
   },
 };
