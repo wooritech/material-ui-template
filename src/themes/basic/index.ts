@@ -9,7 +9,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     custom: {
       drawerWidth: number;
       landingWidth: number;
-      homeHeaderHeight: number;
+      headerHomeHeight: number;
     };
   }
   // allow configuration using `createMuiTheme`
@@ -17,7 +17,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     custom?: {
       drawerWidth?: number;
       landingWidth?: number;
-      homeHeaderHeight?: number;
+      headerHomeHeight?: number;
     };
   }
 }
@@ -44,7 +44,7 @@ const theme = createMuiTheme({
   // 커스텀 변수
   custom: {
     drawerWidth: 256,
-    homeHeaderHeight: 90,
+    headerHomeHeight: 90,
     // landingWidth: 800,
   },
 });

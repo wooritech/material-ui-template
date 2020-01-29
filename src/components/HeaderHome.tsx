@@ -5,16 +5,10 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MenuIcon from '@material-ui/icons/Menu';
 import BrandLogo from './BrandLogo';
 import { ComponentBaseProps } from './types';
 
@@ -30,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: 3,
   },
   toolbar: {
-    minHeight: theme.custom.homeHeaderHeight,
+    minHeight: theme.custom.headerHomeHeight,
     // alignItems: 'flex-start',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
@@ -63,31 +57,19 @@ const ElevationScroll: React.FC<ESProps> = (props) => {
   });
 };
 
-interface HomeHeaderProps extends ComponentBaseProps {
+interface HeaderHomeProps extends ComponentBaseProps {
   isLoggedIn?: boolean;
 }
 
-const HeaderHome: React.FC<HomeHeaderProps> = (props) => {
+const HeaderHome: React.FC<HeaderHomeProps> = (props) => {
   const classes = useStyles();
-  const { isLoggedIn = false } = props;
+  const { isLoggedIn = true } = props;
 
   return (
     <ElevationScroll>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar className={classes.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Hidden smUp>
-              <Grid item>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  // onClick={onDrawerToggle}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-            </Hidden>
             <BrandLogo />
             <Grid item xs />
             {isLoggedIn ? (
@@ -98,6 +80,7 @@ const HeaderHome: React.FC<HomeHeaderProps> = (props) => {
                     variant="outlined"
                     color="inherit"
                     size="medium"
+                    href="/projects"
                   >
                     내 프로젝트
                   </Button>
