@@ -4,7 +4,7 @@ import LayoutMain from '~/layouts/LayoutMain';
 
 const ProjectsPage: NextPage = () => {
   return (
-    <LayoutMain>
+    <LayoutMain pageTitle="내 프로젝트">
       <None />
     </LayoutMain>
   );

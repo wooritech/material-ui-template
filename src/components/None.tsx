@@ -4,7 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    background: 'white',
     minHeight: 200,
   },
 });

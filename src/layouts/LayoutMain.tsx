@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface LayoutMainProps extends LayoutBaseProps {}
+export interface LayoutMainProps extends LayoutBaseProps {
+  pageTitle: string;
+}
 
 const LayoutMain: React.FC<LayoutMainProps> = (props) => {
   const { children } = props;

@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
-import BrandLogo from './BrandLogo';
+
 import { ComponentBaseProps } from './types';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -29,18 +27,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   iconButtonAvatar: {
     padding: 3,
   },
+  pageTitle: {
+    color: 'black',
+    fontWeight: 500,
+  },
   toolbar: {
     minHeight: theme.custom.headerHomeHeight,
     // alignItems: 'flex-start',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-  },
-  link: {
-    textDecoration: 'none',
-    color: lightColor,
-    '&:hover': {
-      color: theme.palette.common.white,
-    },
+    background: 'white',
   },
   button: {
     borderColor: lightColor,
@@ -65,18 +61,19 @@ const ElevationScroll: React.FC<ESProps> = (props) => {
 
 interface HeaderMainProps extends ComponentBaseProps {
   isLoggedIn?: boolean;
+  pageTitle: string;
 }
 
 const HeaderMain: React.FC<HeaderMainProps> = (props) => {
   const classes = useStyles();
-  const { isLoggedIn = true } = props;
+  const { isLoggedIn = true, pageTitle } = props;
 
   return (
     <ElevationScroll>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar className={classes.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <Hidden mdUp>
+            <Hidden smUp>
               <Grid item>
                 <IconButton
                   color="inherit"
@@ -88,19 +85,14 @@ const HeaderMain: React.FC<HeaderMainProps> = (props) => {
                 </IconButton>
               </Grid>
             </Hidden>
-            <Typography variant="h5">Page Title</Typography>
+            <Typography className={classes.pageTitle} variant="h5">
+              {pageTitle}
+            </Typography>
             <Grid item xs />
             {isLoggedIn ? (
               <>
                 <Grid item>
-                  <Button
-                    className={classes.button}
-                    variant="outlined"
-                    color="inherit"
-                    size="medium"
-                  >
-                    내 프로젝트
-                  </Button>
+                  <Link href="/profiles">onlydel</Link>
                 </Grid>
                 <Grid item>
                   <IconButton color="inherit" className={classes.iconButtonAvatar}>
