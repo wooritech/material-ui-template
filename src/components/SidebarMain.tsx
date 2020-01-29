@@ -5,12 +5,10 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 
@@ -89,7 +87,7 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
         {sidebarMenu.map((groups, groupIndex) => (
           <>
             <List>
-              {groups.map((item, itemIndex) => (
+              {groups.map((item) => (
                 <ListItem className={classes.item} button key={item.key}>
                   {/* <ListItemIcon>{itemIndex % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
                   <ListItemText inset primary={primaryTypography(item.title)} />
