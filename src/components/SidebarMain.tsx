@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import { useRouter } from 'next/router';
 
 import { ComponentBaseProps } from './types';
 import BrandLogo from './BrandLogo';
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '24px',
     color: '#C6C6C6',
   },
+  selectedItemText: {
+    fontSize: '24px',
+    color: theme.palette.primary.main,
+  },
   divider: {
     margin: '0 40px',
   },
@@ -52,29 +57,46 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const sidebarMenu = [
+  type MenuItem = {
+    menuIndex: number;
+    title: string;
+    href: string;
+  };
+
+  const sidebarMenu: MenuItem[][] = [
     [
       {
-        key: 'myProject',
+        menuIndex: 1,
         title: '내 프로젝트',
+        href: '/projects',
       },
     ],
     [
       {
-        key: 'profiles',
+        menuIndex: 2,
         title: '계정 설정',
+        href: '/profiles',
       },
       {
-        key: 'settings',
+        menuIndex: 3,
         title: '시스템 설정',
+        href: '/settings',
       },
     ],
   ];
 
   const SideMenus: React.FC = () => {
-    const primaryTypography = (title: string) => (
-      <Typography className={classes.itemText}>{title}</Typography>
-    );
+    const router = useRouter();
+    const selectedItem = (item: MenuItem): boolean => {
+      return item.href === router.asPath;
+    };
+
+    // 선택된 item text 스타일 다르게 적용하기위해.
+    // 이게 override된 테마 스타일에서는 적용이 안된다.
+    const primaryTypography = (title: string, selected: boolean) => {
+      const clsName = selected ? classes.selectedItemText : classes.itemText;
+      return <Typography className={clsName}>{title}</Typography>;
+    };
 
     return (
       <>
@@ -83,23 +105,33 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
             <BrandLogo />
           </Grid>
         </Toolbar>
-        {/* <Divider /> */}
-        {sidebarMenu.map((groups, groupIndex) => (
-          <>
-            <List>
-              {groups.map((item) => (
-                <ListItem className={classes.item} button key={item.key}>
-                  {/* <ListItemIcon>{itemIndex % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                  <ListItemText inset primary={primaryTypography(item.title)} />
-                </ListItem>
-              ))}
-            </List>
+        <>
+          <List component="nav">
+            {sidebarMenu.map((groups, groupIndex) => (
+              <>
+                {groups.map((item) => (
+                  <ListItem
+                    component="a"
+                    href={item.href}
+                    selected={selectedItem(item)}
+                    button
+                    key={item.menuIndex}
+                  >
+                    {/* <ListItemIcon>{itemIndex % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                    <ListItemText
+                      inset
+                      primary={primaryTypography(item.title, selectedItem(item))}
+                    />
+                  </ListItem>
+                ))}
 
-            {groupIndex < sidebarMenu.length - 1 ? (
-              <Divider className={classes.divider} variant="middle" />
-            ) : null}
-          </>
-        ))}
+                {groupIndex < sidebarMenu.length - 1 ? (
+                  <Divider className={classes.divider} variant="middle" />
+                ) : null}
+              </>
+            ))}
+          </List>
+        </>
       </>
     );
   };
