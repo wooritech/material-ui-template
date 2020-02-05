@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // alignItems: 'flex-start',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(5),
     background: 'white',
   },
   button: {

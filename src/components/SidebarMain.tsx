@@ -155,7 +155,7 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
           <SideMenus />
         </Drawer>
       </Hidden>
-      <Hidden xsDown implementation="css">
+      <Hidden mdDown implementation="css">
         <Drawer
           classes={{
             paper: classes.drawerPaper,

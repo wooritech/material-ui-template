@@ -12,13 +12,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${theme.custom.drawerWidth}px)`,
       marginLeft: theme.custom.drawerWidth,
     },
   },
   main: {
     flex: 1,
+    // 기준 간격은 40px;
+    padding: theme.spacing(5),
   },
   footer: {
     padding: theme.spacing(2),
