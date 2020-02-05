@@ -91,7 +91,7 @@ const CardProfile: React.FC<CardProfileProps> = () => {
               <FormButton color="primary" disabled={sent} mounted>
                 {sent ? '처리중...' : '변경 내용 저장'}
               </FormButton>
-              <FormButton color="default" disabled={false} mounted href="/passwordReset">
+              <FormButton color="default" disabled={false} mounted href="/forgotPassword">
                 암호 변경
               </FormButton>
               <FormControl margin="normal" />

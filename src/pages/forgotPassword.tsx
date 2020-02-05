@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LayoutBlank from '~/layouts/LayoutBlank';
-import FormSignin from '~/components/FormSignin';
+import FormForgotPassword from '~/components/FormForgotPassword';
 import HeaderBlank from '~/components/HeaderBlank';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -16,18 +16,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const SigninPage: NextPage = () => {
+const PasswordResetPage: NextPage = () => {
   const classes = useStyles();
   return (
     <LayoutBlank>
       <Grid container className={classes.root} justify="center" alignItems="baseline">
         <Grid item className={classes.signinBox}>
-          <HeaderBlank title="RealDocs 사용자 로그인" showLogo />
-          <FormSignin linkSignup="/signup" linkForgotPassword="/forgotPassword" />
+          <HeaderBlank title="RealDocs 사용자 암호 초기화" showLogo />
+          <FormForgotPassword linkSignup="/signup" />
         </Grid>
       </Grid>
     </LayoutBlank>
   );
 };
 
-export default SigninPage;
+export default PasswordResetPage;

@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface SignupFormProps extends ComponentBaseProps {
+interface FormSignupProps extends ComponentBaseProps {
   linkSigin?: string;
   linkTerms?: string;
   linkPrivacy?: string;
 }
 
-const SignupForm: React.FC<SignupFormProps> = (props) => {
+const FormSignup: React.FC<FormSignupProps> = (props) => {
   const { linkSigin } = props;
   const [sent, setSent] = React.useState<boolean>(false);
 
@@ -129,4 +129,4 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
   );
 };
 
-export default SignupForm;
+export default FormSignup;
