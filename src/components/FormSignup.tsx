@@ -72,7 +72,6 @@ const SignupForm: React.FC<SignupFormProps> = (props) => {
                 size="medium"
                 type="email"
                 fullWidth
-                autoFocus
                 required
               />
               <TextField
