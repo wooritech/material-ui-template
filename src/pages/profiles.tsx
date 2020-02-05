@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import None from '~/components/None';
+import CardProfile from '~/components/CardProfile';
 import LayoutMain from '~/layouts/LayoutMain';
 
 const ProfilesPage: NextPage = () => {
   return (
     <LayoutMain pageTitle="계정 설정">
-      <None />
+      <CardProfile />
     </LayoutMain>
   );
 };

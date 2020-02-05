@@ -1,4 +1,5 @@
 export default {
+  // type: 'dark',
   primary: {
     light: '#629FFF',
     main: '#0671DD',
