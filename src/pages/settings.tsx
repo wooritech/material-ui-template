@@ -1,11 +1,14 @@
 import { NextPage } from 'next';
-import None from '~/components/None';
+import CardPanel from '~/components/CardPanel';
+import ListAdmins from '~/components/ListAdmins';
 import LayoutMain from '~/layouts/LayoutMain';
 
 const ProfilesPage: NextPage = () => {
   return (
     <LayoutMain pageTitle="시스템 설정">
-      <None />
+      <CardPanel headerTitle="관리자 목록">
+        <ListAdmins />
+      </CardPanel>
     </LayoutMain>
   );
 };
