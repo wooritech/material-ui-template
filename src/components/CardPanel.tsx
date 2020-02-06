@@ -12,21 +12,30 @@ const useStyles = makeStyles(() =>
     root: {
       maxWidth: '100%',
     },
+    paddingNone: {
+      padding: 0,
+      '&:last-child': {
+        paddingBottom: 0,
+      },
+    },
   }),
 );
+
 interface CardPanelProps extends ComponentBaseProps {
   headerTitle: string;
+  showHeaderDivider?: boolean;
+  paddingNone?: boolean;
 }
 
 const CardPanel: React.FC<CardPanelProps> = (props) => {
-  const { headerTitle, children } = props;
+  const { headerTitle, children, showHeaderDivider = true, paddingNone } = props;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardHeader title={headerTitle} />
-      <Divider light />
-      <CardContent>{children}</CardContent>
+      {showHeaderDivider ? <Divider light /> : null}
+      <CardContent className={paddingNone ? classes.paddingNone : ''}>{children}</CardContent>
     </Card>
   );
 };
