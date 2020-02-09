@@ -32,39 +32,22 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const createData = (
-  projectId: string,
-  projectName: string,
-  projectDescription: string,
-  latestVersion: string,
-  projectOwner: string,
-  constructorCount: number,
-) => {
+const createData = (version: string, modified: string, state: string) => {
   return {
-    projectId,
-    projectName,
-    projectDescription,
-    latestVersion,
-    projectOwner,
-    constructorCount,
+    version,
+    modified,
+    state,
   };
 };
 
 const rows = [
-  createData('DOCID00', 'realgrid docs v2', '', '2.0.1', '홍길동', 5),
-  createData('DOCID01', '아이랩 도움말1', '', '3.0.1', '홍길동', 5),
-  createData('DOCID02', '아이랩 도움말2', '', '3.0.1', '홍길동', 5),
-  createData('DOCID03', '아이랩 도움말3', '', '3.0.1', '홍길동', 5),
-  createData('DOCID04', '아이랩 도움말4', '', '3.0.1', '홍길동', 5),
-  createData('DOCID05', '아이랩 도움말5', '', '3.0.1', '홍길동', 5),
-  createData('DOCID06', '아이랩 도움말6', '', '3.0.1', '홍길동', 5),
-  createData('DOCID07', '아이랩 도움말7', '', '3.0.1', '홍길동', 5),
-  createData('DOCID08', '아이랩 도움말8', '', '3.0.1', '홍길동', 5),
+  createData('v0.1.0', '2020.01.02', '고정'),
+  createData('v0.2.0', '2020.02.02', '활성'),
 ];
 
-interface ListProjectProps extends ComponentBaseProps {}
+interface ListDocumentVersionsProps extends ComponentBaseProps {}
 
-const ListProject: React.FC<ListProjectProps> = () => {
+const ListDocumentVersions: React.FC<ListDocumentVersionsProps> = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -86,28 +69,20 @@ const ListProject: React.FC<ListProjectProps> = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>프로젝트 명</TableCell>
-              <TableCell>프로젝트 설명</TableCell>
-              <TableCell>최신 문서 버전</TableCell>
-              <TableCell>소유자</TableCell>
-              <TableCell className={classes.countCell}>참여자 수</TableCell>
+              <TableCell>버전</TableCell>
+              <TableCell>마지막 수정일</TableCell>
+              <TableCell>상태</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow key={row.projectId}>
+              <TableRow key={row.version}>
                 <TableCell component="th" scope="row">
-                  {row.projectId}
+                  <Link href="/edit">{row.version}</Link>
                 </TableCell>
-                <TableCell>
-                  <Link href="/projects/settings">{row.projectName}</Link>
-                </TableCell>
-                <TableCell>{row.projectDescription}</TableCell>
-                <TableCell>{row.latestVersion}</TableCell>
-                <TableCell>{row.projectOwner}</TableCell>
-                <TableCell align="right">{row.constructorCount}</TableCell>
+                <TableCell>{row.modified}</TableCell>
+                <TableCell>{row.state}</TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon />
                 </TableCell>
@@ -115,7 +90,7 @@ const ListProject: React.FC<ListProjectProps> = () => {
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={7} />
+                <TableCell colSpan={4} />
               </TableRow>
             )}
           </TableBody>
@@ -134,4 +109,4 @@ const ListProject: React.FC<ListProjectProps> = () => {
   );
 };
 
-export default ListProject;
+export default ListDocumentVersions;

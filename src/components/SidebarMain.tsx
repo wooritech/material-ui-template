@@ -88,7 +88,7 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
   const SideMenus: React.FC = () => {
     const router = useRouter();
     const selectedItem = (item: MenuItem): boolean => {
-      return item.href === router.asPath;
+      return router.asPath.startsWith(item.href);
     };
 
     // 선택된 item text 스타일 다르게 적용하기위해.
