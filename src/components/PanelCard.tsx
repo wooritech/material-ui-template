@@ -21,13 +21,13 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-interface CardPanelProps extends ComponentBaseProps {
+interface PanelCardProps extends ComponentBaseProps {
   headerTitle: string;
   showHeaderDivider?: boolean;
   paddingNone?: boolean;
 }
 
-const CardPanel: React.FC<CardPanelProps> = (props) => {
+const PanelCard: React.FC<PanelCardProps> = (props) => {
   const { headerTitle, children, showHeaderDivider = true, paddingNone } = props;
   const classes = useStyles();
 
@@ -40,4 +40,4 @@ const CardPanel: React.FC<CardPanelProps> = (props) => {
   );
 };
 
-export default CardPanel;
+export default PanelCard;

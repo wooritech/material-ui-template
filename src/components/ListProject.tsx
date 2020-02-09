@@ -51,7 +51,7 @@ const createData = (
 };
 
 const rows = [
-  createData('DOCID00', 'realgrid docs v2', '', '2.0.1', '홍길동', 5),
+  createData('DOCID00', 'realgrid docs v2', '', 'v0.1', '홍길동', 5),
   createData('DOCID01', '아이랩 도움말1', '', '3.0.1', '홍길동', 5),
   createData('DOCID02', '아이랩 도움말2', '', '3.0.1', '홍길동', 5),
   createData('DOCID03', '아이랩 도움말3', '', '3.0.1', '홍길동', 5),
@@ -105,7 +105,9 @@ const ListProject: React.FC<ListProjectProps> = () => {
                   <Link href="/projects/settings">{row.projectName}</Link>
                 </TableCell>
                 <TableCell>{row.projectDescription}</TableCell>
-                <TableCell>{row.latestVersion}</TableCell>
+                <TableCell>
+                  <Link href="/edit">{row.latestVersion}</Link>
+                </TableCell>
                 <TableCell>{row.projectOwner}</TableCell>
                 <TableCell align="right">{row.constructorCount}</TableCell>
                 <TableCell align="right">

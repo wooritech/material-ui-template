@@ -7,17 +7,13 @@ import FormButton from '~/modules/components/FormButton';
 import { ComponentBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  form: {
-    margin: theme.spacing(2),
-  },
-  signup: {
-    align: 'center',
-    marginTop: theme.spacing(2),
-  },
-  paper: {
+  root: {
     margin: 'auto',
     overflow: 'hidden',
     padding: theme.spacing(2),
+  },
+  form: {
+    margin: theme.spacing(2),
   },
   contentWrapper: {
     margin: '8px 4px',
@@ -37,7 +33,7 @@ const FormResetPassword: React.FC<FormResetPasswordProps> = () => {
 
   return (
     <>
-      <Paper className={classes.paper}>
+      <Paper className={classes.root}>
         <div className={classes.contentWrapper}>
           <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
             <FormControl margin="none" fullWidth>

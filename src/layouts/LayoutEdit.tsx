@@ -2,9 +2,9 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import SidebarMain from '~/components/SidebarMain';
+import SidebarEdit from '~/components/SidebarEdit';
 import Copyright from '~/components/Copyright';
-import HeaderMain from '~/components/HeaderMain';
+import HeaderEdit from '~/components/HeaderEdit';
 import { LayoutBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,25 +20,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   main: {
     flex: 1,
     // 기준 간격은 40px;
-    padding: theme.spacing(5),
+    padding: theme.spacing(0),
   },
   footer: {
     padding: theme.spacing(2),
   },
 }));
 
-export interface LayoutMainProps extends LayoutBaseProps {
+export interface LayoutEditProps extends LayoutBaseProps {
   pageTitle: string;
 }
 
-const LayoutMain: React.FC<LayoutMainProps> = (props) => {
+const LayoutEdit: React.FC<LayoutEditProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.app}>
-      <HeaderMain {...props} />
-      <SidebarMain {...props} />
+      <HeaderEdit {...props} />
+      <SidebarEdit {...props} />
       <main className={classes.main}>{children}</main>
       <footer className={classes.footer}>
         <Copyright />
@@ -47,4 +47,4 @@ const LayoutMain: React.FC<LayoutMainProps> = (props) => {
   );
 };
 
-export default LayoutMain;
+export default LayoutEdit;

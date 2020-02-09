@@ -3,30 +3,12 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import red from '@material-ui/core/colors/red';
 
 import FormButton from '~/modules/components/FormButton';
 import { ComponentBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
     form: {
       margin: theme.spacing(2),
     },

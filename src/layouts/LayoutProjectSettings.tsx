@@ -3,7 +3,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import LayoutMain from '~/layouts/LayoutMain';
-import CardPanel from '~/components/CardPanel';
+import PanelCard from '~/components/PanelCard';
 import SideMenuProjectSettings from '~/components/SideMenuProjectSettings';
 import { LayoutBaseProps } from './types';
 
@@ -27,9 +27,9 @@ const LayoutProjectSettings: React.FC<LayoutProjectSettingsProps> = (props) => {
     <LayoutMain pageTitle="프로젝트 설정">
       <Grid container spacing={2} className={classes.root}>
         <Grid item sm={3} className={classes.menus}>
-          <CardPanel headerTitle="" showHeaderDivider={false} paddingNone>
+          <PanelCard headerTitle="" showHeaderDivider={false} paddingNone>
             <SideMenuProjectSettings />
-          </CardPanel>
+          </PanelCard>
         </Grid>
         <Grid item sm={9} className={classes.contents}>
           {children}
