@@ -4,7 +4,7 @@ import LayoutEdit from '~/layouts/LayoutEdit';
 
 const EditPage: NextPage = () => {
   return (
-    <LayoutEdit pageTitle="계정 설정">
+    <LayoutEdit pageTitle="">
       <EditDocument />
     </LayoutEdit>
   );

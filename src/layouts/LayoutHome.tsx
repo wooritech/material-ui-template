@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: theme.custom.landingWidth,
+    maxWidth: theme.custom.pageWidthHome,
     marginLeft: 'auto',
     marginRight: 'auto',
   },

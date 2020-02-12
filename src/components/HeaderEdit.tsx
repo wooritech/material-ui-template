@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 500,
   },
   toolbar: {
-    minHeight: theme.custom.headerHomeHeight,
+    minHeight: theme.custom.headerHeightHome,
     // alignItems: 'flex-start',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),

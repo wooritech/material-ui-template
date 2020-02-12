@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     [theme.breakpoints.up('lg')]: {
-      width: `calc(100% - ${theme.custom.drawerWidth}px)`,
-      marginLeft: theme.custom.drawerWidth,
+      width: `calc(100% - ${theme.custom.sidebarWidthMain}px)`,
+      marginLeft: theme.custom.sidebarWidthMain,
     },
   },
   main: {

@@ -7,17 +7,23 @@ import overrides from './overrides';
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     custom: {
-      drawerWidth: number;
-      landingWidth: number;
-      headerHomeHeight: number;
+      headerHeightHome: number;
+      headerHeightMain: number;
+      headerHeightEdit: number;
+      sidebarWidthEdit: number;
+      sidebarWidthMain: number;
+      pageWidthHome: number;
     };
   }
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     custom?: {
-      drawerWidth?: number;
-      landingWidth?: number;
-      headerHomeHeight?: number;
+      headerHeightHome?: number;
+      headerHeightMain?: number;
+      headerHeightEdit?: number;
+      sidebarWidthEdit?: number;
+      sidebarWidthMain?: number;
+      pageWidthHome?: number;
     };
   }
 }
@@ -43,9 +49,12 @@ const theme = createMuiTheme({
   },
   // 커스텀 변수
   custom: {
-    drawerWidth: 400,
-    headerHomeHeight: 96,
-    // landingWidth: 800,
+    headerHeightHome: 60,
+    headerHeightMain: 96,
+    headerHeightEdit: 96,
+    sidebarWidthEdit: 300,
+    sidebarWidthMain: 400,
+    pageWidthHome: -1,
   },
 });
 

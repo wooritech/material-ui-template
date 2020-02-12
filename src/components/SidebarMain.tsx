@@ -19,17 +19,17 @@ import BrandLogo from './BrandLogo';
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
     [theme.breakpoints.up('md')]: {
-      width: theme.custom.drawerWidth,
+      width: theme.custom.sidebarWidthMain,
       flexShrink: 0,
     },
   },
   toolbar: {
-    minHeight: theme.custom.headerHomeHeight,
+    minHeight: theme.custom.headerHeightEdit,
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
   drawerPaper: {
-    width: theme.custom.drawerWidth,
+    width: theme.custom.sidebarWidthMain,
   },
   item: {
     color: '#ffffff',
