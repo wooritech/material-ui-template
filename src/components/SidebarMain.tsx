@@ -58,31 +58,34 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
   };
 
   type MenuItem = {
-    menuIndex: number;
+    _id: number;
     title: string;
     href: string;
+    divider?: boolean;
   };
 
-  const sidebarMenu: MenuItem[][] = [
-    [
-      {
-        menuIndex: 1,
-        title: '내 프로젝트',
-        href: '/projects',
-      },
-    ],
-    [
-      {
-        menuIndex: 2,
-        title: '계정 설정',
-        href: '/profiles',
-      },
-      {
-        menuIndex: 3,
-        title: '시스템 설정',
-        href: '/settings',
-      },
-    ],
+  const sidebarMenu: MenuItem[] = [
+    {
+      _id: 1,
+      title: '내 프로젝트',
+      href: '/projects',
+    },
+    {
+      _id: 2,
+      title: '',
+      href: '',
+      divider: true,
+    },
+    {
+      _id: 3,
+      title: '계정 설정',
+      href: '/profiles',
+    },
+    {
+      _id: 4,
+      title: '시스템 설정',
+      href: '/settings',
+    },
   ];
 
   const SideMenus: React.FC = () => {
@@ -105,33 +108,21 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
             <BrandLogo />
           </Grid>
         </Toolbar>
-        <>
-          <List component="nav">
-            {sidebarMenu.map((groups, groupIndex) => (
-              <>
-                {groups.map((item) => (
-                  <ListItem
-                    component="a"
-                    href={item.href}
-                    selected={selectedItem(item)}
-                    button
-                    key={item.menuIndex}
-                  >
-                    {/* <ListItemIcon>{itemIndex % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                    <ListItemText
-                      inset
-                      primary={primaryTypography(item.title, selectedItem(item))}
-                    />
-                  </ListItem>
-                ))}
-
-                {groupIndex < sidebarMenu.length - 1 ? (
-                  <Divider className={classes.divider} variant="middle" />
-                ) : null}
-              </>
-            ))}
-          </List>
-        </>
+        <List component="nav">
+          {sidebarMenu.map((item) => (
+            // map() loop 바로 아래 노드에 key 설정 해야한다.
+            <div key={item._id}>
+              {item.divider ? (
+                <Divider className={classes.divider} variant="middle" />
+              ) : (
+                <ListItem component="a" href={item.href} selected={selectedItem(item)} button>
+                  {/* <ListItemIcon>{itemIndex % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                  <ListItemText inset primary={primaryTypography(item.title, selectedItem(item))} />
+                </ListItem>
+              )}
+            </div>
+          ))}
+        </List>
       </>
     );
   };
