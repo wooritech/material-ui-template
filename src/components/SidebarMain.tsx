@@ -105,7 +105,7 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
       <>
         <Toolbar className={classes.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <BrandLogo />
+            <BrandLogo imageName="logo-title-21243d.png" />
           </Grid>
         </Toolbar>
         <List component="nav">

@@ -39,7 +39,7 @@ const HeaderBlank: React.FC<HeaderBlankPorps> = (props) => {
         <Grid container justify="center">
           <Grid item>
             <img
-              src="/images/logo-fafafa.png"
+              src="/images/logo-f2f3f8.png"
               alt="Real Document Director"
               className={classes.logo}
             />

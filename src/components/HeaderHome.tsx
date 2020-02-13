@@ -70,7 +70,7 @@ const HeaderHome: React.FC<HeaderHomeProps> = (props) => {
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar className={classes.toolbar}>
           <Grid container spacing={1} alignItems="center">
-            <BrandLogo />
+            <BrandLogo imageName="logo-title-blue.png" />
             <Grid item xs />
             {isLoggedIn ? (
               <>
