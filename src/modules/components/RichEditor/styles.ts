@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const controlStyles = makeStyles((theme: Theme) => ({
   controls: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
 }));
 
@@ -16,4 +16,17 @@ const buttonStyles = makeStyles(() => ({
   },
 }));
 
-export { controlStyles, buttonStyles };
+const editorStyles = makeStyles((theme: Theme) => ({
+  root: {
+    minHeight: '100px',
+    backgroundColor: '#eee',
+    margin: theme.spacing(0),
+  },
+  editor: {
+    margin: theme.spacing(2),
+    // marginLeft: theme.spacing(2),
+    // marginRight: theme.spacing(2),
+  },
+}));
+
+export { controlStyles, buttonStyles, editorStyles };

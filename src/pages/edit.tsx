@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import EditDocument from '~/components/PanelEdit';
+import PanelEdit from '~/components/PanelEdit';
 import LayoutEdit from '~/layouts/LayoutEdit';
 
 const EditPage: NextPage = () => {
   return (
     <LayoutEdit pageTitle="">
-      <EditDocument />
+      <PanelEdit />
     </LayoutEdit>
   );
 };

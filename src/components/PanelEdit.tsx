@@ -12,30 +12,25 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
       flex: 1,
       overflow: 'auto',
+      boxShadow: '0px 0px 5px 3px #ddd',
+      borderRadius: '5px',
       // height: `calc(100vh - ${theme.spacing(2) - theme.custom.headerHeightEdit}px)`,
-    },
-    editor: {
-      minHeight: '100px',
-      backgroundColor: '#eee',
-      // border: '1px solid',
-      // height: '2000px',
-      padding: '20px',
     },
   }),
 );
 
-interface EditDocumentProps extends ComponentBaseProps {}
+interface PanelEditProps extends ComponentBaseProps {}
 
-const EditDocument: React.FC<EditDocumentProps> = () => {
+const PanelEdit: React.FC<PanelEditProps> = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Paper elevation={0} square className={classes.editor}>
+      <Paper elevation={0} square>
         <RichEditor />
       </Paper>
     </div>
   );
 };
 
-export default EditDocument;
+export default PanelEdit;

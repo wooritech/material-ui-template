@@ -13,6 +13,7 @@ import {
 
 import BlockStyleControls from './BlockStyleControls';
 import InlineStyleControls from './InlineStyleControls';
+import { editorStyles } from './styles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;
@@ -62,6 +63,7 @@ const RichEditor: React.FC = () => {
   // const [state, setState] = React.useState(EditorState.createEmpty());
   // 이렇게 하면 Warning: Prop `data-offset-key` did not match. 발생하면서
   // Uncaught TypeError: Cannot read property 'getIn' of... 오류까지 발생.
+  const classes = editorStyles();
 
   const emptyContentState = convertFromRaw({
     entityMap: {},
@@ -173,10 +175,10 @@ const RichEditor: React.FC = () => {
   }
 
   return (
-    <div className="RichEditor-root">
+    <div className={classes.root}>
       <BlockStyleControls editorState={state} onToggle={toggleBlockType} />
       <InlineStyleControls editorState={state} onToggle={toggleInlineStyle} />
-      <div className={className}>
+      <div className={classes.editor}>
         <Editor
           blockStyleFn={getBlockStyle}
           customStyleMap={styleMap}

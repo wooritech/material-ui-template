@@ -35,7 +35,7 @@ const LayoutEdit: React.FC<LayoutEditProps> = (props) => {
 
   return (
     <div className={classes.app}>
-      <HeaderEdit {...props} />
+      {/* <HeaderEdit {...props} /> */}
       <SidebarEdit {...props} />
       <main className={classes.main}>{children}</main>
     </div>

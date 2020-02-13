@@ -1,5 +1,9 @@
 export default {
   paper: {
-    backgroundColor: '#eee',
+    backgroundColor: '#F6F9FC',
+    paperAnchorLeft: '0px',
+  },
+  paperAnchorDockedLeft: {
+    borderRight: '0px',
   },
 };

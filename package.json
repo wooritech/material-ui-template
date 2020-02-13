@@ -20,8 +20,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@material-ui/core": "latest",
+    "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.42",
     "@material-ui/styles": "^4.7.1",
     "@material-ui/types": "^4.1.1",
     "@next/bundle-analyzer": "^9.1.6",

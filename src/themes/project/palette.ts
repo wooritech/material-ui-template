@@ -11,6 +11,6 @@ export default {
     dark: '#32CB00',
   },
   background: {
-    default: '#F2F3F8',
+    default: '#F6F9FC',
   },
 };
