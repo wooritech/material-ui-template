@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#fff',
       margin: theme.spacing(2),
       flex: 1,
-      overflow: 'auto',
+      overflow: 'hidden',
       boxShadow: '0px 0px 5px 3px #ddd',
       borderRadius: '5px',
       // height: `calc(100vh - ${theme.spacing(2) - theme.custom.headerHeightEdit}px)`,

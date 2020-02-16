@@ -1,6 +1,12 @@
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import StyleButton from './StyleButton';
 import { StyleControlsProps } from './types';
-import { controlStyles } from './styles';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  controls: {
+    marginTop: theme.spacing(0),
+  },
+}));
 
 const BLOCK_TYPES = [
   { label: 'H1', style: 'header-one' },
@@ -17,7 +23,7 @@ const BLOCK_TYPES = [
 
 const BlockStyleControls: React.FC<StyleControlsProps> = (props) => {
   const { editorState, onToggle } = props;
-  const classes = controlStyles();
+  const classes = useStyles();
   const selection = editorState.getSelection();
   const blockType = editorState
     .getCurrentContent()

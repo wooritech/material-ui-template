@@ -1,8 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { StyleButtonProps } from './types';
-import { buttonStyles } from './styles';
+
+const buttonStyles = makeStyles(() => ({
+  normal: {
+    color: 'gray',
+  },
+  active: {
+    color: 'blue',
+  },
+}));
 
 const StyleButton: React.FC<StyleButtonProps> = (props) => {
   const classes = buttonStyles();
