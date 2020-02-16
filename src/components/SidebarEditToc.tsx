@@ -4,13 +4,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Label from '@material-ui/icons/Label';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import InfoIcon from '@material-ui/icons/Info';
-import ForumIcon from '@material-ui/icons/Forum';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
+import FolderIcon from '@material-ui/icons/Folder';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
@@ -129,43 +124,58 @@ export default function GmailTreeView() {
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <StyledTreeItem nodeId="1" labelText="All Mail" labelIcon={MailIcon} />
-      <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} />
-      <StyledTreeItem nodeId="3" labelText="Categories" labelIcon={Label}>
+      <StyledTreeItem nodeId="1" labelText="시작" labelIcon={FolderIcon} />
+      <StyledTreeItem nodeId="3" labelText="데모" labelIcon={FolderIcon}>
         <StyledTreeItem
           nodeId="5"
-          labelText="Social"
-          labelIcon={SupervisorAccountIcon}
-          labelInfo="90"
+          labelText="드리드 구성요소"
+          labelIcon={FolderIcon}
+          labelInfo="22"
           color="#1a73e8"
           bgColor="#e8f0fe"
-        />
+        >
+          <StyledTreeItem
+            nodeId="51"
+            labelText="인디케이터"
+            labelIcon={InsertDriveFileOutlinedIcon}
+            color="#1a73e8"
+            bgColor="#e8f0fe"
+          />
+          <StyledTreeItem
+            nodeId="52"
+            labelText="상태바"
+            labelIcon={InsertDriveFileOutlinedIcon}
+            color="#1a73e8"
+            bgColor="#e8f0fe"
+          />
+        </StyledTreeItem>
         <StyledTreeItem
           nodeId="6"
-          labelText="Updates"
-          labelIcon={InfoIcon}
-          labelInfo="2,294"
+          labelText="셀 구성요소"
+          labelIcon={FolderIcon}
+          labelInfo="8"
           color="#e3742f"
           bgColor="#fcefe3"
         />
         <StyledTreeItem
           nodeId="7"
-          labelText="Forums"
-          labelIcon={ForumIcon}
-          labelInfo="3,566"
+          labelText="컬럼"
+          labelIcon={FolderIcon}
+          labelInfo="6"
           color="#a250f5"
           bgColor="#f3e8fd"
         />
         <StyledTreeItem
           nodeId="8"
-          labelText="Promotions"
-          labelIcon={LocalOfferIcon}
+          labelText="헤더와 푸터"
+          labelIcon={FolderIcon}
           labelInfo="733"
           color="#3c8039"
           bgColor="#e6f4ea"
         />
       </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={Label} />
+      <StyledTreeItem nodeId="2" labelText="강좌" labelIcon={FolderIcon} />
+      <StyledTreeItem nodeId="4" labelText="간단한 코드 예제들" labelIcon={FolderIcon} />
     </TreeView>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { EditorState, RichUtils, convertFromRaw } from 'draft-js';
+import Divider from '@material-ui/core/Divider';
 import EditControl from './EditControl';
 import BlockStyleControls from './BlockStyleControls';
 import InlineStyleControls from './InlineStyleControls';
@@ -12,9 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'hidden',
   },
   toolbar: {
-    // position: 'fixed',
     backgroundColor: '#fff',
-    borderBottom: '1px solid #ddd',
     margin: theme.spacing(1),
   },
   editor: {},
@@ -62,6 +61,7 @@ const RichEditor: React.FC = () => {
         <BlockStyleControls editorState={state} onToggle={toggleBlockType} />
         <InlineStyleControls editorState={state} onToggle={toggleInlineStyle} />
       </div>
+      <Divider variant="middle" light />
       <EditControl state={state} onChange={onChange} />
     </div>
   );
