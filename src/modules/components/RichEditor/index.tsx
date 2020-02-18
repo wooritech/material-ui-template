@@ -11,10 +11,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     margin: theme.spacing(0),
     overflow: 'hidden',
+    // height: '100%',
   },
   toolbar: {
     backgroundColor: '#fff',
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
   },
   editor: {},
 }));
@@ -56,14 +57,14 @@ const RichEditor: React.FC = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <>
       <div className={classes.toolbar}>
         <BlockStyleControls editorState={state} onToggle={toggleBlockType} />
         <InlineStyleControls editorState={state} onToggle={toggleInlineStyle} />
       </div>
       <Divider variant="middle" light />
       <EditControl state={state} onChange={onChange} />
-    </div>
+    </>
   );
 };
 

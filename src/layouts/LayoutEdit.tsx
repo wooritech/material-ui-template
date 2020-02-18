@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   main: {
-    padding: theme.spacing(0),
+    padding: theme.spacing(3),
     display: 'flex',
     flex: 1,
     minHeight: '0px',

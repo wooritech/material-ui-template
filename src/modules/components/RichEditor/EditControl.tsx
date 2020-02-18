@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   ContentBlock,
   Editor,
@@ -11,21 +10,7 @@ import {
   DraftStyleMap,
 } from 'draft-js';
 import { ComponentBaseProps } from '~/components/types';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    overflow: 'auto',
-    fontSize: '16px',
-    color: '#24292e',
-    backgroundColor: '#fafbfc',
-    // TODO: 스타일 수정 필요 (Mobile 벗어남.)
-    height: 'calc(100vh - 145px)',
-    borderRadius: '3px',
-    boxShadow: 'inset 0 1px 2px rgba(27,31,35,.075)',
-  },
-}));
+import useStyles from './EditorStyles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;
@@ -171,22 +156,8 @@ const EditControl: React.FC<EditControlProps> = (props) => {
     return 'not-handled';
   };
 
-  const refEditor = React.createRef<Editor>();
-  const handleRootClick = () => {
-    const editor = refEditor.current;
-    if (editor) editor.focus();
-  };
-
   return (
-    // 웹 접근성을 위해 마우스 클릭 이벤트와 함께 키보드 이벤트를 적용하도록 권고한다.
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-    <div
-      className={classes.root}
-      tabIndex={0}
-      role="link"
-      onClick={handleRootClick}
-      // onKeyPress={() => {}}
-    >
+    <div className={classes.root}>
       <Editor
         blockStyleFn={getBlockStyle}
         customStyleMap={styleMap}
@@ -195,9 +166,8 @@ const EditControl: React.FC<EditControlProps> = (props) => {
         keyBindingFn={keyBindingFn}
         handleKeyCommand={handleKeyCommand}
         onChange={onChange}
-        // placeholder="아래에 내용을 입력하세요."
+        placeholder="아래에 내용을 입력하세요."
         spellCheck
-        ref={refEditor}
       />
     </div>
   );
