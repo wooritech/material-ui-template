@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ContentBlock,
-  Editor,
+  // Editor,
   EditorState,
   Modifier,
   RichUtils,
@@ -9,6 +9,9 @@ import {
   getDefaultKeyBinding,
   DraftStyleMap,
 } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+import createImagePlugin from 'draft-js-image-plugin';
+
 import { ComponentBaseProps } from '~/components/types';
 import useStyles from './EditorStyles';
 
@@ -156,6 +159,8 @@ const EditControl: React.FC<EditControlProps> = (props) => {
     return 'not-handled';
   };
 
+  const imagePlugin = createImagePlugin();
+
   return (
     <div className={classes.root}>
       <Editor
@@ -168,6 +173,7 @@ const EditControl: React.FC<EditControlProps> = (props) => {
         onChange={onChange}
         placeholder="아래에 내용을 입력하세요."
         spellCheck
+        plugins={[imagePlugin]}
       />
     </div>
   );

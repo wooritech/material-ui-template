@@ -15,7 +15,7 @@ export default makeStyles((theme: Theme) => ({
   },
   '@global': {
     '.DraftEditor-editorContainer,.DraftEditor-root,.public-DraftEditor-content': {
-      height: 'inherit',
+      height: '100%',
       textAlign: 'initial',
     },
     '.public-DraftEditor-content[contenteditable=true]': {
@@ -69,6 +69,13 @@ export default makeStyles((theme: Theme) => ({
     '.public-DraftStyleDefault-block': {
       position: 'relative',
       whiteSpace: 'pre-wrap',
+    },
+    '.public-DraftStyleDefault-pre': {
+      backgroundColor: '#272c34',
+      color: '#fff',
+      fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+      fontSize: 16,
+      padding: theme.spacing(2),
     },
     '.public-DraftStyleDefault-ltr': {
       direction: 'ltr',
