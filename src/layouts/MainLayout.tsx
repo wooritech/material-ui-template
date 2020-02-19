@@ -2,9 +2,9 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import SidebarMain from '~/components/SidebarMain';
+import MainSidebar from '~/components/MainSidebar';
 import Copyright from '~/components/Copyright';
-import HeaderMain from '~/components/HeaderMain';
+import MainHeader from '~/components/MainHeader';
 import { LayoutBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -37,8 +37,8 @@ const LayoutMain: React.FC<LayoutMainProps> = (props) => {
 
   return (
     <div className={classes.app}>
-      <HeaderMain {...props} />
-      <SidebarMain {...props} />
+      <MainHeader {...props} />
+      <MainSidebar {...props} />
       <main className={classes.main}>{children}</main>
       <footer className={classes.footer}>
         <Copyright />

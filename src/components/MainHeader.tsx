@@ -60,12 +60,12 @@ const ElevationScroll: React.FC<ESProps> = (props) => {
   });
 };
 
-interface HeaderMainProps extends ComponentBaseProps {
+interface MainHeaderProps extends ComponentBaseProps {
   isLoggedIn?: boolean;
   pageTitle: string;
 }
 
-const HeaderMain: React.FC<HeaderMainProps> = (props) => {
+const MainHeader: React.FC<MainHeaderProps> = (props) => {
   const classes = useStyles();
   const { isLoggedIn = true, pageTitle } = props;
 
@@ -128,4 +128,4 @@ const HeaderMain: React.FC<HeaderMainProps> = (props) => {
   );
 };
 
-export default HeaderMain;
+export default MainHeader;

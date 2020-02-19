@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface HeaderBlankPorps extends ComponentBaseProps {
+interface BlankHeaderPorps extends ComponentBaseProps {
   title: string;
   showLogo: boolean;
 }
 
-const HeaderBlank: React.FC<HeaderBlankPorps> = (props) => {
+const BlankHeader: React.FC<BlankHeaderPorps> = (props) => {
   const classes = useStyles();
   const { title, showLogo } = props;
 
@@ -59,4 +59,4 @@ const HeaderBlank: React.FC<HeaderBlankPorps> = (props) => {
   );
 };
 
-export default HeaderBlank;
+export default BlankHeader;

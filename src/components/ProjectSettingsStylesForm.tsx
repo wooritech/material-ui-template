@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
 
 import FormButton from '~/modules/components/FormButton';
 import { ComponentBaseProps } from './types';
@@ -15,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface FormProjectSettingsProps extends ComponentBaseProps {}
+interface ProjectSettingsStylesFormProps extends ComponentBaseProps {}
 
-const FormProjectSettings: React.FC<FormProjectSettingsProps> = () => {
+const ProjectSettingsStylesForm: React.FC<ProjectSettingsStylesFormProps> = () => {
   const classes = useStyles();
   const [sent, setSent] = React.useState<boolean>(false);
 
@@ -29,26 +28,7 @@ const FormProjectSettings: React.FC<FormProjectSettingsProps> = () => {
     <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
-            <TextField
-              id="projectId"
-              label="프로젝트 ID"
-              variant="outlined"
-              margin="normal"
-              value="DOCID00"
-              disabled
-            />
-            <TextField
-              id="projectName"
-              label="프로젝트 명"
-              variant="outlined"
-              margin="normal"
-              value="리얼그리드 문서 사이트 2"
-              disabled={sent}
-              autoFocus
-              required
-            />
-          </FormControl>
+          <FormControl fullWidth />
           <FormButton color="primary" disabled={sent} mounted>
             {sent ? '처리중...' : '변경 내용 저장'}
           </FormButton>
@@ -58,4 +38,4 @@ const FormProjectSettings: React.FC<FormProjectSettingsProps> = () => {
   );
 };
 
-export default FormProjectSettings;
+export default ProjectSettingsStylesForm;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -31,22 +32,22 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const createData = (username: string, email: string, roles: string) => {
+const createData = (version: string, modified: string, state: string) => {
   return {
-    username,
-    email,
-    roles,
+    version,
+    modified,
+    state,
   };
 };
 
 const rows = [
-  createData('onlydel', 'onlydel@wooritech.com', '소유자'),
-  createData('gildong', 'hong@wooritech.com', '관리자'),
+  createData('v0.1.0', '2020.01.02', '고정'),
+  createData('v0.2.0', '2020.02.02', '활성'),
 ];
 
-interface ListProjectMembersProps extends ComponentBaseProps {}
+interface ProjectSettingsVersionListProps extends ComponentBaseProps {}
 
-const ListProjectMembers: React.FC<ListProjectMembersProps> = () => {
+const ProjectSettingsVersionList: React.FC<ProjectSettingsVersionListProps> = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -68,20 +69,20 @@ const ListProjectMembers: React.FC<ListProjectMembersProps> = () => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>사용자 아이디</TableCell>
-              <TableCell>이메일 주소</TableCell>
-              <TableCell>역할</TableCell>
+              <TableCell>버전</TableCell>
+              <TableCell>마지막 수정일</TableCell>
+              <TableCell>상태</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <TableRow key={row.username}>
+              <TableRow key={row.version}>
                 <TableCell component="th" scope="row">
-                  {row.username}
+                  <Link href="/edit">{row.version}</Link>
                 </TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.roles}</TableCell>
+                <TableCell>{row.modified}</TableCell>
+                <TableCell>{row.state}</TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon />
                 </TableCell>
@@ -108,4 +109,4 @@ const ListProjectMembers: React.FC<ListProjectMembersProps> = () => {
   );
 };
 
-export default ListProjectMembers;
+export default ProjectSettingsVersionList;

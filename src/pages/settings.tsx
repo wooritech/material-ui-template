@@ -1,15 +1,15 @@
 import { NextPage } from 'next';
-import PanelCard from '~/components/PanelCard';
-import ListAdmin from '~/components/ListAdmin';
-import LayoutMain from '~/layouts/LayoutMain';
+import PanelCard from '~/modules/components/CardTypePanel';
+import SystemSettingsAdminList from '~/components/SystemSettingsAdminList';
+import MainLayout from '~/layouts/MainLayout';
 
 const SettingsPage: NextPage = () => {
   return (
-    <LayoutMain pageTitle="시스템 설정">
+    <MainLayout pageTitle="시스템 설정">
       <PanelCard headerTitle="관리자 목록" showHeaderDivider paddingNone>
-        <ListAdmin />
+        <SystemSettingsAdminList />
       </PanelCard>
-    </LayoutMain>
+    </MainLayout>
   );
 };
 

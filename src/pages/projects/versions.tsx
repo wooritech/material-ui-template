@@ -1,16 +1,16 @@
 import { NextPage } from 'next';
-import LayoutProjectSettings from '~/layouts/LayoutProjectSettings';
-import PanelCard from '~/components/PanelCard';
-import ListDocumentVersions from '~/components/ListDocumentVersions';
+import ProjectSettingsLayout from '~/layouts/ProjectSettingsLayout';
+import PanelCard from '~/modules/components/CardTypePanel';
+import ProjectSettingsVersionList from '~/components/ProjectSettingsVersionList';
 
-const ProjectSettingsPage: NextPage = () => {
+const ProjectSettingsVersionsPage: NextPage = () => {
   return (
-    <LayoutProjectSettings pageTitle="프로젝트 설정">
+    <ProjectSettingsLayout pageTitle="프로젝트 설정">
       <PanelCard headerTitle="문서 버전 목록" showHeaderDivider paddingNone>
-        <ListDocumentVersions />
+        <ProjectSettingsVersionList />
       </PanelCard>
-    </LayoutProjectSettings>
+    </ProjectSettingsLayout>
   );
 };
 
-export default ProjectSettingsPage;
+export default ProjectSettingsVersionsPage;

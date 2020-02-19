@@ -1,14 +1,14 @@
 import { NextPage } from 'next';
 import None from '~/components/None';
-import LayoutHome from '~/layouts/LayoutHome';
+import LandingLayout from '~/layouts/LandingLayout';
 
 interface LandingPageProps {}
 
 const LandingPage: NextPage<LandingPageProps> = () => {
   return (
-    <LayoutHome>
+    <LandingLayout>
       <None />
-    </LayoutHome>
+    </LandingLayout>
   );
 };
 

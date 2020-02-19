@@ -7,7 +7,7 @@ import { ErrorProps } from 'next/error';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import LayoutBlank from '~/layouts/LayoutBlank';
+import BlankLayout from '~/layouts/BlankLayout';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 const ErrorPage: NextPage<ErrorProps> = ({ statusCode }) => {
   const classes = useStyles();
   return (
-    <LayoutBlank>
+    <BlankLayout>
       <Grid container justify="center" alignItems="center" className={classes.root}>
         <Grid item>
           <Typography color="error" align="center">
@@ -28,7 +28,7 @@ const ErrorPage: NextPage<ErrorProps> = ({ statusCode }) => {
           </Typography>
         </Grid>
       </Grid>
-    </LayoutBlank>
+    </BlankLayout>
   );
 };
 

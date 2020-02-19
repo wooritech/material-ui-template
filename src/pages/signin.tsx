@@ -2,9 +2,9 @@ import React from 'react';
 import { NextPage } from 'next';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import LayoutBlank from '~/layouts/LayoutBlank';
-import FormSignin from '~/components/FormSignin';
-import HeaderBlank from '~/components/HeaderBlank';
+import BlankLayout from '~/layouts/BlankLayout';
+import SigninForm from '~/components/SigninForm';
+import BlankHeader from '~/components/BlankHeader';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SigninPage: NextPage = () => {
   const classes = useStyles();
   return (
-    <LayoutBlank>
+    <BlankLayout>
       <Grid container className={classes.root} justify="center" alignItems="baseline">
         <Grid item className={classes.signinBox}>
-          <HeaderBlank title="RealDocs 사용자 로그인" showLogo />
-          <FormSignin linkSignup="/signup" linkForgotPassword="/forgotPassword" />
+          <BlankHeader title="RealDocs 사용자 로그인" showLogo />
+          <SigninForm linkSignup="/signup" linkForgotPassword="/forgotPassword" />
         </Grid>
       </Grid>
-    </LayoutBlank>
+    </BlankLayout>
   );
 };
 

@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface FormProfileProps extends ComponentBaseProps {}
+interface ProfileFormProps extends ComponentBaseProps {}
 
-const FormProfile: React.FC<FormProfileProps> = () => {
+const ProfileForm: React.FC<ProfileFormProps> = () => {
   const classes = useStyles();
   const [sent, setSent] = React.useState<boolean>(false);
 
@@ -72,4 +72,4 @@ const FormProfile: React.FC<FormProfileProps> = () => {
   );
 };
 
-export default FormProfile;
+export default ProfileForm;

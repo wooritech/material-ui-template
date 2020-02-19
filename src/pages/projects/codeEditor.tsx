@@ -1,16 +1,16 @@
 import { NextPage } from 'next';
 import ProjectSettingsLayout from '~/layouts/ProjectSettingsLayout';
 import PanelCard from '~/modules/components/CardTypePanel';
-import ProjectSettingsForm from '~/components/ProjectSettingsForm';
+import ProjectSettingsCodeEditorForm from '~/components/ProjectSettingsCodeEditorForm';
 
-const ProjectSettingsPage: NextPage = () => {
+const ProjectSettingsCodeEditorPage: NextPage = () => {
   return (
     <ProjectSettingsLayout pageTitle="프로젝트 설정">
       <PanelCard headerTitle="코드 편집기 설정" showHeaderDivider>
-        <ProjectSettingsForm />
+        <ProjectSettingsCodeEditorForm />
       </PanelCard>
     </ProjectSettingsLayout>
   );
 };
 
-export default ProjectSettingsPage;
+export default ProjectSettingsCodeEditorPage;

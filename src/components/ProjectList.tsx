@@ -62,9 +62,9 @@ const rows = [
   createData('DOCID08', '아이랩 도움말8', '', '3.0.1', '홍길동', 5),
 ];
 
-interface ListProjectProps extends ComponentBaseProps {}
+interface ProjectListProps extends ComponentBaseProps {}
 
-const ListProject: React.FC<ListProjectProps> = () => {
+const ProjectList: React.FC<ProjectListProps> = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -136,4 +136,4 @@ const ListProject: React.FC<ListProjectProps> = () => {
   );
 };
 
-export default ListProject;
+export default ProjectList;

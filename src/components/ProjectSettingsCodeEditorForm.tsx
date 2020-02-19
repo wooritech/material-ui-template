@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface FormCodeEditorSettingsProps extends ComponentBaseProps {}
+interface ProjectSettingsCodeEditorFormProps extends ComponentBaseProps {}
 
-const FormCodeEditorSettings: React.FC<FormCodeEditorSettingsProps> = () => {
+const ProjectSettingsCodeEditorForm: React.FC<ProjectSettingsCodeEditorFormProps> = () => {
   const classes = useStyles();
   const [sent, setSent] = React.useState<boolean>(false);
 
@@ -38,4 +38,4 @@ const FormCodeEditorSettings: React.FC<FormCodeEditorSettingsProps> = () => {
   );
 };
 
-export default FormCodeEditorSettings;
+export default ProjectSettingsCodeEditorForm;

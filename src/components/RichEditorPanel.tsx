@@ -16,9 +16,9 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-interface PanelEditProps extends ComponentBaseProps {}
+interface RichEditorPanelProps extends ComponentBaseProps {}
 
-const PanelEdit: React.FC<PanelEditProps> = () => {
+const RichEditorPanel: React.FC<RichEditorPanelProps> = () => {
   const classes = useStyles();
 
   return (
@@ -28,4 +28,4 @@ const PanelEdit: React.FC<PanelEditProps> = () => {
   );
 };
 
-export default PanelEdit;
+export default RichEditorPanel;

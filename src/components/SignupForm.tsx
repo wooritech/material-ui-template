@@ -29,16 +29,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface SigninFormProps extends ComponentBaseProps {
-  linkSignup?: string;
+interface SignupFormProps extends ComponentBaseProps {
+  linkSigin?: string;
   linkTerms?: string;
-  linkForgetPassword?: string;
   linkPrivacy?: string;
-  linkForgotPassword?: string;
 }
 
-const FormSignin: React.FC<SigninFormProps> = (props) => {
-  const { linkSignup, linkForgotPassword } = props;
+const SignupForm: React.FC<SignupFormProps> = (props) => {
+  const { linkSigin } = props;
   const [sent, setSent] = React.useState<boolean>(false);
 
   const classes = useStyles();
@@ -66,6 +64,17 @@ const FormSignin: React.FC<SigninFormProps> = (props) => {
                 required
               />
               <TextField
+                id="email"
+                label="이메일 주소"
+                variant="outlined"
+                margin="normal"
+                disabled={sent}
+                size="medium"
+                type="email"
+                fullWidth
+                required
+              />
+              <TextField
                 id="password"
                 label="암호"
                 variant="outlined"
@@ -76,29 +85,48 @@ const FormSignin: React.FC<SigninFormProps> = (props) => {
                 required
                 fullWidth
               />
-              <FormHelperText>
-                암호가 기억나지 않는다면 <Link href={linkForgotPassword}>여기를 눌러</Link> 암호를
-                변경하세요.
-              </FormHelperText>
+              <TextField
+                id="passwordConfirm"
+                label="암호 확인"
+                variant="outlined"
+                type="password"
+                margin="normal"
+                autoComplete="current-password"
+                disabled={sent}
+                required
+                fullWidth
+              />
             </FormControl>
+            <FormHelperText>
+              숫자와 소문자를 포함하여 15 자 이상 또는 8 자 이상이어야합니다.
+            </FormHelperText>
             <FormControl margin="normal" fullWidth>
               <FormButton color="primary" size="large" fullWidth disabled={sent} mounted>
-                {sent ? '처리중...' : '로그인'}
+                {sent ? '처리중...' : '사용자 등록'}
               </FormButton>
             </FormControl>
 
             <FormControl margin="dense">
-              <FormControlLabel checked={clipped} control={<Checkbox />} label="암호 저장" />
+              <FormControlLabel
+                checked={clipped}
+                control={<Checkbox />}
+                label="개인정보 보호 및 약관에 동의"
+              />
+              <FormHelperText>
+                체크 할 경우
+                <Link href="/privacy">개인정보 보호</Link> 및 <Link href="/terms">약관</Link> 에
+                동의함을 의미합니다.
+              </FormHelperText>
             </FormControl>
           </form>
         </div>
       </Paper>
       <Typography variant="subtitle2" align="center" className={classes.signup}>
-        RealDocs가 처음 이라면
-        <Link href={linkSignup}> 새로운 사용자로 등록</Link> 하세요.
+        RealDocs 사용자 아이디가 있다면
+        <Link href={linkSigin}> 로그인</Link> 하세요.
       </Typography>
     </>
   );
 };
 
-export default FormSignin;
+export default SignupForm;

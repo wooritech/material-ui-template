@@ -1,16 +1,16 @@
 import { NextPage } from 'next';
-import LayoutProjectSettings from '~/layouts/LayoutProjectSettings';
-import PanelCard from '~/components/PanelCard';
-import FormProjectStyles from '~/components/FormProjectStyles';
+import ProjectSettingsLayout from '~/layouts/ProjectSettingsLayout';
+import PanelCard from '~/modules/components/CardTypePanel';
+import ProjectSettingsStylesForm from '~/components/ProjectSettingsStylesForm';
 
-const ProjectSettingsPage: NextPage = () => {
+const ProjectSettingsStylesPage: NextPage = () => {
   return (
-    <LayoutProjectSettings pageTitle="프로젝트 설정">
+    <ProjectSettingsLayout pageTitle="프로젝트 설정">
       <PanelCard headerTitle="스타일 관리" showHeaderDivider>
-        <FormProjectStyles />
+        <ProjectSettingsStylesForm />
       </PanelCard>
-    </LayoutProjectSettings>
+    </ProjectSettingsLayout>
   );
 };
 
-export default ProjectSettingsPage;
+export default ProjectSettingsStylesPage;

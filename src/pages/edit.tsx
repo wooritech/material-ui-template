@@ -1,12 +1,27 @@
 import { NextPage } from 'next';
-import PanelEdit from '~/components/PanelEdit';
-import LayoutEdit from '~/layouts/LayoutEdit';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import RichEditor from '~/modules/components/RichEditor';
+import EditLayout from '~/layouts/EditLayout';
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      flex: 1,
+      background: '#fff',
+      overflow: 'hidden',
+      boxShadow: '0px 0px 5px 3px #ddd',
+      borderRadius: '5px',
+    },
+  }),
+);
 const EditPage: NextPage = () => {
+  const classes = useStyles();
   return (
-    <LayoutEdit pageTitle="">
-      <PanelEdit />
-    </LayoutEdit>
+    <EditLayout pageTitle="">
+      <div className={classes.root}>
+        <RichEditor />
+      </div>
+    </EditLayout>
   );
 };
 

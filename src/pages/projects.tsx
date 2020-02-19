@@ -1,15 +1,15 @@
 import { NextPage } from 'next';
-import PanelCard from '~/components/PanelCard';
-import ListProject from '~/components/ListProject';
-import LayoutMain from '~/layouts/LayoutMain';
+import PanelCard from '~/modules/components/CardTypePanel';
+import ProjectList from '~/components/ProjectList';
+import MainLayout from '~/layouts/MainLayout';
 
 const ProjectsPage: NextPage = () => {
   return (
-    <LayoutMain pageTitle="내 프로젝트">
+    <MainLayout pageTitle="내 프로젝트">
       <PanelCard headerTitle="프로젝트 목록" paddingNone>
-        <ListProject />
+        <ProjectList />
       </PanelCard>
-    </LayoutMain>
+    </MainLayout>
   );
 };
 

@@ -14,13 +14,13 @@ interface TableState {
   data: Row[];
 }
 
-interface ListAdminProps extends ComponentBaseProps {}
+interface SystemSettingsAdminListProps extends ComponentBaseProps {}
 
 const createData = (username: string, email: string) => {
   return { username, email };
 };
 
-const ListAdmin: React.FC<ListAdminProps> = () => {
+const SystemSettingsAdminList: React.FC<SystemSettingsAdminListProps> = () => {
   const rows = [
     createData('onlydel', 'onlydel@wooritech.com'),
     createData('call-of-duty', 'cod@wooritech.com'),
@@ -81,4 +81,4 @@ const ListAdmin: React.FC<ListAdminProps> = () => {
   );
 };
 
-export default ListAdmin;
+export default SystemSettingsAdminList;

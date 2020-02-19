@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface SidebarMainProps extends ComponentBaseProps {}
+export interface MainSidebarProps extends ComponentBaseProps {}
 
-const SidebarMain: React.FC<SidebarMainProps> = () => {
+const MainSidebar: React.FC<MainSidebarProps> = () => {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -161,4 +161,4 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
   );
 };
 
-export default SidebarMain;
+export default MainSidebar;

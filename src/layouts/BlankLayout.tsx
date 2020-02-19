@@ -9,9 +9,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export interface LayoutBlankProps extends LayoutBaseProps {}
+export interface BlankLayoutProps extends LayoutBaseProps {}
 
-const LayoutBlank: React.FC<LayoutBlankProps> = (props) => {
+const BlankLayout: React.FC<BlankLayoutProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
 
@@ -22,4 +22,4 @@ const LayoutBlank: React.FC<LayoutBlankProps> = (props) => {
   );
 };
 
-export default LayoutBlank;
+export default BlankLayout;

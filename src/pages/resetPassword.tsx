@@ -2,9 +2,9 @@ import React from 'react';
 import { NextPage } from 'next';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import LayoutBlank from '~/layouts/LayoutBlank';
-import FormResetPassword from '~/components/FormResetPassword';
-import HeaderBlank from '~/components/HeaderBlank';
+import BlankLayout from '~/layouts/BlankLayout';
+import ResetPasswordForm from '~/components/ResetPasswordForm';
+import BlankHeader from '~/components/BlankHeader';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -16,18 +16,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const PasswordResetPage: NextPage = () => {
+const ResetPasswordPage: NextPage = () => {
   const classes = useStyles();
   return (
-    <LayoutBlank>
+    <BlankLayout>
       <Grid container className={classes.root} justify="center" alignItems="baseline">
         <Grid item className={classes.signinBox}>
-          <HeaderBlank title="RealDocs 사용자 암호 변경" showLogo />
-          <FormResetPassword />
+          <BlankHeader title="RealDocs 사용자 암호 변경" showLogo />
+          <ResetPasswordForm />
         </Grid>
       </Grid>
-    </LayoutBlank>
+    </BlankLayout>
   );
 };
 
-export default PasswordResetPage;
+export default ResetPasswordPage;

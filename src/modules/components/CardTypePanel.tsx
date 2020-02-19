@@ -5,7 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 
-import { ComponentBaseProps } from './types';
+import { ComponentBaseProps } from '../../components/types';
 
 const useStyles = makeStyles(() =>
   createStyles({

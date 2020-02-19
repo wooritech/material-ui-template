@@ -7,7 +7,7 @@ import Drawer from '@material-ui/core/Drawer';
 
 import { ComponentBaseProps } from './types';
 import BrandLogo from './BrandLogo';
-import SidebarEditToc from './SidebarEditToc';
+import EditTocTreeView from './EditTocTreeView';
 
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: {
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface SidebarMainProps extends ComponentBaseProps {}
+export interface EditSidebarProps extends ComponentBaseProps {}
 
-const SidebarMain: React.FC<SidebarMainProps> = () => {
+const EditSidebar: React.FC<EditSidebarProps> = () => {
   const classes = useStyles();
 
   const documentToc = (
@@ -38,7 +38,7 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
           <BrandLogo imageName="logo-title-f2f3f8.png" />
         </Grid>
       </Toolbar>
-      <SidebarEditToc />
+      <EditTocTreeView />
     </>
   );
 
@@ -73,4 +73,4 @@ const SidebarMain: React.FC<SidebarMainProps> = () => {
   );
 };
 
-export default SidebarMain;
+export default EditSidebar;

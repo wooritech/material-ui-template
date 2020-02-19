@@ -2,8 +2,7 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import SidebarEdit from '~/components/SidebarEdit';
-import HeaderEdit from '~/components/HeaderEdit';
+import EditSidebar from '~/components/EditSidebar';
 import { LayoutBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,21 +24,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface LayoutEditProps extends LayoutBaseProps {
+export interface EditLayoutProps extends LayoutBaseProps {
   pageTitle: string;
 }
 
-const LayoutEdit: React.FC<LayoutEditProps> = (props) => {
+const EditLayout: React.FC<EditLayoutProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.app}>
-      {/* <HeaderEdit {...props} /> */}
-      <SidebarEdit {...props} />
+      <EditSidebar {...props} />
       <main className={classes.main}>{children}</main>
     </div>
   );
 };
 
-export default LayoutEdit;
+export default EditLayout;

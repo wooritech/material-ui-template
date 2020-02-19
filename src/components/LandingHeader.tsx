@@ -57,11 +57,11 @@ const ElevationScroll: React.FC<ESProps> = (props) => {
   });
 };
 
-interface HeaderHomeProps extends ComponentBaseProps {
+interface LandingHeaderProps extends ComponentBaseProps {
   isLoggedIn?: boolean;
 }
 
-const HeaderHome: React.FC<HeaderHomeProps> = (props) => {
+const LandingHeader: React.FC<LandingHeaderProps> = (props) => {
   const classes = useStyles();
   const { isLoggedIn = true } = props;
 
@@ -118,4 +118,4 @@ const HeaderHome: React.FC<HeaderHomeProps> = (props) => {
   );
 };
 
-export default HeaderHome;
+export default LandingHeader;

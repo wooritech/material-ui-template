@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Copyright from '~/components/Copyright';
-import HeaderHome from '~/components/HeaderHome';
+import LandingHeader from '~/components/LandingHeader';
 import { LayoutBaseProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -21,15 +21,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface LayoutHomeProps extends LayoutBaseProps {}
+export interface LandingLayoutProps extends LayoutBaseProps {}
 
-const LayoutHome: React.FC<LayoutHomeProps> = (props) => {
+const LandingLayout: React.FC<LandingLayoutProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.app}>
-      <HeaderHome {...props} />
+      <LandingHeader {...props} />
       <main className={classes.main}>{children}</main>
       <footer className={classes.footer}>
         <Copyright />
@@ -38,4 +38,4 @@ const LayoutHome: React.FC<LayoutHomeProps> = (props) => {
   );
 };
 
-export default LayoutHome;
+export default LandingLayout;
