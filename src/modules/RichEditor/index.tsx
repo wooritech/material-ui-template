@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import EditControl from './EditControl';
 import BlockStyleControls from './BlockStyleControls';
 import InlineStyleControls from './InlineStyleControls';
-import ExtendControls from './ExtendControls';
+import ImageControlButton from './ImageControlButton';
 import ContentUtils from './ContentUtils';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -88,7 +88,7 @@ const RichEditor: React.FC = () => {
           </Grid>
           <Divider orientation="vertical" flexItem className={classes.divider} />
           <Grid item>
-            <ExtendControls editorState={state} onToggle={toggleExtendControls} />
+            <ImageControlButton editorState={state} onToggle={toggleExtendControls} />
           </Grid>
         </Grid>
       </div>

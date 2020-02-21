@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import StyleButton from './StyleButton';
-import { StyleControlsProps } from './types';
+import ToolButton from './ToolButton';
+import { EditorControlsProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   controls: {
@@ -21,7 +21,7 @@ const BLOCK_TYPES = [
   { label: 'Code Block', style: 'code-block' },
 ];
 
-const BlockStyleControls: React.FC<StyleControlsProps> = (props) => {
+const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
   const { editorState, onToggle } = props;
   const classes = useStyles();
 
@@ -34,7 +34,7 @@ const BlockStyleControls: React.FC<StyleControlsProps> = (props) => {
   return (
     <div className={classes.controls}>
       {BLOCK_TYPES.map((type) => (
-        <StyleButton
+        <ToolButton
           key={type.label}
           active={type.style === blockType}
           label={type.label}

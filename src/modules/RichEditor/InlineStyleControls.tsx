@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import StyleButton from './StyleButton';
-import { StyleControlsProps } from './types';
+import ToolButton from './ToolButton';
+import { EditorControlsProps } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   controls: {
@@ -15,7 +15,7 @@ const INLINE_STYLES = [
   { label: 'Monospace', style: 'CODE' },
 ];
 
-const InlineStyleControls: React.FC<StyleControlsProps> = (props) => {
+const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {
   const { editorState, onToggle } = props;
   const classes = useStyles();
   const currentStyle = editorState.getCurrentInlineStyle();
@@ -23,7 +23,7 @@ const InlineStyleControls: React.FC<StyleControlsProps> = (props) => {
   return (
     <div className={classes.controls}>
       {INLINE_STYLES.map((type) => (
-        <StyleButton
+        <ToolButton
           key={type.label}
           active={currentStyle.has(type.style)}
           label={type.label}

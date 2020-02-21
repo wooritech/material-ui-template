@@ -6,15 +6,16 @@ import { ComponentBaseProps } from '~/components/types';
 //   toHTML(options?: Record<string, any>): string;
 // };
 
-export interface StyleControlsProps extends ComponentBaseProps {
+export interface EditorControlsProps extends ComponentBaseProps {
   editorState: EditorState;
   onToggle: (blockType: string) => void;
 }
 
-export interface StyleButtonProps extends ComponentBaseProps {
+export interface ToolButtonProps extends ComponentBaseProps {
   key: string;
   active: boolean;
   label: string;
-  onToggle: (blockType: string) => void;
+  onToggle?: (blockType: string) => void;
+  onClick?: (event: MouseEvent) => void;
   style: string;
 }
