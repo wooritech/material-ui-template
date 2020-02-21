@@ -26,7 +26,6 @@
     "@material-ui/styles": "^4.7.1",
     "@material-ui/types": "^4.1.1",
     "@next/bundle-analyzer": "^9.1.6",
-    "@types/draft-js": "^0.10.38",
     "clsx": "latest",
     "draft-js": "^0.11.4",
     "draft-js-image-plugin": "^2.0.7",
@@ -34,9 +33,11 @@
     "material-table": "^1.57.1",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-dropzone": "^10.2.1"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.10.38",
     "@types/next": "latest",
     "@types/node": "latest",
     "@types/react": "latest",

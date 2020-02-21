@@ -16,6 +16,7 @@ out/
 .DS_Store
 .env*
 src/pages/playground
+packages
 
 # 디버깅
 npm-debug.log*

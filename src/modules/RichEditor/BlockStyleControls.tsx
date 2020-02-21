@@ -24,6 +24,7 @@ const BLOCK_TYPES = [
 const BlockStyleControls: React.FC<StyleControlsProps> = (props) => {
   const { editorState, onToggle } = props;
   const classes = useStyles();
+
   const selection = editorState.getSelection();
   const blockType = editorState
     .getCurrentContent()

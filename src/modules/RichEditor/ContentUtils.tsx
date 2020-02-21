@@ -5,6 +5,21 @@ export default {
     return null;
   },
 
+  // Convert file to base64 string
+  fileToBase64: (filename: string, filepath: string) => {
+    return new Promise((resolve) => {
+      const file = new File([filename], filepath);
+      const reader = new FileReader();
+      // Read file content on file loaded event
+      reader.onload = function(event: ProgressEvent<FileReader>) {
+        resolve(event.target ? event.target.result : null);
+      };
+
+      // Convert data to base64
+      reader.readAsDataURL(file);
+    });
+  },
+
   insertImage: (editorState: EditorState, base64: string) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity('image', 'IMMUTABLE', {

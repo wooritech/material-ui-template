@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import RichEditor from '~/modules/components/RichEditor';
+import RichEditor from '~/modules/RichEditor';
 import EditLayout from '~/layouts/EditLayout';
 
 const useStyles = makeStyles(() =>

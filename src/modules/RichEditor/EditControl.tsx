@@ -13,7 +13,7 @@ import Editor from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 
 import { ComponentBaseProps } from '~/components/types';
-import useStyles from './EditorStyles';
+import useStyles from './styles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;

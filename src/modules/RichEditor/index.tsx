@@ -17,10 +17,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     // height: '100%',
   },
   toolbar: {
+    width: 'fit-content',
     backgroundColor: '#fff',
     margin: theme.spacing(2),
   },
   editor: {},
+  divider: {
+    backgroundColor: '#ddd',
+    margin: theme.spacing(1),
+  },
 }));
 
 // 에러 없이 초기 문서 생성을 위한 코드
@@ -81,12 +86,13 @@ const RichEditor: React.FC = () => {
           <Grid item>
             <InlineStyleControls editorState={state} onToggle={toggleInlineStyle} />
           </Grid>
+          <Divider orientation="vertical" flexItem className={classes.divider} />
           <Grid item>
             <ExtendControls editorState={state} onToggle={toggleExtendControls} />
           </Grid>
         </Grid>
       </div>
-      <Divider variant="middle" light />
+      {/* <Divider variant="middle" light /> */}
       <EditControl state={state} onChange={onChange} />
     </>
   );
