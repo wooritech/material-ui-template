@@ -10,15 +10,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const ImageControlButton: React.FC<EditorControlsProps> = () => {
+export interface ImageControlProps extends EditorControlsProps {
+  onInsertImage: (base64: string[]) => void;
+}
+
+const ImageControl: React.FC<ImageControlProps> = (props) => {
+  const { editorState, onInsertImage } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (event: {}, reason: 'backdropClick' | 'escapeKeyDown', base64: string[]) => {
     setOpen(false);
+    onInsertImage(base64);
   };
 
   const imageButton = { label: 'Images', style: 'images' };
@@ -37,4 +43,4 @@ const ImageControlButton: React.FC<EditorControlsProps> = () => {
   );
 };
 
-export default ImageControlButton;
+export default ImageControl;

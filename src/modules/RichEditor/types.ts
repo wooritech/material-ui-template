@@ -8,7 +8,7 @@ import { ComponentBaseProps } from '~/components/types';
 
 export interface EditorControlsProps extends ComponentBaseProps {
   editorState: EditorState;
-  onToggle: (blockType: string) => void;
+  onToggle?: (blockType: string) => void;
 }
 
 export interface ToolButtonProps extends ComponentBaseProps {
