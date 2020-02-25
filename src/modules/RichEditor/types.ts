@@ -9,6 +9,7 @@ import { ComponentBaseProps } from '~/components/types';
 export interface EditorControlsProps extends ComponentBaseProps {
   editorState: EditorState;
   onToggle?: (blockType: string) => void;
+  onChange?: (editorState: EditorState) => void;
 }
 
 export interface ToolButtonProps extends ComponentBaseProps {
@@ -18,4 +19,5 @@ export interface ToolButtonProps extends ComponentBaseProps {
   onToggle?: (blockType: string) => void;
   onClick?: (event: MouseEvent) => void;
   style: string;
+  icon?: string;
 }

@@ -9,7 +9,7 @@ export default makeStyles((theme: Theme) => ({
     color: '#24292e',
     backgroundColor: '#fafbfc',
     // TODO: 스타일 수정 필요 (Mobile 벗어남. -> 아마 툴바 때문인듯.)
-    height: 'calc(100% - 140px)',
+    height: 'calc(100% - 125px)',
     borderRadius: '3px',
     boxShadow: 'inset 0 1px 2px rgba(27,31,35,.075)',
   },

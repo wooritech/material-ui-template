@@ -1,4 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { RichUtils } from 'draft-js';
 import ToolButton from './ToolButton';
 import { EditorControlsProps } from './types';
 
@@ -9,16 +10,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const INLINE_STYLES = [
-  { label: 'Bold', style: 'BOLD' },
-  { label: 'Italic', style: 'ITALIC' },
-  { label: 'Underline', style: 'UNDERLINE' },
-  { label: 'Monospace', style: 'CODE' },
+  { label: 'Bold', style: 'BOLD', icon: 'format_bold' },
+  { label: 'Italic', style: 'ITALIC', icon: 'format_italic' },
+  { label: 'Underline', style: 'UNDERLINE', icon: 'format_underline' },
+  { label: 'Monospace', style: 'CODE', icon: 'code' },
 ];
 
 const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {
-  const { editorState, onToggle } = props;
+  const { editorState, onChange } = props;
   const classes = useStyles();
   const currentStyle = editorState.getCurrentInlineStyle();
+
+  const toggleBlockType = (blockType: string) => {
+    if (onChange) onChange(RichUtils.toggleBlockType(editorState, blockType));
+  };
 
   return (
     <div className={classes.controls}>
@@ -27,8 +32,9 @@ const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {
           key={type.label}
           active={currentStyle.has(type.style)}
           label={type.label}
-          onToggle={onToggle}
+          onToggle={toggleBlockType}
           style={type.style}
+          icon={type.icon}
         />
       ))}
     </div>

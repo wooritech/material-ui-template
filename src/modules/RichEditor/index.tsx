@@ -1,13 +1,12 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { EditorState, RichUtils, convertFromRaw } from 'draft-js';
+import { EditorState, convertFromRaw } from 'draft-js';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import EditControl from './EditControl';
 import BlockStyleControls from './BlockStyleControls';
 import InlineStyleControls from './InlineStyleControls';
 import ImageControl from './ImageControl';
-import ContentUtils from './ContentUtils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -54,46 +53,26 @@ const RichEditor: React.FC = () => {
   const [state, setState] = React.useState(EditorState.createWithContent(emptyContentState));
   const onChange = (editorState: EditorState) => {
     setState(editorState);
-    // const blocks = editorState.toJS();
-    // console.log(blocks);
-  };
-
-  const toggleBlockType: (blockType: string) => void = (blockType: string) => {
-    onChange(RichUtils.toggleBlockType(state, blockType));
-  };
-
-  const toggleInlineStyle: (inlineStyle: string) => void = (inlineStyle: string) => {
-    onChange(RichUtils.toggleInlineStyle(state, inlineStyle));
-  };
-
-  const handleImageImage = (files: string[]) => {
-    if (files && files.length > 0) {
-      let tempState = state;
-      // eslint-disable-next-line array-callback-return
-      files.map((file) => {
-        tempState = ContentUtils.insertImage(tempState, file);
-        setState(tempState);
-      });
-    }
   };
 
   return (
     <>
       <div className={classes.toolbar}>
         <Grid container>
-          <Grid item xs={12}>
-            <BlockStyleControls editorState={state} onToggle={toggleBlockType} />
-          </Grid>
           <Grid item>
-            <InlineStyleControls editorState={state} onToggle={toggleInlineStyle} />
+            <BlockStyleControls editorState={state} onChange={onChange} />
           </Grid>
           <Divider orientation="vertical" flexItem className={classes.divider} />
           <Grid item>
-            <ImageControl editorState={state} onInsertImage={handleImageImage} />
+            <InlineStyleControls editorState={state} onChange={onChange} />
+          </Grid>
+          <Divider orientation="vertical" flexItem className={classes.divider} />
+          <Grid item>
+            <ImageControl editorState={state} onChange={onChange} />
           </Grid>
         </Grid>
       </div>
-      {/* <Divider variant="middle" light /> */}
+      <Divider variant="middle" light />
       <EditControl state={state} onChange={onChange} />
     </>
   );
