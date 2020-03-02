@@ -15,6 +15,7 @@ import createImagePlugin from 'draft-js-image-plugin';
 import createFocusPlugin from 'draft-js-focus-plugin';
 import createResizeablePlugin from 'draft-js-resizeable-plugin';
 import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
+import { createEmailPlugin, createUrlPlugin, createHashtagPlugin } from './plugins';
 
 import { ComponentBaseProps } from '~/components/types';
 import useStyles from './styles';
@@ -168,19 +169,25 @@ const EditControl: React.FC<EditControlProps> = (props) => {
   const blockDndPlugin = createBlockDndPlugin();
   // const alignmentPlugin = createAlignmentPlugin();
   // const { AlignmentTool } = alignmentPlugin;
-  const decorator = composeDecorators(
-    // resizeablePlugin.decorator,
-    // alignmentPlugin.decorator,
-    focusPlugin.decorator,
-    blockDndPlugin.decorator,
-  );
-  const imagePlugin = createImagePlugin({ decorator });
+  const emailPlugin = createEmailPlugin({});
+  const urlPlugin = createUrlPlugin({});
+  const hashtagPlugin = createHashtagPlugin({});
+  // const decorator = composeDecorators(
+  // resizeablePlugin.decorator,
+  // alignmentPlugin.decorator,
+  // focusPlugin.decorator,
+  // blockDndPlugin.decorator,
+  // );
+  // const imagePlugin = createImagePlugin({ decorator });
   const plugins = [
     blockDndPlugin,
     focusPlugin,
     // alignmentPlugin,
     resizeablePlugin,
-    imagePlugin,
+    // imagePlugin,
+    emailPlugin,
+    urlPlugin,
+    hashtagPlugin,
   ];
 
   return (
