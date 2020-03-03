@@ -200,7 +200,7 @@ const EditControl: React.FC<EditControlProps> = (props) => {
         keyBindingFn={keyBindingFn}
         handleKeyCommand={handleKeyCommand}
         onChange={onChange}
-        placeholder="아래에 내용을 입력하세요."
+        placeholder="여기에 내용을 입력하세요."
         spellCheck
         plugins={plugins}
       />

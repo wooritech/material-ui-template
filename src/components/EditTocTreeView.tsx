@@ -106,9 +106,11 @@ function StyledTreeItem(props: StyledTreeItemProps) {
 const useStyles = makeStyles(
   createStyles({
     root: {
-      height: 264,
+      height: 'calc(100vh - 96px)',
       flexGrow: 1,
       maxWidth: 400,
+      overflowY: 'auto',
+      paddingRight: '16px',
     },
   }),
 );

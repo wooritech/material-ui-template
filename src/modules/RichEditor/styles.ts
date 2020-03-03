@@ -3,15 +3,12 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 export default makeStyles((theme: Theme) => ({
   root: {
     margin: theme.spacing(2),
-    padding: theme.spacing(2),
     overflow: 'auto',
     fontSize: '18px',
     color: '#24292e',
-    backgroundColor: '#fafbfc',
     // TODO: 스타일 수정 필요 (Mobile 벗어남. -> 아마 툴바 때문인듯.)
-    height: 'calc(100% - 125px)',
+    height: 'calc(100% - 105px)',
     borderRadius: '3px',
-    boxShadow: 'inset 0 1px 2px rgba(27,31,35,.075)',
   },
   '@global': {
     '.DraftEditor-editorContainer,.DraftEditor-root,.public-DraftEditor-content': {
@@ -25,7 +22,6 @@ export default makeStyles((theme: Theme) => ({
       position: 'relative',
     },
     '.DraftEditor-editorContainer': {
-      backgroundColor: 'rgba(255,255,255,0)',
       borderLeft: '.1px solid transparent',
       position: 'relative',
       zIndex: 1,
