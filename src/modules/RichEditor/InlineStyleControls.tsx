@@ -1,13 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { RichUtils } from 'draft-js';
 import ToolButton from './ToolButton';
 import { EditorControlsProps } from './types';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  controls: {
-    marginTop: theme.spacing(0),
-  },
-}));
 
 const INLINE_STYLES = [
   { label: 'Bold', style: 'BOLD', icon: 'format_bold' },
@@ -18,7 +11,6 @@ const INLINE_STYLES = [
 
 const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {
   const { editorState, onChange } = props;
-  const classes = useStyles();
   const currentStyle = editorState.getCurrentInlineStyle();
 
   const toggleBlockType = (blockType: string) => {
@@ -26,7 +18,7 @@ const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {
   };
 
   return (
-    <div className={classes.controls}>
+    <div>
       {INLINE_STYLES.map((type) => (
         <ToolButton
           key={type.label}

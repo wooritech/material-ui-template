@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { ToolButtonProps } from './types';
+import { ComponentBaseProps } from '~/components/types';
 
 const buttonStyles = makeStyles(() => ({
   normal: {
@@ -14,6 +14,16 @@ const buttonStyles = makeStyles(() => ({
     color: 'blue',
   },
 }));
+
+interface ToolButtonProps extends ComponentBaseProps {
+  key: string;
+  active: boolean;
+  label: string;
+  onToggle?: (blockType: string) => void;
+  onClick?: (event: MouseEvent) => void;
+  style: string;
+  icon?: string;
+}
 
 const ToolButton: React.FC<ToolButtonProps> = (props) => {
   const classes = buttonStyles();

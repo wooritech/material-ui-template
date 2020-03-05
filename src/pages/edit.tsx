@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import RichEditor from '~/modules/RichEditor';
+import EditorPanel from '~/components/EditorPanel';
 import EditLayout from '~/layouts/EditLayout';
 
 const useStyles = makeStyles(() =>
@@ -19,7 +19,7 @@ const EditPage: NextPage = () => {
   return (
     <EditLayout pageTitle="">
       <div className={classes.root}>
-        <RichEditor />
+        <EditorPanel />
       </div>
     </EditLayout>
   );

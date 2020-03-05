@@ -1,15 +1,13 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-export default makeStyles((theme: Theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    overflow: 'auto',
-    fontSize: '18px',
-    color: '#24292e',
-    // TODO: 스타일 수정 필요 (Mobile 벗어남. -> 아마 툴바 때문인듯.)
-    height: 'calc(100% - 105px)',
-    borderRadius: '3px',
+export const useToolbarStyle = makeStyles((theme: Theme) => ({
+  divider: {
+    backgroundColor: '#ddd',
+    margin: theme.spacing(1),
   },
+}));
+
+export const useEditorStyles = makeStyles((theme: Theme) => ({
   '@global': {
     '.DraftEditor-editorContainer,.DraftEditor-root,.public-DraftEditor-content': {
       height: '100%',

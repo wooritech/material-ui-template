@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ContentBlock,
-  // Editor,
+  Editor,
   EditorState,
   Modifier,
   RichUtils,
@@ -9,51 +9,33 @@ import {
   getDefaultKeyBinding,
   DraftStyleMap,
 } from 'draft-js';
-import Editor, { composeDecorators } from 'draft-js-plugins-editor';
-import createImagePlugin from 'draft-js-image-plugin';
+// import PluginEditor from 'draft-js-plugins-editor';
+// import createImagePlugin from 'draft-js-image-plugin';
 // import createAlignmentPlugin from 'draft-js-alignment-plugin';
-import createFocusPlugin from 'draft-js-focus-plugin';
-import createResizeablePlugin from 'draft-js-resizeable-plugin';
-import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
-import { createEmailPlugin, createUrlPlugin, createHashtagPlugin } from './plugins';
-
-import { ComponentBaseProps } from '~/components/types';
-import useStyles from './styles';
+// import createFocusPlugin from 'draft-js-focus-plugin';
+// import createResizeablePlugin from 'draft-js-resizeable-plugin';
+// import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
+import { useEditorStyles } from './styles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;
 export const KEYCODES: Record<KeyName, KeyCode> = {
   ENTER: 13,
 };
-
 type SyntheticKeyboardEvent = React.KeyboardEvent<{}>;
-
 const SPLIT_HEADER_BLOCK = 'split-header-block';
 
-interface EditControlProps extends ComponentBaseProps {
-  state: EditorState;
+interface RichEditorProps {
+  editorState: EditorState;
   onChange: (editorState: EditorState) => void;
 }
 
-const EditControl: React.FC<EditControlProps> = (props) => {
-  const classes = useStyles();
-  const { state, onChange } = props;
+const RichEditor: React.FC<RichEditorProps> = (props) => {
+  useEditorStyles();
+  const { onChange, editorState } = props;
 
-  // 텍스트를 입력하기 전에 사용자가 블록 유형을 변경하면
-  // placeholder 스타일을 지정하거나 숨긴다.
-  // let className = 'RichEditor-editor';
-  // const contentState = state.getCurrentContent();
-  // if (!contentState.hasText()) {
-  //   if (
-  //     contentState
-  //       .getBlockMap()
-  //       .first()
-  //       .getType() !== 'unstyled'
-  //   ) {
-  //     className += ' RichEditor-hidePlaceholder';
-  //   }
-  // }
-
+  // const richState = createEmptyState(decorators);
+  // const [draftState, setEditorState] = React.useState(editorState || createEmptyState(decorators));
   const getBlockStyle = (block: ContentBlock) => {
     switch (block.getType()) {
       case 'blockquote':
@@ -98,7 +80,6 @@ const EditControl: React.FC<EditControlProps> = (props) => {
   };
 
   const splitHeaderToNewBlock = (): EditorState => {
-    const editorState = state;
     const selection = editorState.getSelection();
 
     // 커서 다음에 새 블록 추가
@@ -130,7 +111,6 @@ const EditControl: React.FC<EditControlProps> = (props) => {
 
   const keyBindingFn = (e: SyntheticKeyboardEvent): string | null => {
     if (e.keyCode === KEYCODES.ENTER) {
-      const editorState = state;
       const contentState = editorState.getCurrentContent();
       const selectionState = editorState.getSelection();
 
@@ -148,13 +128,13 @@ const EditControl: React.FC<EditControlProps> = (props) => {
     return getDefaultKeyBinding(e);
   };
 
-  const handleKeyCommand = (command: string, editorState: EditorState) => {
+  const handleKeyCommand = (command: string, state: EditorState) => {
     if (command === SPLIT_HEADER_BLOCK) {
       onChange(splitHeaderToNewBlock());
       return 'handled';
     }
 
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+    const newState = RichUtils.handleKeyCommand(state, command);
 
     if (newState) {
       onChange(newState);
@@ -164,48 +144,19 @@ const EditControl: React.FC<EditControlProps> = (props) => {
     return 'not-handled';
   };
 
-  const focusPlugin = createFocusPlugin();
-  const resizeablePlugin = createResizeablePlugin();
-  const blockDndPlugin = createBlockDndPlugin();
-  // const alignmentPlugin = createAlignmentPlugin();
-  // const { AlignmentTool } = alignmentPlugin;
-  const emailPlugin = createEmailPlugin({});
-  const urlPlugin = createUrlPlugin({});
-  const hashtagPlugin = createHashtagPlugin({});
-  // const decorator = composeDecorators(
-  // resizeablePlugin.decorator,
-  // alignmentPlugin.decorator,
-  // focusPlugin.decorator,
-  // blockDndPlugin.decorator,
-  // );
-  // const imagePlugin = createImagePlugin({ decorator });
-  const plugins = [
-    blockDndPlugin,
-    focusPlugin,
-    // alignmentPlugin,
-    resizeablePlugin,
-    // imagePlugin,
-    emailPlugin,
-    urlPlugin,
-    hashtagPlugin,
-  ];
-
   return (
-    <div className={classes.root}>
-      <Editor
-        blockStyleFn={getBlockStyle}
-        customStyleMap={styleMap}
-        editorKey="richeditor"
-        editorState={state}
-        keyBindingFn={keyBindingFn}
-        handleKeyCommand={handleKeyCommand}
-        onChange={onChange}
-        placeholder="여기에 내용을 입력하세요."
-        spellCheck
-        plugins={plugins}
-      />
-    </div>
+    <Editor
+      blockStyleFn={getBlockStyle}
+      customStyleMap={styleMap}
+      editorKey="richeditor"
+      keyBindingFn={keyBindingFn}
+      handleKeyCommand={handleKeyCommand}
+      editorState={editorState}
+      onChange={onChange}
+      placeholder="여기에 내용을 입력하세요."
+      spellCheck
+    />
   );
 };
 
-export default EditControl;
+export default RichEditor;

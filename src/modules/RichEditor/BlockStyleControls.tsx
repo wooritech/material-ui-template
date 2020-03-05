@@ -1,13 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { RichUtils } from 'draft-js';
 import ToolButton from './ToolButton';
 import { EditorControlsProps } from './types';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  controls: {
-    marginTop: theme.spacing(0),
-  },
-}));
 
 const BLOCK_TYPES = [
   { label: 'H1', style: 'header-one' },
@@ -24,7 +17,6 @@ const BLOCK_TYPES = [
 
 const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
   const { editorState, onChange } = props;
-  const classes = useStyles();
 
   const selection = editorState.getSelection();
   const isBlockType = (style: string): boolean => {
@@ -41,7 +33,7 @@ const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
   };
 
   return (
-    <div className={classes.controls}>
+    <div>
       {BLOCK_TYPES.map((type) => (
         <ToolButton
           key={type.label}
