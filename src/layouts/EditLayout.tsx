@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export interface EditLayoutProps extends LayoutBaseProps {
   pageTitle: string;
+  onTreeNodeClick: (id: string) => void;
 }
 
 const EditLayout: React.FC<EditLayoutProps> = (props) => {

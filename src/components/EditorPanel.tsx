@@ -1,152 +1,122 @@
+/* eslint-disable no-fallthrough */
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import {
-  RichEditor,
-  RichEditorToolbar,
-  RichEditorState,
-  createEmptyState,
-  RichEditorRawViewer,
-} from '~/modules/RichEditor';
+import RichEditorFrame from '~/modules/RichEditor/RichEditorFrame';
+import { RichEditorDocument, RichEditorState, getToolbarConfigs } from '~/modules/RichEditor';
+
+import documentDatas from '~/__datas__/documentDatas';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
-    margin: theme.spacing(0),
+    background: '#fff',
     overflow: 'hidden',
+    boxShadow: '0px 0px 5px 3px #ddd',
+    borderRadius: '5px',
+    margin: theme.spacing(0),
     height: '100%',
-  },
-  toolbar: {
-    width: 'fit-content',
-    backgroundColor: '#fff',
-    margin: theme.spacing(1),
-  },
-  container: {
-    flexGrow: 1,
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-  },
-  editor: {
-    overflow: 'auto',
-    fontSize: '16px',
-    color: '#24292e',
-    backgroundColor: '#eee',
-    borderRadius: '3px',
-    padding: '5px',
-    /**
-     * TODO: 스타일 수정 필요
-     *  화면 크기에 따라 툴바의 높이가 변하면 전체 감싸고 있는 panel의 높이를 벗어남.
-     */
-    height: 'calc(100vh - 124px)',
-  },
-  extentions: {
-    overflow: 'auto',
-    fontSize: '16px',
-    height: 'calc(100vh - 124px)',
-    borderRadius: '3px',
-    padding: theme.spacing(1),
-  },
-  extRaw: {
-    color: '#eee',
-    backgroundColor: '#0d0d0d',
-  },
-  extLang: {
-    color: '#0d0d0d',
-    backgroundColor: '#e3f2fd',
-  },
-  divider: {
-    backgroundColor: '#ddd',
-    margin: theme.spacing(1),
   },
 }));
 
-const MultiLanguageEditor: React.FC<{ editorState: RichEditorState }> = (props) => {
-  const { editorState } = props;
-  const [mleEditorState, setMleEditorState] = React.useState(createEmptyState());
-  const onChange = (richState: RichEditorState) => {
-    setMleEditorState(richState);
-  };
-  return <RichEditor editorState={mleEditorState} onChange={onChange} />;
-};
-
-/**
- * EditorPanel 컴포넌트
- */
 const EditorPanel: React.FC = () => {
   const classes = useStyles();
-  const [editorState, setEditorState] = React.useState(createEmptyState());
-  const [extMode, setExtMode] = React.useState('NONE'); // NONE, RAW, PREVEW, LANG
+  const [richDoc, setRichDoc] = React.useState<RichEditorDocument>(new RichEditorDocument());
+  const [richState, setRichState] = React.useState<RichEditorState>(
+    RichEditorState.createEmptyState(),
+  );
 
-  const onChange = (state: RichEditorState) => {
-    setEditorState(state);
+  const defaultLanguage = 'kr';
+
+  /**
+   * 툴바를 구성하기 위해 config 를 생성하는 방법
+   *   1. configs.defaultToolbarConfig 를 참고하여 직접 config 객체를 만들어도 되고
+   *   2. configs.getToolbarConfigs() 함수를 사용해 원하는 컨트롤들만 보이게 할 수도 있다.
+  //  *   3. toolbarConfig 속성을 모든 툴바 컨트롤을 표시됩니다.
+  //  */
+  // const toolbarConfig = [
+  //   {
+  //     name: 'UndoRedo',
+  //     type: 'BUTTONGROUP',
+  //     buttons: [
+  //       { label: 'Undo', value: 'undo', icon: 'undo_outlined' },
+  //       { label: 'Redo', value: 'redo', icon: 'redo_outlined' },
+  //     ],
+  //   },
+  // ];
+
+  const toolbarConfig = getToolbarConfigs([
+    'UndoRedo',
+    'Divider',
+    'HeadingStyle',
+    'Divider',
+    'BlockStyle',
+    'Divider',
+    'InlineStyle',
+    'Divider',
+    'Image',
+    'Divider',
+    'Extension',
+  ]);
+
+  /** 임시 샘플 데이터 로드
+   * 왼쪽 목차 메뉴에서 노드를 선택할 경우 RichEditorRaw 타입의 데이터를 만들어서
+   * new RichEditorDocument(raw) 로 생성하면 된다.
+   */
+  const loadSampleData = (id = '51') => {
+    const docData = documentDatas.find((item) => {
+      return item.id === id;
+    });
+
+    if (docData) {
+      const doc = new RichEditorDocument(docData);
+      setRichDoc(doc);
+
+      const state = RichEditorState.createWithRichDocument(doc, defaultLanguage);
+      setRichState(state);
+    }
   };
 
-  const [mleState, setMleState] = React.useState(createEmptyState());
-  const handleMleState = (richState: RichEditorState) => {
-    setMleState(richState);
+  /**
+   * RichEditor의 모든 이벤트를 Command로 처리할 예정.
+   */
+  const handleRichCommand = (command: string, value?: any) => {
+    switch (command) {
+      case 'save':
+        console.log(value);
+        break;
+      case 'load':
+        loadSampleData();
+        break;
+      case 'change-title':
+        if (value) {
+          // console.log(value.title);
+          setRichDoc(value);
+        }
+      default:
+        break;
+    }
   };
 
-  const toggleRawViewer = () => {
-    if (extMode !== 'RAW') setExtMode('RAW');
-    else setExtMode('NONE');
-  };
-
-  const toggleLangViewer = () => {
-    if (extMode !== 'LANG') setExtMode('LANG');
-    else setExtMode('NONE');
+  /** 사실 RichEditorState로 해야할 일을 Frame에 모두 포함할 예정이기 때문에
+   * 밖에서는 특별히 처리할 내용이 없을 수도 있다.
+   * 이 경우 onRichCommand evnet 에 모두 포함 시킬수도 있다.
+   */
+  const handleStateChange = (state: RichEditorState) => {
+    setRichState(state);
   };
 
   return (
     <div className={classes.root}>
-      <div className={classes.toolbar}>
-        <Grid container spacing={0}>
-          <Grid item>
-            <RichEditorToolbar editorState={editorState} onChange={onChange} />
-          </Grid>
-          <Divider orientation="vertical" flexItem className={classes.divider} />
-          <Grid item>
-            <Button variant="text" tabIndex={0} onClick={toggleRawViewer}>
-              Row
-            </Button>
-            <Button variant="text" tabIndex={0} onClick={toggleLangViewer}>
-              다른언어
-            </Button>
-            <Button variant="text" tabIndex={0} onClick={toggleLangViewer}>
-              미리보기
-            </Button>
-            <Button variant="text" tabIndex={0} onClick={toggleLangViewer}>
-              버전정보
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
-      <Divider variant="middle" light />
-      <Grid container className={classes.container} spacing={1}>
-        <Grid item xs={extMode === 'NONE' ? 12 : 6}>
-          <div className={classes.editor}>
-            <RichEditor editorState={editorState} onChange={onChange} />
-          </div>
-        </Grid>
-        {extMode === 'RAW' ? (
-          <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extRaw}`}>
-              <RichEditorRawViewer editorState={editorState} />
-            </div>
-          </Grid>
-        ) : null}
-        {extMode === 'LANG' ? (
-          <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extLang}`}>
-              <RichEditor editorState={mleState} onChange={handleMleState} />
-            </div>
-          </Grid>
-        ) : null}
-      </Grid>
+      <RichEditorFrame
+        richDoc={richDoc}
+        richState={richState}
+        /** document 상태 변경 이벤트는 이것 하나로 통일 */
+        onRichCommand={handleRichCommand}
+        /** editor 상태 변경 이벤트 */
+        onStateChange={handleStateChange}
+        /** 이 값을 넘기기 않으면 모든 툴바를 표시합니다. */
+        toolbarConfig={toolbarConfig}
+      />
     </div>
   );
 };

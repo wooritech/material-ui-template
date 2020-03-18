@@ -32,10 +32,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface EditSidebarProps extends ComponentBaseProps {}
+export interface EditSidebarProps extends ComponentBaseProps {
+  onTreeNodeClick: (id: string) => void;
+}
 
-const EditSidebar: React.FC<EditSidebarProps> = () => {
+const EditSidebar: React.FC<EditSidebarProps> = (props) => {
   const classes = useStyles();
+  const { onTreeNodeClick } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,6 +47,10 @@ const EditSidebar: React.FC<EditSidebarProps> = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClickNode = (id: string) => {
+    onTreeNodeClick(id);
   };
 
   const documentToc = (
@@ -76,7 +83,7 @@ const EditSidebar: React.FC<EditSidebarProps> = () => {
           <MenuItem onClick={() => Router.push('/logout')}>로그아웃</MenuItem>
         </Menu>
       </Toolbar>
-      <EditTocTreeView />
+      <EditTocTreeView onClickNode={handleClickNode} />
     </div>
   );
 

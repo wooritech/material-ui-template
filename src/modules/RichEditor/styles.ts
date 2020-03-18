@@ -9,6 +9,18 @@ export const useToolbarStyle = makeStyles((theme: Theme) => ({
 
 export const useEditorStyles = makeStyles((theme: Theme) => ({
   '@global': {
+    '.RichEditor-align-left .public-DraftStyleDefault-ltr': {
+      textAlign: 'left',
+    },
+    '.RichEditor-align-center .public-DraftStyleDefault-ltr': {
+      textAlign: 'center',
+    },
+    '.RichEditor-align-right .public-DraftStyleDefault-ltr': {
+      textAlign: 'right',
+    },
+    '.RichEditor-align-justify .public-DraftStyleDefault-ltr': {
+      textAlign: 'justify',
+    },
     '.DraftEditor-editorContainer,.DraftEditor-root,.public-DraftEditor-content': {
       height: '100%',
       textAlign: 'initial',

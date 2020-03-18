@@ -3,16 +3,30 @@ import { convertToRaw } from 'draft-js';
 
 /** Editor */
 import RichEditor from './RichEditor';
-import { RichEditorState, createEmptyState } from './RichEditorState';
-import RichEditorRawViewer from './RichEditorRawViewer';
+import RichEditorState from './RichEditorState';
+import RawViewer from './RawViewer';
+import Preview from './Preview';
+import RichEditorDocument from './RichEditorDocument';
 
 /** Toolbar controls */
-import BlockStyleControls from './BlockStyleControls';
-import InlineStyleControls from './InlineStyleControls';
-import ImageControl from './ImageControl';
+import { defaultToolbarConfig, getToolbarConfigs } from './configs';
 import RichEditorToolbar from './RichEditorToolbar';
 
+/** types */
+export * from './configs/types';
+export * from './types';
+
 /** EXPORT */
-export { convertToRaw };
-export { RichEditor, RichEditorState, createEmptyState, RichEditorRawViewer };
-export { RichEditorToolbar, BlockStyleControls, InlineStyleControls, ImageControl };
+export {
+  /** configs */
+  defaultToolbarConfig,
+  getToolbarConfigs,
+  /** editor */
+  convertToRaw,
+  RichEditor,
+  RichEditorState,
+  RawViewer,
+  Preview,
+  RichEditorDocument,
+  RichEditorToolbar,
+};

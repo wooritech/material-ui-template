@@ -115,8 +115,17 @@ const useStyles = makeStyles(
   }),
 );
 
-export default function GmailTreeView() {
+interface EditTocTreeViewProps {
+  onClickNode: (id: string) => void;
+}
+
+const EditTocTreeView: React.FC<EditTocTreeViewProps> = (props) => {
   const classes = useStyles();
+  const { onClickNode } = props;
+
+  const onNodeSelect = (event: React.ChangeEvent<{}>, nodeIds: string) => {
+    onClickNode(nodeIds);
+  };
 
   return (
     <TreeView
@@ -125,6 +134,7 @@ export default function GmailTreeView() {
       defaultCollapseIcon={<ArrowDropDownIcon />}
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
+      onNodeSelect={onNodeSelect}
     >
       <StyledTreeItem nodeId="1" labelText="시작" labelIcon={FolderIcon} />
       <StyledTreeItem nodeId="3" labelText="데모" labelIcon={FolderIcon}>
@@ -180,4 +190,6 @@ export default function GmailTreeView() {
       <StyledTreeItem nodeId="4" labelText="간단한 코드 예제들" labelIcon={FolderIcon} />
     </TreeView>
   );
-}
+};
+
+export default EditTocTreeView;

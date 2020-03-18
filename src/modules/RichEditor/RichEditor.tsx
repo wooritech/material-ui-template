@@ -15,6 +15,7 @@ import {
 // import createFocusPlugin from 'draft-js-focus-plugin';
 // import createResizeablePlugin from 'draft-js-resizeable-plugin';
 // import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
+import { blockStyleFn } from './renderers';
 import { useEditorStyles } from './styles';
 
 export type KeyName = 'ENTER';
@@ -36,14 +37,6 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
 
   // const richState = createEmptyState(decorators);
   // const [draftState, setEditorState] = React.useState(editorState || createEmptyState(decorators));
-  const getBlockStyle = (block: ContentBlock) => {
-    switch (block.getType()) {
-      case 'blockquote':
-        return 'RichEditor-blockquote';
-      default:
-        return '';
-    }
-  };
 
   const isHeaderBlock = (block: ContentBlock): boolean => {
     switch (block.getType()) {
@@ -146,15 +139,15 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
 
   return (
     <Editor
-      blockStyleFn={getBlockStyle}
-      customStyleMap={styleMap}
+      // blockStyleFn={blockStyleFn}
+      // customStyleMap={styleMap}
       editorKey="richeditor"
-      keyBindingFn={keyBindingFn}
-      handleKeyCommand={handleKeyCommand}
+      // keyBindingFn={keyBindingFn}
+      // handleKeyCommand={handleKeyCommand}
       editorState={editorState}
       onChange={onChange}
       placeholder="여기에 내용을 입력하세요."
-      spellCheck
+      // spellCheck
     />
   );
 };

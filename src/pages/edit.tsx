@@ -1,26 +1,18 @@
+import React from 'react';
 import { NextPage } from 'next';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import EditorPanel from '~/components/EditorPanel';
 import EditLayout from '~/layouts/EditLayout';
+import EditorPanel from '~/components/EditorPanel';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      flex: 1,
-      background: '#fff',
-      overflow: 'hidden',
-      boxShadow: '0px 0px 5px 3px #ddd',
-      borderRadius: '5px',
-    },
-  }),
-);
 const EditPage: NextPage = () => {
-  const classes = useStyles();
+  const [nodeId, setNodeId] = React.useState('');
+
+  const handleOnTreeNodeClick = (id: string) => {
+    setNodeId(id);
+  };
+
   return (
-    <EditLayout pageTitle="">
-      <div className={classes.root}>
-        <EditorPanel />
-      </div>
+    <EditLayout pageTitle="" onTreeNodeClick={handleOnTreeNodeClick}>
+      <EditorPanel />
     </EditLayout>
   );
 };
