@@ -1,4 +1,31 @@
+import { DraftStyleMap } from 'draft-js';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+
+/** 커스텀 스타일 매핑 */
+export const customStyleMap: DraftStyleMap = {
+  CODE: {
+    backgroundColor: 'rgba(27,31,35,.08)',
+    padding: '0 .4em',
+    margin: 0,
+    // font-size: 85%;
+    borderRadius: '3px',
+  },
+  pre: {
+    backgroundColor: '#272c34',
+    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+    fontSize: 16,
+    padding: 2,
+  },
+  small: {
+    fontSize: '8px',
+  },
+  medium: {
+    fontSize: '12px',
+  },
+  large: {
+    fontSize: '16px',
+  },
+};
 
 export const useToolbarStyle = makeStyles((theme: Theme) => ({
   divider: {

@@ -56,6 +56,11 @@ export default [
             depth: 0,
             inlineStyleRanges: [
               {
+                offset: 7,
+                length: 5,
+                style: 'CODE',
+              },
+              {
                 offset: 28,
                 length: 22,
                 style: 'BOLD',

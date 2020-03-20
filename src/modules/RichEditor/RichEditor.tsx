@@ -7,7 +7,6 @@ import {
   RichUtils,
   SelectionState,
   getDefaultKeyBinding,
-  DraftStyleMap,
 } from 'draft-js';
 // import PluginEditor from 'draft-js-plugins-editor';
 // import createImagePlugin from 'draft-js-image-plugin';
@@ -16,7 +15,7 @@ import {
 // import createResizeablePlugin from 'draft-js-resizeable-plugin';
 // import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
 import { blockStyleFn } from './renderers';
-import { useEditorStyles } from './styles';
+import { useEditorStyles, customStyleMap } from './styles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;
@@ -51,25 +50,6 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
       default:
         return false;
     }
-  };
-
-  // 'code' 스타일 매핑
-  const styleMap: DraftStyleMap = {
-    pre: {
-      backgroundColor: '#272c34',
-      fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-      fontSize: 16,
-      padding: 2,
-    },
-    small: {
-      fontSize: '8px',
-    },
-    medium: {
-      fontSize: '12px',
-    },
-    large: {
-      fontSize: '16px',
-    },
   };
 
   const splitHeaderToNewBlock = (): EditorState => {
@@ -140,7 +120,7 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
   return (
     <Editor
       // blockStyleFn={blockStyleFn}
-      // customStyleMap={styleMap}
+      customStyleMap={customStyleMap}
       editorKey="richeditor"
       // keyBindingFn={keyBindingFn}
       // handleKeyCommand={handleKeyCommand}
