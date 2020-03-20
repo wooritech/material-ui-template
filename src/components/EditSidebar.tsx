@@ -1,4 +1,6 @@
 import React from 'react';
+import Router from 'next/router';
+
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Hidden, Divider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -8,8 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import AddCircleOutlineOutlined from '@material-ui/icons/AddCircleOutlineOutlined';
+import RemoveCircleOutlineOutlined from '@material-ui/icons/RemoveCircleOutlineOutlined';
+import ControlPointDuplicateOutlined from '@material-ui/icons/ControlPointDuplicateOutlined';
+import LoupeOutlined from '@material-ui/icons/LoupeOutlined';
 
-import Router from 'next/router';
 import { ComponentBaseProps } from './types';
 import BrandLogo from './BrandLogo';
 import EditTocTreeView from './EditTocTreeView';
@@ -29,6 +36,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   drawerPaper: {
     width: theme.custom.sidebarWidthEdit,
+  },
+  treeHeader: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  rotate90: {
+    transform: 'rotate(90deg)',
   },
 }));
 
@@ -83,6 +101,27 @@ const EditSidebar: React.FC<EditSidebarProps> = (props) => {
           <MenuItem onClick={() => Router.push('/logout')}>로그아웃</MenuItem>
         </Menu>
       </Toolbar>
+      <div className={classes.treeHeader}>
+        <Grid container spacing={0}>
+          <Grid item xs />
+          <Grid item>
+            <IconButton
+              size="small"
+              color="primary"
+              aria-label="add child"
+              className={classes.rotate90}
+            >
+              <ControlPointDuplicateOutlined />
+            </IconButton>
+            <IconButton size="small" color="primary" aria-label="add">
+              <AddCircleOutlineOutlined />
+            </IconButton>
+            <IconButton size="small" color="primary" aria-label="delete">
+              <RemoveCircleOutlineOutlined />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </div>
       <EditTocTreeView onClickNode={handleClickNode} />
     </div>
   );
