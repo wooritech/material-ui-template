@@ -4,7 +4,9 @@ import BlockStyleControls from './BlockStyleControls';
 import AlignmentControls from './AlignmentControls';
 import InlineStyleControls from './InlineStyleControls';
 import ExtensionControls from './ExtensionControls';
-import ImageControl from './ImageControl';
+import ImageControls from './ImageControls';
+import TableControls from './TableControls';
+import CodeDirectorControls from './CodeDirectorControls';
 
 import ControlComponents from './ControlComponents';
 
@@ -17,6 +19,8 @@ export {
   AlignmentControls,
   InlineStyleControls,
   ExtensionControls,
-  ImageControl,
+  ImageControls,
+  TableControls,
+  CodeDirectorControls,
   ControlComponents,
 };

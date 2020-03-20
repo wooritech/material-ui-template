@@ -91,6 +91,16 @@ export const defaultToolbarConfig: RichEditorToolbarConfig = [
       { label: '소스보기', value: 'preview' },
     ],
   },
+  {
+    name: 'Table',
+    type: 'BUTTONGROUP',
+    buttons: [{ label: 'Table', value: 'table', icon: 'grid_on_outlined' }],
+  },
+  {
+    name: 'CodeDirector',
+    type: 'BUTTONGROUP',
+    buttons: [{ label: 'Code Director', value: 'code-director', icon: 'aspect_ratio_outlined' }],
+  },
 ];
 
 export const getToolbarConfigs = (controlNames: string[]): RichEditorToolbarConfig => {

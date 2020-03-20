@@ -54,6 +54,8 @@ const EditorPanel: React.FC = () => {
     'InlineStyle',
     'Divider',
     'Image',
+    'Table',
+    'CodeDirector',
     'Divider',
     'Extension',
   ]);

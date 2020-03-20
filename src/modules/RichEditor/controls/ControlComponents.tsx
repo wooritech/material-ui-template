@@ -7,7 +7,9 @@ import BlockStyleControls from './BlockStyleControls';
 import AlignmentControls from './AlignmentControls';
 import InlineStyleControls from './InlineStyleControls';
 import ExtensionControls from './ExtensionControls';
-import ImageControl from './ImageControl';
+import ImageControls from './ImageControls';
+import TableControls from './TableControls';
+import CodeDirectorControls from './CodeDirectorControls';
 
 import { EditorControlsProps } from './types';
 
@@ -26,7 +28,9 @@ const Map: { [kay: string]: React.FC | React.FC<EditorControlsProps> } = {
   Alignment: AlignmentControls,
   InlineStyle: InlineStyleControls,
   Extension: ExtensionControls,
-  Image: ImageControl,
+  Image: ImageControls,
+  Table: TableControls,
+  CodeDirector: CodeDirectorControls,
   Divider,
 };
 
