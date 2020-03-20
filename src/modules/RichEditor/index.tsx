@@ -12,6 +12,12 @@ import RichEditorDocument from './RichEditorDocument';
 import { defaultToolbarConfig, getToolbarConfigs } from './configs';
 import RichEditorToolbar from './RichEditorToolbar';
 
+/**
+ * - RichLanguageRaws
+ * - RichDocumentRaw
+ */
+export * from './RichEditorDocument';
+
 /** types */
 export * from './configs/types';
 export * from './types';

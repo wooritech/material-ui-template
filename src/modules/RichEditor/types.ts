@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RawDraftContentState } from 'draft-js';
-// import RichEditorState from './RichEditorState';
-// import RichEditorDocument from './RichEditorDocument';
 
-export interface RichLanguageRaws {
-  // any 없으면 타입오류
-  // DraftInlineStyleType 타입의 리터럴 타입에 있는 값을 넣어 주었는데 오류가 생기는 이유는???
-  [language: string]: RawDraftContentState | any;
-}
-
-export interface RichDocumentRaw {
-  id: string;
-  title: string;
-  raws: RichLanguageRaws;
-}
-
-/** 일단 모든 타입이 결정되면 그때 나열하거나 그냥 any 타입을 쓰는게 나을 수도 있다. */
+/** 일단 모든 타입이 결정되면 그때 나열하거나 그냥 any 타입을 쓰는게 나을 수도 있다.
+ *   - string 을 포함하지 않아도 되는 방법을 찾아야 한다.
+ */
+export type TypeRichCommand =
+  | string
+  | 'save'
+  | 'load'
+  | 'change-state'
+  | 'change-ext-mode'
+  | 'change-title';
 export type TypeRichCommandValue = any; // string | RichEditorState | RichEditorDocument;
-export type EventRichCommand = (command: string, value?: TypeRichCommandValue) => void;
+export type EventRichCommand = (command: TypeRichCommand, value?: TypeRichCommandValue) => void;
+
+export type ToolbarState = {
+  /** 툴바의 extension toggle 정보: none, raw, language, preview */
+  extension: string | undefined;
+};
