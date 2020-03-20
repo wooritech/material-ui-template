@@ -15,6 +15,10 @@ interface Props extends EditorControlsProps {
   name: string;
 }
 
+/**
+ * control의 이름으로 해당 컨트롤을 찾아온다.
+ * Divider는 React.FC로 처리
+ */
 const Map: { [kay: string]: React.FC | React.FC<EditorControlsProps> } = {
   UndoRedo: UndoRedoControls,
   HeadingStyle: HeadingStyleControls,

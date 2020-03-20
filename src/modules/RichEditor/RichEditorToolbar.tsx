@@ -7,7 +7,7 @@ import { EditorState } from 'draft-js';
 import { getToolbarConfigs, defaultToolbarConfig } from './configs';
 import { ControlComponents } from './controls';
 import { RichEditorToolbarConfig } from './configs/types';
-import { EventRichCommand } from './types';
+import { EventRichCommand, ToolbarState } from './types';
 
 const useToolbarStyle = makeStyles((theme: Theme) => ({
   paper: {
@@ -30,12 +30,12 @@ interface RichEditorToolbarProps {
   onChange: (eidtorState: EditorState) => void;
   config?: RichEditorToolbarConfig;
   /** 임시: editor config 를 만들자. */
-  extMode: string | null;
+  toolbarState: ToolbarState;
 }
 
 const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
   const classes = useToolbarStyle();
-  const { editorState, onChange, config, onRichCommand, extMode } = props;
+  const { editorState, onChange, config, onRichCommand, toolbarState } = props;
   const controlConfig =
     config ||
     defaultToolbarConfig ||
@@ -80,6 +80,7 @@ const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
                   onChange={onChange}
                   buttonItems={control.buttons}
                   onRichCommand={onRichCommand}
+                  toolbarState={toolbarState}
                 />
               );
             })}

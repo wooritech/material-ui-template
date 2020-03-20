@@ -13,7 +13,7 @@ import RichEditorDocument from './RichEditorDocument';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditorToolbarConfig } from './configs';
-import { EventRichCommand, TypeRichCommandValue } from './types';
+import { EventRichCommand, TypeRichCommandValue, ToolbarState } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -78,7 +78,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
     /** 툴바 설정 정보: 없으면 모든 툴버튼 로드 */
     toolbarConfig,
   } = props;
-  const [extMode, setExtMode] = React.useState<string | null>(null); // NONE, RAW, PREVEW, LANG
+  const [toolbarState, setToolbarState] = React.useState<ToolbarState>({ extension: undefined });
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
@@ -89,7 +89,9 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         onStateChange(value as RichEditorState);
         break;
       case 'change-ext-mode':
-        setExtMode(value === extMode ? null : value);
+        // eslint-disable-next-line no-case-declarations
+        const newState = { extension: value === toolbarState?.extension ? undefined : value };
+        setToolbarState(newState);
         break;
       default:
         onRichCommand(command, value);
@@ -110,30 +112,30 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         onChange={handleStateChange}
         config={toolbarConfig}
         /** 임시 */
-        extMode={extMode}
+        toolbarState={toolbarState}
       />
       <Divider light />
       <Grid container className={classes.container} spacing={1}>
-        <Grid item xs={extMode === null ? 12 : 6}>
+        <Grid item xs={toolbarState === null ? 12 : 6}>
           <div className={classes.editor}>
             <RichEditor editorState={richState} onChange={handleStateChange} />
           </div>
         </Grid>
-        {extMode === 'raw' ? (
+        {toolbarState?.extension === 'raw' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extRaw}`}>
               <RawViewer editorState={richState} />
             </div>
           </Grid>
         ) : null}
-        {extMode === 'lang' ? (
+        {toolbarState?.extension === 'lang' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extLang}`}>
               <MultiLanguageEditor />
             </div>
           </Grid>
         ) : null}
-        {extMode === 'preview' ? (
+        {toolbarState?.extension === 'preview' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extPreview}`}>
               <Preview editorState={richState} />
