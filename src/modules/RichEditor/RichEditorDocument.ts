@@ -37,10 +37,6 @@ const defaultValue: Partial<RichDocumentRaw> = {
   },
 };
 
-export type TType = {
-  name: string;
-};
-
 /**
  * RichEditor 컴포넌트에서 사용되는 문서 타입.
  * 임시로 만든 구조이고 필요하면 변경 하면 된다.

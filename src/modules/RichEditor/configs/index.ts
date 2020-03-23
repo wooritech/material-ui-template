@@ -1,5 +1,6 @@
+import RichEditorConfig from './RichEditorConfig';
 import { defaultToolbarConfig, getToolbarConfigs } from './toolbars';
 
 export * from './types';
 
-export { defaultToolbarConfig, getToolbarConfigs };
+export { RichEditorConfig, defaultToolbarConfig, getToolbarConfigs };

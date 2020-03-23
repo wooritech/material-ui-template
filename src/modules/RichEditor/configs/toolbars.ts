@@ -1,19 +1,22 @@
 import { RichEditorControls, RichEditorToolbarConfig } from './types';
 
 /**
- * 툴바 컨트롤들의 총 집합
+ * ToolbarSet: 툴바 컨트롤들의 총 집합
  *  - 새로운 툴바가 추가되면 여기에 반드시 추가해 주어야 한다.
- *  - defaultToolbarConfig를 직접 사용해도 되고
- *    getToolbarControls() 함수를 이용해도 된다.
  *
  * Controls
- *  - UndoControls: undo, redo
- *  - Heading
- *  -
- *  - BlockStyleControls:
- *  - InlineStuyles
+ *  - UndoRedo: undo, redo
+ *  - HeadingStyle
+ *  - BlockStyle:
+ *  - Alignment
+ *  - InlineStyles
+ *  - Image
+ *  - Extension
+ *  - Table
+ *  - CodeDirector
+ *  - Divider
  */
-export const defaultToolbarConfig: RichEditorToolbarConfig = [
+const ToolbarSet: RichEditorToolbarConfig = [
   {
     name: 'UndoRedo',
     type: 'BUTTONGROUP',
@@ -105,6 +108,22 @@ export const defaultToolbarConfig: RichEditorToolbarConfig = [
 
 export const getToolbarConfigs = (controlNames: string[]): RichEditorToolbarConfig => {
   return controlNames.map((name) => {
-    return defaultToolbarConfig.find((item) => item.name === name) as RichEditorControls;
+    return ToolbarSet.find((item) => item.name === name) as RichEditorControls;
   });
 };
+
+export const defaultToolbarConfig = getToolbarConfigs([
+  'UndoRedo',
+  'Divider',
+  'HeadingStyle',
+  'Divider',
+  'BlockStyle',
+  'Divider',
+  'InlineStyle',
+  'Divider',
+  'Image',
+  'Table',
+  'CodeDirector',
+  'Divider',
+  'Extension',
+]);

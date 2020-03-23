@@ -12,7 +12,7 @@ import Preview from './Preview';
 import RichEditorDocument from './RichEditorDocument';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
-import { RichEditorToolbarConfig } from './configs';
+import { RichEditorToolbarConfig, RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue, ToolbarState } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -63,21 +63,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface RichEditorFrameProps {
   richDoc: RichEditorDocument;
   richState: RichEditorState;
+  richConfig: RichEditorConfig;
   onRichCommand: EventRichCommand;
   onStateChange: (richState: RichEditorState) => void;
-  toolbarConfig?: RichEditorToolbarConfig;
+  onConfigChange?: (config: RichEditorConfig) => void;
+  // toolbarConfig?: RichEditorToolbarConfig;
 }
 
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const classes = useStyles();
-  const {
-    richDoc,
-    richState,
-    onRichCommand,
-    onStateChange,
-    /** 툴바 설정 정보: 없으면 모든 툴버튼 로드 */
-    toolbarConfig,
-  } = props;
+  const { richDoc, richState, richConfig, onRichCommand, onStateChange } = props;
   const [toolbarState, setToolbarState] = React.useState<ToolbarState>({ extension: undefined });
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
@@ -110,7 +105,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         editorState={richState}
         onRichCommand={handleRichCommand}
         onChange={handleStateChange}
-        config={toolbarConfig}
+        config={richConfig?.toolbarConfig}
         /** 임시 */
         toolbarState={toolbarState}
       />

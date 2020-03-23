@@ -9,7 +9,7 @@ import Preview from './Preview';
 import RichEditorDocument from './RichEditorDocument';
 
 /** Toolbar controls */
-import { defaultToolbarConfig, getToolbarConfigs } from './configs';
+import { RichEditorConfig, defaultToolbarConfig, getToolbarConfigs } from './configs';
 import RichEditorToolbar from './RichEditorToolbar';
 
 /**
@@ -25,6 +25,7 @@ export * from './types';
 /** EXPORT */
 export {
   /** configs */
+  RichEditorConfig,
   defaultToolbarConfig,
   getToolbarConfigs,
   /** editor */
