@@ -12,8 +12,3 @@ export type TypeRichCommand =
   | 'change-title';
 export type TypeRichCommandValue = any; // string | RichEditorState | RichEditorDocument;
 export type EventRichCommand = (command: TypeRichCommand, value?: TypeRichCommandValue) => void;
-
-export type ToolbarState = {
-  /** 툴바의 extension toggle 정보: none, raw, language, preview */
-  extension: string | undefined;
-};

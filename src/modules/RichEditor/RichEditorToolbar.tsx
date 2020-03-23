@@ -4,10 +4,9 @@ import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { EditorState } from 'draft-js';
-import { getToolbarConfigs, defaultToolbarConfig } from './configs';
+import { RichEditorConfig } from './configs';
 import { ControlComponents } from './controls';
-import { RichEditorToolbarConfig } from './configs/types';
-import { EventRichCommand, ToolbarState } from './types';
+import { EventRichCommand } from './types';
 
 const useToolbarStyle = makeStyles((theme: Theme) => ({
   paper: {
@@ -25,33 +24,17 @@ const useToolbarStyle = makeStyles((theme: Theme) => ({
 }));
 
 interface RichEditorToolbarProps {
+  richConfig: RichEditorConfig;
   editorState: EditorState;
   onRichCommand: EventRichCommand;
-  onChange: (eidtorState: EditorState) => void;
-  config?: RichEditorToolbarConfig;
-  /** 임시: editor config 를 만들자. */
-  toolbarState: ToolbarState;
+  onStateChange: (eidtorState: EditorState) => void;
 }
 
+/** 툴바에 버튼을 생성하는 컴포넌트 */
 const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
   const classes = useToolbarStyle();
-  const { editorState, onChange, config, onRichCommand, toolbarState } = props;
-  const controlConfig =
-    config ||
-    defaultToolbarConfig ||
-    getToolbarConfigs([
-      'UndoRedo',
-      'Divider',
-      'HeadingStyle',
-      'Divider',
-      'BlockStyle',
-      'Divider',
-      'InlineStyle',
-      'Divider',
-      'Image',
-      'Divider',
-      'Extension',
-    ]);
+  const { richConfig, editorState, onStateChange, onRichCommand } = props;
+  const controlConfig = richConfig.toolbarConfig;
 
   return (
     <div className={classes.toolbar}>
@@ -76,11 +59,11 @@ const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
                 <ControlComponents
                   key={index.toString()}
                   name={control.name}
+                  richConfig={richConfig}
                   editorState={editorState}
-                  onChange={onChange}
+                  onChange={onStateChange}
                   buttonItems={control.buttons}
                   onRichCommand={onRichCommand}
-                  toolbarState={toolbarState}
                 />
               );
             })}

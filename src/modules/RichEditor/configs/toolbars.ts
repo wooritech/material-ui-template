@@ -119,6 +119,8 @@ export const defaultToolbarConfig = getToolbarConfigs([
   'Divider',
   'BlockStyle',
   'Divider',
+  'Alignment',
+  'Divider',
   'InlineStyle',
   'Divider',
   'Image',

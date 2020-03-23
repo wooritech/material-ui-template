@@ -12,8 +12,8 @@ import Preview from './Preview';
 import RichEditorDocument from './RichEditorDocument';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
-import { RichEditorToolbarConfig, RichEditorConfig } from './configs';
-import { EventRichCommand, TypeRichCommandValue, ToolbarState } from './types';
+import { RichEditorConfig } from './configs';
+import { EventRichCommand, TypeRichCommandValue } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -72,8 +72,8 @@ interface RichEditorFrameProps {
 
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const classes = useStyles();
-  const { richDoc, richState, richConfig, onRichCommand, onStateChange } = props;
-  const [toolbarState, setToolbarState] = React.useState<ToolbarState>({ extension: undefined });
+  const { richDoc, richState, richConfig, onRichCommand, onStateChange, onConfigChange } = props;
+  // const [toolbarState, setToolbarState] = React.useState<ToolbarState>({ extension: undefined });
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
@@ -84,9 +84,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         onStateChange(value as RichEditorState);
         break;
       case 'change-ext-mode':
-        // eslint-disable-next-line no-case-declarations
-        const newState = { extension: value === toolbarState?.extension ? undefined : value };
-        setToolbarState(newState);
+        if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
       default:
         onRichCommand(command, value);
@@ -103,34 +101,32 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       <Divider light />
       <RichEditorToolbar
         editorState={richState}
+        richConfig={richConfig}
         onRichCommand={handleRichCommand}
-        onChange={handleStateChange}
-        config={richConfig?.toolbarConfig}
-        /** 임시 */
-        toolbarState={toolbarState}
+        onStateChange={handleStateChange}
       />
       <Divider light />
       <Grid container className={classes.container} spacing={1}>
-        <Grid item xs={toolbarState === null ? 12 : 6}>
+        <Grid item xs={richConfig.extension === undefined ? 12 : 6}>
           <div className={classes.editor}>
             <RichEditor editorState={richState} onChange={handleStateChange} />
           </div>
         </Grid>
-        {toolbarState?.extension === 'raw' ? (
+        {richConfig.extension === 'raw' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extRaw}`}>
               <RawViewer editorState={richState} />
             </div>
           </Grid>
         ) : null}
-        {toolbarState?.extension === 'lang' ? (
+        {richConfig.extension === 'lang' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extLang}`}>
               <MultiLanguageEditor />
             </div>
           </Grid>
         ) : null}
-        {toolbarState?.extension === 'preview' ? (
+        {richConfig.extension === 'preview' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extPreview}`}>
               <Preview editorState={richState} />
