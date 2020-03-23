@@ -33,14 +33,13 @@
     "material-table": "^1.57.1",
     "next": "latest",
     "prismjs": "^1.19.0",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-dropzone": "^10.2.1",
     "react-markdown": "^4.3.1"
   },
   "devDependencies": {
     "@types/draft-js": "^0.10.38",
-    "@types/next": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
