@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { blockStyleFn } from './blockStyleFn';
+import blockStyleFn from './blockStyleFn';
+import blockRendererFn from './blockRendererFn';
 
-export { blockStyleFn };
+export { blockStyleFn, blockRendererFn };

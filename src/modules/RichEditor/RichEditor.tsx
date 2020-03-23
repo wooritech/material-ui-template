@@ -14,7 +14,7 @@ import {
 // import createFocusPlugin from 'draft-js-focus-plugin';
 // import createResizeablePlugin from 'draft-js-resizeable-plugin';
 // import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
-import { blockStyleFn } from './renderers';
+import { blockStyleFn, blockRendererFn } from './renderers';
 import { useEditorStyles, customStyleMap } from './styles';
 
 export type KeyName = 'ENTER';
@@ -119,7 +119,8 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
 
   return (
     <Editor
-      // blockStyleFn={blockStyleFn}
+      blockStyleFn={blockStyleFn}
+      blockRendererFn={blockRendererFn}
       customStyleMap={customStyleMap}
       editorKey="richeditor"
       // keyBindingFn={keyBindingFn}

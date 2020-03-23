@@ -1,5 +1,5 @@
 import { DraftDecorator } from 'draft-js';
-import { EditorPlugin } from 'draft-js-plugins-editor';
+// import { EditorPlugin } from 'draft-js-plugins-editor';
 
 /**
  * linkify-it 패키지로 대체 가능
@@ -25,4 +25,4 @@ export interface RichEditorPluginProps {
 
 export type RichEditorPlugin<RichEditorPluginProps> = (
   props: RichEditorPluginProps,
-) => EditorPlugin & { decorator: DraftDecorator };
+) => { decorator: DraftDecorator };
