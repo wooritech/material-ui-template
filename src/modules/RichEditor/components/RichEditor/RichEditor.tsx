@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import {
   ContentBlock,
@@ -14,8 +15,7 @@ import {
 // import createFocusPlugin from 'draft-js-focus-plugin';
 // import createResizeablePlugin from 'draft-js-resizeable-plugin';
 // import createBlockDndPlugin from 'draft-js-drag-n-drop-plugin';
-import { blockStyleFn, blockRendererFn } from './renderers';
-import { useEditorStyles, customStyleMap } from './styles';
+import { useEditorStyles, customStyleMap } from '../../styles';
 
 export type KeyName = 'ENTER';
 export type KeyCode = number;
@@ -27,15 +27,14 @@ const SPLIT_HEADER_BLOCK = 'split-header-block';
 
 interface RichEditorProps {
   editorState: EditorState;
+  blockStyleFn?: (block: ContentBlock) => string;
+  blockRendererFn?: (block: ContentBlock) => any;
   onChange: (editorState: EditorState) => void;
 }
 
 const RichEditor: React.FC<RichEditorProps> = (props) => {
   useEditorStyles();
-  const { onChange, editorState } = props;
-
-  // const richState = createEmptyState(decorators);
-  // const [draftState, setEditorState] = React.useState(editorState || createEmptyState(decorators));
+  const { onChange, editorState, blockStyleFn, blockRendererFn } = props;
 
   const isHeaderBlock = (block: ContentBlock): boolean => {
     switch (block.getType()) {

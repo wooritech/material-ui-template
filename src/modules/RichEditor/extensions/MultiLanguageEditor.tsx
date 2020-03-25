@@ -3,10 +3,8 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import RichEditor from './RichEditor';
-import RichEditorState from './RichEditorState';
+import { RichEditor } from '../components';
+import { RichEditorState } from '../modules';
 
 interface TabPanelProps {
   children?: React.ReactNode;

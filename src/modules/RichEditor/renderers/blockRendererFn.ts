@@ -1,5 +1,5 @@
 import { ContentBlock } from 'draft-js';
-import { Media } from '../components/Media';
+import { Media } from '../components';
 
 /**
  *

@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
-import RichEditorDocument from './RichEditorDocument';
+import { RichEditorDocument } from './modules';
 import { EventRichCommand } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({

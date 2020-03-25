@@ -4,16 +4,15 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import MultiLanguageEditor from '~/modules/RichEditor/MultiLanguageEditor';
-import RichEditor from './RichEditor';
-import RichEditorState from './RichEditorState';
-import RawViewer from './RawViewer';
-import Preview from './Preview';
-import RichEditorDocument from './RichEditorDocument';
+import MultiLanguageEditor from '~/modules/RichEditor/extensions/MultiLanguageEditor';
+import { RichEditor } from './components';
+import { RichEditorState, RichEditorDocument } from './modules';
+import { Preview, RawView } from './extensions';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
+import { blockStyleFn, blockRendererFn } from './renderers';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -109,13 +108,18 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       <Grid container className={classes.container} spacing={1}>
         <Grid item xs={richConfig.extension === undefined ? 12 : 6}>
           <div className={classes.editor}>
-            <RichEditor editorState={richState} onChange={handleStateChange} />
+            <RichEditor
+              editorState={richState}
+              onChange={handleStateChange}
+              blockRendererFn={blockRendererFn}
+              blockStyleFn={blockStyleFn}
+            />
           </div>
         </Grid>
         {richConfig.extension === 'raw' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extRaw}`}>
-              <RawViewer editorState={richState} />
+              <RawView editorState={richState} />
             </div>
           </Grid>
         ) : null}

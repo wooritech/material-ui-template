@@ -6,7 +6,7 @@ import {
   CompositeDecorator,
   RawDraftContentState,
 } from 'draft-js';
-import { createEmailPlugin, createUrlPlugin, createHashtagPlugin } from './plugins';
+import { createEmailPlugin, createUrlPlugin, createHashtagPlugin } from '../plugins';
 import RichEditorDocument from './RichEditorDocument';
 
 // 에러 없이 초기 문서 생성을 위한 코드
