@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolButtons, ButtonItemConfig } from '../components/ToolButtons';
+import { ToolButtons, ButtonItemConfig } from '../components';
 import { EditorControlsProps } from './types';
 
 const ExtensionControls: React.FC<EditorControlsProps> = (props) => {

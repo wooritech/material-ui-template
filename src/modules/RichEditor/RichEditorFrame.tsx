@@ -4,12 +4,11 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import MultiLanguageEditor from '~/modules/RichEditor/extensions/MultiLanguageEditor';
-import { RichEditor } from './components';
-import { RichEditorState, RichEditorDocument } from './modules';
-import { Preview, RawView } from './extensions';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
+import { RichEditor } from './components';
+import { RichEditorState, RichEditorDocument } from './modules';
+import { Preview, RawView, MultiLanguageEditor } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, blockRendererFn } from './renderers';
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '16px',
     height: 'calc(100vh - 185px)',
     borderRadius: '3px',
-    padding: theme.spacing(1),
+    // padding: theme.spacing(1),
   },
   extRaw: {
     color: '#eee',
@@ -49,9 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   extLang: {
     color: '#0d0d0d',
     backgroundColor: '#e3f2fd',
-  },
-  extPreview: {
-    backgroundColor: '#efefef',
   },
   divider: {
     backgroundColor: '#ddd',
@@ -132,9 +128,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         ) : null}
         {richConfig.extension === 'preview' ? (
           <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extPreview}`}>
-              <Preview editorState={richState} />
-            </div>
+            <Preview editorState={richState} />
           </Grid>
         ) : null}
       </Grid>

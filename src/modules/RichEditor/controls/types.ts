@@ -1,5 +1,5 @@
 import { EditorState } from 'draft-js';
-import { ButtonItemConfig } from '../components/ToolButtons/types';
+import { ButtonItemConfig } from '../components';
 import { EventRichCommand } from '../types';
 import { RichEditorConfig } from '../configs';
 

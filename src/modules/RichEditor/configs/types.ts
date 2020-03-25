@@ -1,4 +1,4 @@
-import { ButtonItemConfig } from '../components/ToolButtons';
+import { ButtonItemConfig } from '../components';
 
 export type RichEditorToolbarNames =
   | string

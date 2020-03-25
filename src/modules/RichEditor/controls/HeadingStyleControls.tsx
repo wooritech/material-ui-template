@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { RichUtils } from 'draft-js';
-import { ToolButtonPopper, ButtonItemConfig } from '../components/ToolButtons';
+import { ToolButtonPopper, ButtonItemConfig } from '../components';
 import { EditorControlsProps } from './types';
 
 const HeadingStyleControls: React.FC<EditorControlsProps> = (props) => {

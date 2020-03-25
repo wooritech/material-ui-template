@@ -1,5 +1,9 @@
 # RichEditor
 
+- React
+- Typescript
+- Material-ui
+
 ## Components
 
 - RichEditorState

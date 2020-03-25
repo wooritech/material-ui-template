@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { RichUtils } from 'draft-js';
-import { ToolButtons, ButtonItemConfig } from '../components/ToolButtons';
+import { ToolButtons, ButtonItemConfig } from '../components';
 import { EditorControlsProps } from './types';
 
 const InlineStyleControls: React.FC<EditorControlsProps> = (props) => {

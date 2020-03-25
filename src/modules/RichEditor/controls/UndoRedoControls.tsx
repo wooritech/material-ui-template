@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditorState } from 'draft-js';
-import { ToolButtons, ButtonItemConfig } from '../components/ToolButtons';
+import { ToolButtons, ButtonItemConfig } from '../components';
 import { EditorControlsProps } from './types';
 
 const UndoRedoControls: React.FC<EditorControlsProps> = (props) => {
