@@ -28,6 +28,7 @@
     "@next/bundle-analyzer": "^9.1.6",
     "@types/prismjs": "^1.16.0",
     "clsx": "latest",
+    "draft-convert": "^2.1.8",
     "draft-js": "^0.11.4",
     "immutable": "^4.0.0-rc.12",
     "material-table": "^1.57.1",
@@ -39,6 +40,7 @@
     "react-markdown": "^4.3.1"
   },
   "devDependencies": {
+    "@types/draft-convert": "^2.1.1",
     "@types/draft-js": "^0.10.38",
     "@types/node": "latest",
     "@types/react": "latest",

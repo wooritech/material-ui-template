@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToolButtons, ButtonItemConfig } from '../components/ToolButtons';
 import { EditorControlsProps } from './types';
-import { insertImageFile, insertImageUrl } from '../ContentUtils';
+import { ContentUtils } from '../utils';
 
 /**
  * https://github.com/wooritech/material-ui-template/issues/30#issuecomment-603586703
@@ -22,7 +22,7 @@ const ImageControl: React.FC<EditorControlsProps> = (props) => {
     files.map((file: File) => {
       if (richConfig.imageFileProcess === 'base64') {
         /** 이미지를 base64로 에디터에 직접 추가하는 경우 */
-        insertImageFile(editorState, file).then((state) => {
+        ContentUtils.insertImageFile(editorState, file).then((state) => {
           if (state && onChange) onChange(state);
         });
       }
@@ -31,7 +31,7 @@ const ImageControl: React.FC<EditorControlsProps> = (props) => {
         /** 이미지 파일을 저장소에 업로드 하고 그 경로를 에디터에 추가하는 경우 */
         const callbackFn = (src: string, name?: string, size?: number) => {
           // console.log('uploadedImage: ', src);
-          if (onChange) onChange(insertImageUrl(editorState, src, name, size));
+          if (onChange) onChange(ContentUtils.insertImageUrl(editorState, src, name, size));
         };
 
         if (onRichCommand) onRichCommand('insert-local-image', { file, callbackFn });
