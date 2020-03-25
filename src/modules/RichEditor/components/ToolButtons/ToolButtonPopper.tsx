@@ -9,9 +9,9 @@ import Grow from '@material-ui/core/Grow';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import { ButtonItemConfig } from './types';
 import ToolButtonGroup from './ToolButtonGroup';
-import ToolButton from './ToolButton';
 
 const buttonStyles = makeStyles((theme: Theme) => ({
   endIcon: {
@@ -69,10 +69,10 @@ const ToolButtonPopper: React.FC<ToolButtonPopperProps> = (props) => {
 
   return (
     <ToolButtonGroup size="small" exclusive aria-label="rich blockstyle" ref={anchorRef}>
-      <ToolButton value="" aria-label="" onClick={handlePoper}>
+      <ToggleButton style={{ border: 'none' }} value="" aria-label="" onClick={handlePoper}>
         {currentLabel()}
         <ArrowDropDownIcon className={classes.endIcon} />
-      </ToolButton>
+      </ToggleButton>
       <Popper
         open={open}
         anchorEl={anchorRef.current}

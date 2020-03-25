@@ -1,61 +1,61 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { DropperModal } from '~/modules/FileDropper';
 import { ToolButtons, ButtonItemConfig } from '../components/ToolButtons';
 import { EditorControlsProps } from './types';
-import ContentUtils from '../ContentUtils';
+import { insertImageFile, insertImageUrl } from '../ContentUtils';
 
+/**
+ * https://github.com/wooritech/material-ui-template/issues/30#issuecomment-603586703
+ */
 const ImageControl: React.FC<EditorControlsProps> = (props) => {
-  const { editorState, onChange, buttonItems } = props;
-  const [open, setOpen] = React.useState(false);
-  const [selectedStyle, setStyle] = React.useState('');
+  const { richConfig, editorState, onChange, buttonItems, onRichCommand } = props;
 
   if (!buttonItems)
     throw new Error('InlineStyleControls.buttonItmes 속성에 값이 없거나 잘못되었습니다.');
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  /* eslint-disable-next-line consistent-return */
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement | HTMLFormElement>) => {
+    const files: File[] = Array.from(e.target.files);
 
-  // 이미지 컨트롤이 있는지 확인해서 버튼이 active 되도록 한다.
-  const currentStyle = editorState.getCurrentInlineStyle();
-  const hasStyle = (value: any): boolean => {
-    return currentStyle.has(value);
-  };
+    if (!files) return undefined;
 
-  const handleImageImage = (files: string[]) => {
-    if (files && files.length > 0) {
-      files.map((file) => {
-        if (onChange) onChange(ContentUtils.insertImage(editorState, file));
-      });
-    }
-  };
+    /* eslint-disable-next-line array-callback-return */
+    files.map((file: File) => {
+      if (richConfig.imageFileProcess === 'base64') {
+        /** 이미지를 base64로 에디터에 직접 추가하는 경우 */
+        insertImageFile(editorState, file).then((state) => {
+          if (state && onChange) onChange(state);
+        });
+      }
 
-  const handleClose = (event: {}, reason: 'backdropClick' | 'escapeKeyDown', files: string[]) => {
-    setOpen(false);
-    handleImageImage(files);
+      if (richConfig.imageFileProcess === 'upload-url') {
+        /** 이미지 파일을 저장소에 업로드 하고 그 경로를 에디터에 추가하는 경우 */
+        const callbackFn = (src: string, name?: string, size?: number) => {
+          // console.log('uploadedImage: ', src);
+          if (onChange) onChange(insertImageUrl(editorState, src, name, size));
+        };
+
+        if (onRichCommand) onRichCommand('insert-local-image', { file, callbackFn });
+      }
+    });
   };
 
   return (
     <div>
-      <ToolButtons
-        buttonItems={buttonItems as ButtonItemConfig[]}
-        checkSelected={hasStyle}
-        defaultValue={selectedStyle}
-        setValue={setStyle}
-        exclusive={false}
-        onChange={handleOpen}
-      />
-      <DropperModal open={open} onClose={handleClose} />
-      {/* <ToolButton
-        // key={imageButton.label}
-        // active={false}
-        // label={imageButton.label}
-        // onClick={handleOpen}
-        // style={imageButton.style}
-      />
-      <DropperModal open={open} onClose={handleClose} /> */}
+      <label htmlFor="raised-button-file">
+        <input
+          id="raised-button-file"
+          hidden
+          // multiple
+          accept="image/*"
+          type="file"
+          onChange={handleFile}
+        />
+        <ToolButtons
+          buttonItems={buttonItems as ButtonItemConfig[]}
+          exclusive={false}
+          buttonComponent="span"
+        />
+      </label>
     </div>
   );
 };

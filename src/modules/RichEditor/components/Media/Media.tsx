@@ -1,20 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Card } from '@material-ui/core';
 import ImageMedia from './ImageMedia';
 import { DraftBlockComponentProps } from './types';
 
 /** Media */
 const Media: React.FC<DraftBlockComponentProps> = (props) => {
+  // console.log(props);
   const { contentState, block } = props;
 
   const entity = contentState.getEntity(block.getEntityAt(0));
-  const { src } = entity.getData();
+  const { src, name, size } = entity.getData();
   const type = entity.getType();
 
   return (
-    <Card variant="outlined">
-      {type === 'image' ? <ImageMedia src={src} image={src} {...props} /> : null}
-    </Card>
+    <div className="public-DraftStyleDefault-ltr">
+      {type === 'image' ? <ImageMedia src={src} name={name} size={size} {...props} /> : null}
+    </div>
   );
 };
 

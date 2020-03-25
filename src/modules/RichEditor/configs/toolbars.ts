@@ -83,15 +83,16 @@ const ToolbarSet: RichEditorToolbarConfig = [
   {
     name: 'Image',
     type: 'BUTTONGROUP',
-    buttons: [{ label: 'Images', value: 'images', icon: 'add_photo_alternate' }],
+    // buttons: [{ label: 'Images', value: 'images', icon: 'add_photo_alternate' }],
+    buttons: [{ label: 'Images', value: 'images', icon: 'perm_media_outlined' }],
   },
   {
     name: 'Extension',
     type: 'BUTTONGROUP',
     buttons: [
-      { label: '소스보기', value: 'raw' },
-      { label: '다른 언어', value: 'lang' },
-      { label: '소스보기', value: 'preview' },
+      { label: '소스보기', value: 'raw', icon: 'settings_ethernet_outlined' },
+      { label: '다른 언어', value: 'lang', startIcon: 'g_translate_outlined' },
+      { label: '미리보기', value: 'preview', icon: 'desktop_mac_outlined' },
     ],
   },
   {

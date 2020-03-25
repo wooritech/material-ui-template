@@ -3,8 +3,8 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToolButtonGroup from './ToolButtonGroup';
-import ToolButton from './ToolButton';
 import { ButtonItemConfig } from './types';
 
 const buttonStyles = makeStyles((theme: Theme) => ({
@@ -33,6 +33,7 @@ interface ToolButtonProps {
   onChange?: (value: any) => void;
   setValue?: React.Dispatch<React.SetStateAction<any>>;
   defaultValue?: any;
+  buttonComponent?: any;
   checkSelected?: (value: any) => boolean;
 }
 
@@ -45,7 +46,15 @@ const getIconComponent = (icon?: React.ReactElement | string, className?: string
  */
 const ToolButtons: React.FC<ToolButtonProps> = (props) => {
   const classes = buttonStyles();
-  const { buttonItems, exclusive, defaultValue, setValue, onChange, checkSelected } = props;
+  const {
+    buttonItems,
+    exclusive,
+    defaultValue,
+    setValue,
+    onChange,
+    checkSelected,
+    buttonComponent,
+  } = props;
 
   // const handleClick = (event: MouseEvent, value: any) => {
   //   event.preventDefault();
@@ -60,7 +69,7 @@ const ToolButtons: React.FC<ToolButtonProps> = (props) => {
     if (setValue) setValue(value);
   };
 
-  const handleToggle = (event: React.MouseEvent<HTMLElement>, value: any) => {
+  const handleToggle = (event: React.MouseEvent, value: any) => {
     event.preventDefault();
     if (onChange) onChange(value);
   };
@@ -75,16 +84,18 @@ const ToolButtons: React.FC<ToolButtonProps> = (props) => {
     >
       {buttonItems.map((item, index) => {
         return (
-          <ToolButton
-            onMouseDown={(e) => handleToggle(e as any, item.value)}
+          <ToggleButton
+            style={{ border: 'none' }}
+            onMouseDown={(e: React.MouseEvent) => handleToggle(e, item.value)}
             value={item.value}
             selected={checkSelected ? checkSelected(item.value) : undefined}
             key={index.toString()}
+            component={buttonComponent}
           >
             {item.startIcon ? getIconComponent(item.startIcon, classes.startIcon) : null}
             {item.icon ? getIconComponent(item.icon) : item.label}
             {item.endIcon ? getIconComponent(item.endIcon, classes.endIcon) : null}
-          </ToolButton>
+          </ToggleButton>
         );
       })}
     </ToolButtonGroup>

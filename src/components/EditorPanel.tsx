@@ -89,6 +89,22 @@ const EditorPanel: React.FC = () => {
     }
   };
 
+  /** config.image.fileProcess 'upload-url' 타입 처리 */
+  const uploadImageFile = (value: {
+    file: File;
+    callbackFn: (src: string, name?: string, size?: number) => void;
+  }) => {
+    const { file, callbackFn } = value;
+    if (file) {
+      console.log(file.name, file.size);
+      /** 이미지 업로드 후 콜백함수 호출 */
+      setTimeout(() => {
+        const url = 'https://t1.daumcdn.net/cfile/tistory/234A8049559BCC8D33';
+        callbackFn(url, file.name, file.size);
+      }, 3000);
+    }
+  };
+
   /**
    * RichEditor의 모든 이벤트를 Command로 처리할 예정.
    */
@@ -109,6 +125,9 @@ const EditorPanel: React.FC = () => {
       case 'change-state':
         /** onStateChange 와 동일한 효과. */
         setRichState(value as RichEditorState);
+        break;
+      case 'insert-local-image':
+        uploadImageFile(value);
         break;
       default:
         break;
