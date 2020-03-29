@@ -1,47 +1,57 @@
-import { EditorState, AtomicBlockUtils, Modifier } from 'draft-js';
+/* eslint-disable no-unused-expressions */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { EditorState, Modifier } from 'draft-js';
+// @types 없음.
+// import { setBlockData } from 'draftjs-utils';
 
 class ContentUtils {
-  static insertVideo = () => {
-    return null;
+  static setBlockData = (editorState: EditorState, data: Immutable.Map<any, any>) => {
+    const newContentState = Modifier.setBlockData(
+      editorState.getCurrentContent(),
+      editorState.getSelection(),
+      data,
+    );
+    return EditorState.push(editorState, newContentState, 'change-block-data');
   };
 
-  static fileToBase64 = (file: File): Promise<string | ArrayBuffer | null> | undefined => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
+  static getSelectionBlock = (editorState: EditorState) => {
+    return editorState
+      .getCurrentContent()
+      .getBlockForKey(editorState.getSelection().getAnchorKey());
+  };
 
-      reader.onload = function(event: ProgressEvent<FileReader>) {
-        resolve(event.target ? event.target.result : null);
-      };
+  static getSelectionBlockData = (editorState: EditorState, name?: string) => {
+    const blockData = ContentUtils.getSelectionBlock(editorState).getData();
+    return name ? blockData.get(name) : blockData;
+  };
 
-      reader.readAsDataURL(file);
+  static setSelectionBlockData = (
+    editorState: EditorState,
+    blockData: Record<any, any>,
+    override?: boolean,
+  ) => {
+    const newBlockData = override
+      ? blockData
+      : { ...ContentUtils.getSelectionBlockData(editorState).toJS(), ...blockData };
+
+    Object.keys(newBlockData).forEach((key) => {
+      if (newBlockData.hasOwnProperty(key) && newBlockData[key] === undefined) {
+        delete newBlockData[key];
+      }
     });
+    // console.log(newBlockData);
+    return ContentUtils.setBlockData(editorState, newBlockData);
   };
 
-  static insertImage = (editorState: EditorState, src: string, name?: string, size?: number) => {
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('image', 'IMMUTABLE', {
-      src,
-      name,
-      size,
+  static toggleSelectionAlignment = (editorState: EditorState, alignment: string | undefined) => {
+    return ContentUtils.setSelectionBlockData(editorState, {
+      textAlign:
+        ContentUtils.getSelectionBlockData(editorState, 'textAlign') !== alignment
+          ? alignment
+          : undefined,
     });
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set(editorState, {
-      currentContent: contentStateWithEntity,
-    });
-    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-  };
-
-  static insertImageUrl = (editorState: EditorState, url: string, name?: string, size?: number) => {
-    return ContentUtils.insertImage(editorState, url, name, size);
-  };
-
-  static insertImageFile = async (editorState: EditorState, file: File) => {
-    if (file.size > 0) {
-      return ContentUtils.fileToBase64(file)?.then((base64) => {
-        return ContentUtils.insertImage(editorState, base64 as string, file.name, file.size);
-      });
-    }
-    return undefined;
   };
 }
 

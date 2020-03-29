@@ -11,7 +11,8 @@ import { RichEditorState, RichEditorDocument } from './modules';
 import { Preview, RawView, MultiLanguageEditor } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
-import { blockStyleFn, blockRendererFn } from './renderers';
+import { blockStyleFn, richBlockRendererFn } from './renderers';
+import { MediaUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -81,6 +82,14 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       case 'change-ext-mode':
         if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
+      case 'change-img-align':
+        // console.log('change-img-align: ', value);
+        onStateChange(
+          MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
+        );
+        // toggleSelectionAlignment(richState, value.textAlign);
+        // RichEditorState.set(richState, value.content);
+        break;
       default:
         onRichCommand(command, value);
     }
@@ -107,7 +116,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             <RichEditor
               editorState={richState}
               onChange={handleStateChange}
-              blockRendererFn={blockRendererFn}
+              blockRendererFn={richBlockRendererFn(handleRichCommand)}
               blockStyleFn={blockStyleFn}
             />
           </div>

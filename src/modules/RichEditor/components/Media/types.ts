@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ContentState, ContentBlock } from 'draft-js';
+import { ContentState, ContentBlock, SelectionState } from 'draft-js';
 
 /**
  * 
@@ -21,4 +21,5 @@ export interface DraftBlockComponentProps {
   contentState: ContentState;
   block: ContentBlock;
   blockProps: Record<any, any>;
+  selection: SelectionState;
 }

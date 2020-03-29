@@ -10,7 +10,7 @@ import { convertToHTML } from 'draft-convert';
  */
 const blockToHTML = (block: any) => {
   if (block.type === 'atomic') {
-    console.log(block);
+    // console.log(block);
     if (block.data) {
       return {
         start: `<div style="text-align: ${block.data.textAlign}">`,
@@ -18,13 +18,16 @@ const blockToHTML = (block: any) => {
         empty: 'empty',
       };
     }
-    //   return <p>atomic</p>;
   }
   return null;
 };
 
 const styleToHTML = (style: string) => {
-  console.log(style);
+  // console.log(style);
+  if (style === 'BOLD') {
+    return <span style={{ color: 'blue' }} />;
+  }
+  return null;
 };
 
 const entityToHTML = (entity: RawDraftEntity, originalText: string) => {
@@ -35,7 +38,7 @@ const entityToHTML = (entity: RawDraftEntity, originalText: string) => {
   return originalText;
 };
 
-class Converter {
+export class Converter {
   static convertToHTML = (editorState: EditorState): string => {
     return convertToHTML({
       blockToHTML,

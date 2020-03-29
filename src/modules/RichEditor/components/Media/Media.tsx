@@ -4,7 +4,7 @@ import { DraftBlockComponentProps } from './types';
 
 /** Media */
 const Media: React.FC<DraftBlockComponentProps> = (props) => {
-  // console.log(props);
+  // console.log(props.selection.getAnchorKey());
   const { contentState, block } = props;
 
   const entity = contentState.getEntity(block.getEntityAt(0));
