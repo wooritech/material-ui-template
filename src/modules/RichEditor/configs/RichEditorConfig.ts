@@ -47,4 +47,8 @@ export default class RichEditorConfig extends Immutable.Record(defaultConfig) im
   setExtension(newExtension: RichEditorToolbarExtension): RichEditorConfig {
     return this.set('extension', newExtension) as RichEditorConfig;
   }
+
+  setImageFileProcess(fileProcess: 'base64' | 'upload-url' | string): RichEditorConfig {
+    return this.setIn(['image', 'fileProcess'], fileProcess) as RichEditorConfig;
+  }
 }

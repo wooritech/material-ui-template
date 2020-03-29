@@ -67,7 +67,10 @@ const EditorPanel: React.FC = () => {
    *         },
    *       ];
    */
-  const [richConfig, setRichConfig] = React.useState<RichEditorConfig>(new RichEditorConfig());
+  const [richConfig, setRichConfig] = React.useState<RichEditorConfig>(() => {
+    const config = new RichEditorConfig();
+    return config.setImageFileProcess('base64');
+  });
 
   const defaultLanguage = 'kr';
 
