@@ -46,6 +46,7 @@ const ImageControl: React.FC<EditorControlsProps> = (props) => {
           id="raised-button-file"
           hidden
           // multiple
+          value=""
           accept="image/*"
           type="file"
           onChange={handleFile}

@@ -1,4 +1,4 @@
-import { ContentBlock, EditorState } from 'draft-js';
+import { ContentBlock } from 'draft-js';
 import { Media } from '../components';
 import { EventRichCommand } from '../types';
 

@@ -18,7 +18,7 @@ const defaultConfig: Partial<Config> = {
   toolbarConfig: defaultToolbarConfig,
   extension: undefined,
   image: {
-    fileProcess: 'upload-url',
+    fileProcess: 'base64',
   },
 };
 
