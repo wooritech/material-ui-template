@@ -90,9 +90,10 @@ const ToolbarSet: RichEditorToolbarConfig = [
     name: 'Extension',
     type: 'BUTTONGROUP',
     buttons: [
+      { label: '다른 언어', value: 'lang', icon: 'g_translate_outlined' },
       { label: '소스보기', value: 'raw', icon: 'settings_ethernet_outlined' },
-      { label: '다른 언어', value: 'lang', startIcon: 'g_translate_outlined' },
-      { label: '미리보기', value: 'preview', icon: 'desktop_mac_outlined' },
+      { label: '브라우저 보기', value: 'browser', icon: 'language_outlined' },
+      { label: 'HTML', value: 'html' },
     ],
   },
   {

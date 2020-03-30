@@ -10,20 +10,34 @@
 - React
 - Typescript
 - Material-ui
-- Next(?)
+- Next?
 
 ## 컴포넌트
 
-- RichEditorState: draft.js EditorState 상속으로 만들고 몇가지 static 함수 추가 등
-- RichEditorDocument: 편집을 위한 문서정보
-- RichEditorConfig: 에디터 설정 정보, 툴바 설정 정보, 확장 화면 설정정보, 현재는 RichEditorToolbarConfig 로 되어 있는데 나중에 RichEditorConfig에 포함할 예정입니다.
 - RichEditorFrame: 아래 컴포넌트를 개별로 사용할 수 있지만 하나로 합쳐진 구조를 제공
-  - RichEditorHeader
-  - RichEditorToolbar
+- RichEditorHeader
+- RichEditorToolbar
+- components
   - RichEditor
-  - RawViewer
-  - Preview
+- configs
+  - RichEditorConfig: 에디터 설정 정보, 툴바 설정 정보, 확장 화면 설정정보, 현재는 RichEditorToolbarConfig 로 되어 있는데 나중에 RichEditorConfig에 포함할 예정입니다.
+- controls
+- extensions
   - MultiLanguageEditor
+  - Preview
+  - RawViewer
+- modules
+  - RichEditorDocument: 편집을 위한 문서정보
+  - RichEditorState: draft.js EditorState 상속으로 만들고 몇가지 static 함수 추가 등
+- plugins
+- renderers
+- utils
+  - convertUtils.tsx
+    - RichEditor 문서를 HTML 코드로 변환 하거나 HTML 코드에서 문서를 불러오기 위한 Utils
+  - contentUtils.ts
+    - RichEditor에서 내부적으로 문서의 블럭코드를 관리하기 위한 Utils.
+  - mediaUtils.ts
+    - RichEditor내부에서 미디어 파일을 읽어오거나 변환하기 위한 Utils
 
 ![image](https://user-images.githubusercontent.com/6207238/77023119-c6efb880-69ce-11ea-9a9e-b5edfdc84688.png)
 

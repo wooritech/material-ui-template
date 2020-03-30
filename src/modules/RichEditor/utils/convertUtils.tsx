@@ -25,7 +25,8 @@ const blockToHTML = (block: any) => {
 const styleToHTML = (style: string) => {
   // console.log(style);
   if (style === 'BOLD') {
-    return <span style={{ color: 'blue' }} />;
+    /** 이 스타일은 그냥 연습일 뿐이다. */
+    // return <span style={{ fontWeight: 800 }} />;
   }
   return null;
 };
@@ -38,7 +39,11 @@ const entityToHTML = (entity: RawDraftEntity, originalText: string) => {
   return originalText;
 };
 
-export class Converter {
+class ConvertUtils {
+  static insertVideo = () => {
+    return null;
+  };
+
   static convertToHTML = (editorState: EditorState): string => {
     return convertToHTML({
       blockToHTML,
@@ -48,4 +53,4 @@ export class Converter {
   };
 }
 
-export default Converter;
+export default ConvertUtils;

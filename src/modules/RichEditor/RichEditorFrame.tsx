@@ -37,18 +37,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   extentions: {
     overflow: 'auto',
-    fontSize: '16px',
     height: 'calc(100vh - 185px)',
     borderRadius: '3px',
-    // padding: theme.spacing(1),
+    padding: theme.spacing(1),
   },
   extRaw: {
     color: '#eee',
+    fontSize: '1.3em',
     backgroundColor: '#0d0d0d',
   },
   extLang: {
     color: '#0d0d0d',
     backgroundColor: '#e3f2fd',
+  },
+  extPreview: {
+    fontSize: '1.0em',
+    border: '1px solid #d0d0d0',
   },
   divider: {
     backgroundColor: '#ddd',
@@ -135,9 +139,11 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             </div>
           </Grid>
         ) : null}
-        {richConfig.extension === 'preview' ? (
+        {['browser', 'html'].includes(richConfig.extension || '') ? (
           <Grid item xs={6}>
-            <Preview editorState={richState} />
+            <div className={`${classes.extentions} ${classes.extPreview}`}>
+              <Preview view={richConfig.extension} editorState={richState} />
+            </div>
           </Grid>
         ) : null}
       </Grid>

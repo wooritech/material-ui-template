@@ -1,5 +1,5 @@
-import Converter from './converter';
-import MediaUtils from './mediaUtils';
+import ConvertUtils from './convertUtils';
 import ContentUtils from './contentUtils';
+import MediaUtils from './mediaUtils';
 
-export { Converter, MediaUtils, ContentUtils };
+export { ConvertUtils, MediaUtils, ContentUtils };
