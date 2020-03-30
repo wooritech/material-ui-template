@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import pretty from 'pretty';
 import { RichEditorState } from '../modules';
 import { ConvertUtils } from '../utils';
-import { ToolButtons } from '../components';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,11 +32,6 @@ const Preview: React.FC<RichEditorPreviewProps> = (props) => {
       {view === 'html' ? (
         <pre className={classes.pre}>{pretty(contents, { ocd: true })}</pre>
       ) : null}
-
-      {/* <div dangerouslySetInnerHTML={{ __html: contents }} />
-      <div>
-        <pre>{contents}</pre>
-      </div> */}
     </div>
   );
 };
