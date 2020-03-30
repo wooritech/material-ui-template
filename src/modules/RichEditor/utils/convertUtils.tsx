@@ -9,8 +9,15 @@ import { convertToHTML } from 'draft-convert';
  *  - getType() 과 같이 함수로 접근할 수 없다.
  */
 const blockToHTML = (block: any) => {
+  // console.log(block.type);
+  if (block.type === 'code-block') {
+    return {
+      start: '<pre>',
+      end: '</pre>',
+    };
+  }
+
   if (block.type === 'atomic') {
-    // console.log(block);
     if (block.data) {
       return {
         start: `<div style="text-align: ${block.data.textAlign}">`,
@@ -19,6 +26,7 @@ const blockToHTML = (block: any) => {
       };
     }
   }
+
   return null;
 };
 
