@@ -67,13 +67,11 @@ interface RichEditorFrameProps {
   onRichCommand: EventRichCommand;
   onStateChange: (richState: RichEditorState) => void;
   onConfigChange?: (config: RichEditorConfig) => void;
-  // toolbarConfig?: RichEditorToolbarConfig;
 }
 
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const classes = useStyles();
   const { richDoc, richState, richConfig, onRichCommand, onStateChange, onConfigChange } = props;
-  // const [toolbarState, setToolbarState] = React.useState<ToolbarState>({ extension: undefined });
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
@@ -87,12 +85,9 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
       case 'change-img-align':
-        // console.log('change-img-align: ', value);
         onStateChange(
           MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
         );
-        // toggleSelectionAlignment(richState, value.textAlign);
-        // RichEditorState.set(richState, value.content);
         break;
       default:
         onRichCommand(command, value);

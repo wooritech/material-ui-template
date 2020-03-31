@@ -27,13 +27,6 @@ export const customStyleMap: DraftStyleMap = {
   },
 };
 
-export const useToolbarStyle = makeStyles((theme: Theme) => ({
-  divider: {
-    backgroundColor: '#ddd',
-    margin: theme.spacing(1),
-  },
-}));
-
 export const useEditorStyles = makeStyles((theme: Theme) => ({
   '@global': {
     '.RichEditor-align-left .public-DraftStyleDefault-ltr': {
