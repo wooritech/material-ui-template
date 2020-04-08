@@ -166,6 +166,8 @@ const EditorPanel: React.FC = () => {
         onConfigChange={handleConfigChange}
         /** 이 값을 넘기기 않으면 모든 툴바를 표시합니다. */
         // toolbarConfig={toolbarConfig}
+        /** 상태표시줄 표시 여부 */
+        showStatusbar
       />
     </div>
   );

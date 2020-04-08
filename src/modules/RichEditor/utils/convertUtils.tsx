@@ -27,6 +27,14 @@ const blockToHTML = (block: any) => {
     }
   }
 
+  if (block.type === 'table') {
+    console.log(block);
+    return {
+      start: '<table>',
+      end: '</table>',
+    };
+  }
+
   return null;
 };
 

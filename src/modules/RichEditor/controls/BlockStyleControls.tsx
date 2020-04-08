@@ -14,10 +14,7 @@ const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
   const selection = editorState.getSelection();
   const isBlockType = (value: any): boolean => {
     return (
-      editorState
-        .getCurrentContent()
-        .getBlockForKey(selection.getStartKey())
-        .getType() === value
+      editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType() === value
     );
   };
 

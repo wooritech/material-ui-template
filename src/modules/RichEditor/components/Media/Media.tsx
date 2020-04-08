@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import ImageMedia from './ImageMedia';
-import { DraftBlockComponentProps } from './types';
+import { DraftBlockComponentProps } from '../types';
 
 /** Media */
 const Media: React.FC<DraftBlockComponentProps> = (props) => {

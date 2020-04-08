@@ -33,6 +33,15 @@ export default [
             data: {},
           },
           {
+            key: '6gw3',
+            text: '',
+            type: 'table',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+          {
             key: 'd9132',
             text:
               '이 컴포넌트는 RichEditor관련 모든 하위 컴포넌트를 포함하고 있다. 다른 컴포넌트들은 속성값과 이벤트 핸들러로 컨트롤 한다.',

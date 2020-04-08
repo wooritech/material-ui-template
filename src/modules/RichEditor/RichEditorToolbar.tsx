@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { EditorState } from 'draft-js';
+import { RichEditorState } from './modules';
 import { RichEditorConfig } from './configs';
 import { ControlComponents } from './controls';
 import { EventRichCommand } from './types';
@@ -25,9 +25,9 @@ const useToolbarStyle = makeStyles((theme: Theme) => ({
 
 interface RichEditorToolbarProps {
   richConfig: RichEditorConfig;
-  editorState: EditorState;
+  editorState: RichEditorState;
   onRichCommand: EventRichCommand;
-  onStateChange: (eidtorState: EditorState) => void;
+  onStateChange: (eidtorState: RichEditorState) => void;
 }
 
 /** 툴바에 버튼을 생성하는 컴포넌트 */

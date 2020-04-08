@@ -1,13 +1,20 @@
 import RichEditor from './RichEditor';
 import { Media } from './Media';
+import Table from './Table/Table';
 import { ToolButtonGroup, ToolButtons, ToolButtonPopper } from './ToolButtons';
 
-export * from './ToolButtons';
+/**
+ * https://github.com/prettier/prettier/issues/7778
+ * https://devblogs.microsoft.com/typescript/announcing-typescript-3-8/#type-only-imports-exports
+ */
+export * from './ToolButtons/types';
 
 export {
   RichEditor,
   /** media */
   Media,
+  /** table */
+  Table,
   /** tool buttons */
   ToolButtonGroup,
   ToolButtons,

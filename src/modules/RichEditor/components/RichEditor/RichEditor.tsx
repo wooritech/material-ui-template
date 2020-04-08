@@ -24,11 +24,12 @@ interface RichEditorProps {
   blockStyleFn?: (block: ContentBlock) => string;
   blockRendererFn?: (block: ContentBlock) => any;
   onChange: (editorState: EditorState) => void;
+  readOnly?: boolean | undefined;
 }
 
 const RichEditor: React.FC<RichEditorProps> = (props) => {
   useEditorStyles();
-  const { onChange, editorState, blockStyleFn, blockRendererFn } = props;
+  const { onChange, editorState, blockStyleFn, blockRendererFn, readOnly } = props;
 
   // const isHeaderBlock = (block: ContentBlock): boolean => {
   //   switch (block.getType()) {
@@ -51,7 +52,7 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
   //   // 커서 다음에 새 블록 추가
   //   const contentWithBlock = Modifier.splitBlock(editorState.getCurrentContent(), selection);
 
-  //   // 새 블록 유형을 일반 'unstyled' 텍스트로 변경
+  //   // 새 블록 유형을 일반 'unstyled' 텍스트로 변경, table인 경우도 new block
   //   const newBlock = contentWithBlock.getBlockAfter(selection.getEndKey());
   //   const contentWithUnstyledBlock = Modifier.setBlockType(
   //     contentWithBlock,
@@ -121,6 +122,7 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
       editorState={editorState}
       onChange={onChange}
       placeholder="여기에 내용을 입력하세요."
+      readOnly={readOnly}
       // spellCheck
     />
   );

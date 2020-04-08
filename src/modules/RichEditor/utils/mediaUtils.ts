@@ -5,7 +5,7 @@ import {
   ContentState,
   ContentBlock,
 } from 'draft-js';
-import { setBlockData } from './blocks';
+import BlockUtils from './blockUtils';
 
 class MediaUtils {
   static insertVideo = () => {
@@ -16,7 +16,7 @@ class MediaUtils {
     return new Promise((resolve) => {
       const reader = new FileReader();
 
-      reader.onload = function(event: ProgressEvent<FileReader>) {
+      reader.onload = (event: ProgressEvent<FileReader>) => {
         resolve(event.target ? event.target.result : null);
       };
 
@@ -59,7 +59,7 @@ class MediaUtils {
   ) => {
     const data = block.getData().set('textAlign', align);
     const sel = SelectionState.createEmpty(block.getKey());
-    return setBlockData(editorState, contentState, sel, data);
+    return BlockUtils.setBlockData(editorState, contentState, sel, data);
   };
 }
 

@@ -12,7 +12,7 @@ import { Preview, RawView, MultiLanguageEditor } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils } from './utils';
+import { MediaUtils, ContentUtils, BlockUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -33,13 +33,22 @@ const useStyles = makeStyles((theme: Theme) => ({
      * TODO: 스타일 수정 필요
      *  화면 크기에 따라 툴바의 높이가 변하면 전체 감싸고 있는 panel의 높이를 벗어남.
      */
-    height: 'calc(100vh - 185px)',
+    height: (props: { editorHeight: number }) => `calc(100vh - ${props.editorHeight}px)`,
   },
   extentions: {
     overflow: 'auto',
-    height: 'calc(100vh - 185px)',
+    height: (props: { editorHeight: number }) => `calc(100vh - ${props.editorHeight}px)`,
     borderRadius: '3px',
     padding: theme.spacing(1),
+  },
+  statusBar: {
+    height: '40px',
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    overflow: 'auto',
+    overFlowY: 'none',
+    fontSize: 12,
   },
   extRaw: {
     color: '#eee',
@@ -67,11 +76,36 @@ interface RichEditorFrameProps {
   onRichCommand: EventRichCommand;
   onStateChange: (richState: RichEditorState) => void;
   onConfigChange?: (config: RichEditorConfig) => void;
+  showStatusbar?: boolean;
 }
 
+/**
+ * RichEditorFrame
+ *
+ */
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
-  const classes = useStyles();
-  const { richDoc, richState, richConfig, onRichCommand, onStateChange, onConfigChange } = props;
+  const {
+    richDoc,
+    richState,
+    richConfig,
+    onRichCommand,
+    onStateChange,
+    onConfigChange,
+    showStatusbar,
+  } = props;
+  const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
+  const [status, setStatus] = React.useState<string[]>([]);
+
+  const setStatusBar = (state: RichEditorState) => {
+    const block = ContentUtils.getSelectionBlock(state).toJS();
+    const inlineStyle = state.getCurrentInlineStyle();
+    const outs: string[] = [];
+    if (block.key) outs.push(block.key);
+    if (block.type) outs.push(block.type);
+    if (inlineStyle.count() > 0) outs.push(JSON.stringify(inlineStyle));
+    outs.push(BlockUtils.isEmptyBlock(state.getCurrentContent(), state.getSelection()).toString());
+    setStatus(outs);
+  };
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
@@ -95,6 +129,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   };
 
   const handleStateChange = (state: RichEditorState) => {
+    setStatusBar(state);
     handleRichCommand('change-state', state);
   };
 
@@ -141,6 +176,12 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             </div>
           </Grid>
         ) : null}
+      </Grid>
+      <Divider light />
+      <Grid container className={classes.statusBar} wrap="nowrap">
+        <Grid item xs>
+          <div>{status.join(' / ')}</div>
+        </Grid>
       </Grid>
     </>
   );
