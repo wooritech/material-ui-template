@@ -8,7 +8,7 @@ const atomicRenderer = (onRichCommand: EventRichCommand) => {
     editable: false,
     /** 커스텀 프로퍼티 */
     props: {
-      command: onRichCommand,
+      onRichCommand,
     },
   };
 };
@@ -19,7 +19,7 @@ const tableRenderer = (onRichCommand: EventRichCommand) => {
     editable: false,
     /** 커스텀 프로퍼티 */
     props: {
-      command: onRichCommand,
+      onRichCommand,
     },
   };
 };

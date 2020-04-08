@@ -4,6 +4,7 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import { SelectionState, Modifier } from 'draft-js';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditor } from './components';
@@ -12,7 +13,7 @@ import { Preview, RawView, MultiLanguageEditor } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils, ContentUtils, BlockUtils } from './utils';
+import { MediaUtils, ContentUtils, BlockUtils, TableUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -95,6 +96,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   } = props;
   const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
   const [status, setStatus] = React.useState<string[]>([]);
+  const [readOnly, setReadOnly] = React.useState(false);
 
   const setStatusBar = (state: RichEditorState) => {
     const block = ContentUtils.getSelectionBlock(state).toJS();
@@ -123,6 +125,19 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
         );
         break;
+      case 'on-focus-table':
+        /** 테이블 블럭에서 테이블에 포커스 올라가면 발생
+         *  value = { contentState, block, data } */
+        setReadOnly(true);
+        break;
+      case 'on-leave-table':
+        /** 테이블 블럭에서 테이블에 포커스 사라지면 발생
+         *  value = { contentState, block, data } */
+        setReadOnly(false);
+        onStateChange(
+          TableUtils.setBlockTableData(richState, value.contentState, value.block, value.data),
+        );
+        break;
       default:
         onRichCommand(command, value);
     }
@@ -130,6 +145,10 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
 
   const handleStateChange = (state: RichEditorState) => {
     setStatusBar(state);
+    // setBlockType(BlockUtils.getCurrentBlockType(state));
+    // console.log(readOnly, blockType);
+    // if (!readOnly && blockType === 'table') setReadOnly(true);
+    // else setReadOnly(false);
     handleRichCommand('change-state', state);
   };
 
@@ -152,6 +171,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
               onChange={handleStateChange}
               blockRendererFn={richBlockRendererFn(handleRichCommand)}
               blockStyleFn={blockStyleFn}
+              readOnly={readOnly}
             />
           </div>
         </Grid>

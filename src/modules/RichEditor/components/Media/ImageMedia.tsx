@@ -86,9 +86,9 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
   const id = open ? 'toolbar-popover' : undefined;
 
   const handleChange = (newValue: string) => {
-    if (blockProps?.command) {
+    if (blockProps?.onRichCommand) {
       /** command 는 EventRichCommand 타입으로 blockRendererFn 호출시 넣어준다. */
-      blockProps.command('change-img-align', {
+      blockProps.onRichCommand('change-img-align', {
         contentState,
         block,
         align: newValue,

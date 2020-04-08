@@ -8,9 +8,17 @@ import {
   ContentBlock,
   CharacterMetadata,
   genKey,
+  RichUtils,
 } from 'draft-js';
 
 class BlockUtils {
+  /**
+   *
+   */
+  static getCurrentBlockType = (editorState: EditorState): string => {
+    return RichUtils.getCurrentBlockType(editorState);
+  };
+
   /**
    * 블럭 분리
    */

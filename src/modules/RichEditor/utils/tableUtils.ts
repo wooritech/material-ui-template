@@ -1,3 +1,4 @@
+import * as Immutable from 'immutable';
 import {
   EditorState,
   AtomicBlockUtils,
@@ -9,29 +10,16 @@ import {
   Editor,
 } from 'draft-js';
 import BlockUtils from './blockUtils';
+import { RichEditorState } from '../modules';
+import ContentUtils from './contentUtils';
 
 export const defaultTableData = {
-  headers: [{ text: 'Header 1' }, { text: 'Header 2' }, { text: 'Header 3' }, { text: 'Header 4' }],
-  rows: [
-    [
-      { text: 'Col 1, Row 1' },
-      { text: 'Col 2, Row 1' },
-      { text: 'Col 3, Row 1' },
-      { text: 'Col 4, Row 1' },
-    ],
-    [
-      { text: 'Col 1, Row 2' },
-      { text: 'Col 2, Row 2' },
-      { text: 'Col 3, Row 2' },
-      { text: 'Col 4, Row 2' },
-    ],
-    [
-      { text: 'Col 1, Row 3' },
-      { text: 'Col 2, Row 3' },
-      { text: 'Col 3, Row 3' },
-      { text: 'Col 4, Row 3' },
-    ],
+  header: [{ text: '' }, { text: '' }, { text: '' }],
+  body: [
+    [{ text: '' }, { text: '' }, { text: '' }],
+    [{ text: '' }, { text: '' }, { text: '' }],
   ],
+  footer: [{ text: '' }, { text: '' }, { text: '' }],
 };
 
 export type TableData = typeof defaultTableData;
@@ -69,7 +57,8 @@ class TableUtils {
     if (!BlockUtils.isEmptyBlock(content, selection))
       tableState = BlockUtils.splitBlock(editorState);
 
-    const entityKey = TableUtils.createTableEntity(editorState, data || defaultTableData);
+    // entity key 보다는 block data를 이용하는게 업데이트도 편하고 용도에 맞는것 같다.
+    // const entityKey = TableUtils.createTableEntity(editorState, data || defaultTableData);
     const blockData = data || defaultTableData;
     tableState = BlockUtils.insertNewFlagment(
       tableState,
@@ -77,8 +66,8 @@ class TableUtils {
       'table',
       '',
       blockData,
-      entityKey,
-      ' ',
+      // entityKey,
+      // ' ',
     );
 
     return tableState;
@@ -95,6 +84,27 @@ class TableUtils {
     const contentStateWithEntity = contentState.createEntity('TABLE', 'IMMUTABLE', data);
 
     return contentStateWithEntity.getLastCreatedEntityKey();
+  };
+
+  static setBlockTableData = (
+    editorState: RichEditorState,
+    contentState: ContentState,
+    block: ContentBlock,
+    data?: TableData,
+  ): RichEditorState => {
+    const blockData = block
+      .getData()
+      .set('header', data?.header)
+      .set('body', data?.body)
+      .set('footer', data?.footer);
+    const selection = SelectionState.createEmpty(block.getKey());
+    return EditorState.push(
+      editorState,
+      Modifier.mergeBlockData(contentState, selection, blockData),
+      'change-block-data',
+    );
+    // return BlockUtils.setBlockData(editorState, contentState, selection, blockData);
+    // return ContentUtils.setBlockData(editorState, blockData);
   };
 }
 
