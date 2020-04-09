@@ -4,16 +4,15 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { SelectionState, Modifier } from 'draft-js';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
-import { RichEditor } from './components';
+import { RichEditor, StatusBar } from './components';
 import { RichEditorState, RichEditorDocument } from './modules';
 import { Preview, RawView, MultiLanguageEditor } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils, ContentUtils, BlockUtils, TableUtils } from './utils';
+import { MediaUtils, TableUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -95,19 +94,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
     showStatusbar,
   } = props;
   const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
-  const [status, setStatus] = React.useState<string[]>([]);
   const [readOnly, setReadOnly] = React.useState(false);
-
-  const setStatusBar = (state: RichEditorState) => {
-    const block = ContentUtils.getSelectionBlock(state).toJS();
-    const inlineStyle = state.getCurrentInlineStyle();
-    const outs: string[] = [];
-    if (block.key) outs.push(block.key);
-    if (block.type) outs.push(block.type);
-    if (inlineStyle.count() > 0) outs.push(JSON.stringify(inlineStyle));
-    outs.push(BlockUtils.isEmptyBlock(state.getCurrentContent(), state.getSelection()).toString());
-    setStatus(outs);
-  };
 
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
@@ -144,7 +131,6 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   };
 
   const handleStateChange = (state: RichEditorState) => {
-    setStatusBar(state);
     // setBlockType(BlockUtils.getCurrentBlockType(state));
     // console.log(readOnly, blockType);
     // if (!readOnly && blockType === 'table') setReadOnly(true);
@@ -197,12 +183,16 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           </Grid>
         ) : null}
       </Grid>
-      <Divider light />
-      <Grid container className={classes.statusBar} wrap="nowrap">
-        <Grid item xs>
-          <div>{status.join(' / ')}</div>
-        </Grid>
-      </Grid>
+      {showStatusbar ? (
+        <>
+          <Divider light />
+          <Grid container className={classes.statusBar} wrap="nowrap">
+            <Grid item xs>
+              <StatusBar richState={richState} />
+            </Grid>
+          </Grid>
+        </>
+      ) : null}
     </>
   );
 };

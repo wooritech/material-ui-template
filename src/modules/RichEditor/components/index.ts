@@ -1,6 +1,7 @@
 import RichEditor from './RichEditor';
 import { Media } from './Media';
 import Table from './Table/Table';
+import StatusBar from './StatusBar';
 import { ToolButtonGroup, ToolButtons, ToolButtonPopper } from './ToolButtons';
 
 /**
@@ -19,4 +20,5 @@ export {
   ToolButtonGroup,
   ToolButtons,
   ToolButtonPopper,
+  StatusBar,
 };
