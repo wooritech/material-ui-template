@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 /** Popover는  modal 을 기반하로 하기 때문에 focus 처리에 어려움이 있다.
- * @todo Scroll 처리를 위해 Popper로 변경 필요
- * @todo timer로 처리한 delay를 수정할 필요가 있다.
+ *
  * 어쨋든 마우스가 툴바에 올라오면 editor selection이 clear 되는 문제가 있다. */
 import Popover from '@material-ui/core/Popover';
 import { ToolButtons } from '../ToolButtons';
@@ -151,3 +150,11 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
 };
 
 export default ImageMedia;
+
+/*
+
+- [ ] Scroll 처리를 위해 Popper로 변경 필요
+- [ ] timer로 처리한 delay를 수정할 필요가 있다.??
+- [ ] 툴바 전면 수정이 필요해 보인다.
+
+*/

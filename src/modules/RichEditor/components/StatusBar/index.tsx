@@ -11,9 +11,6 @@ interface StatusBarProps {
  *
  * 지저분해 질것 같아서 컴포넌트로 분리
  *
- * @todo
- *   - [ ] divider 로 분리
- *   - [ ] 표시할 상태 항목을 옵션으로 처리
  */
 const StatusBar: React.FC<StatusBarProps> = (props) => {
   const { richState } = props;
@@ -33,3 +30,10 @@ const StatusBar: React.FC<StatusBarProps> = (props) => {
 };
 
 export default StatusBar;
+
+/*
+
+- [ ] divider 로 분리
+- [ ] 표시할 상태 항목을 옵션으로 처리 
+
+*/
