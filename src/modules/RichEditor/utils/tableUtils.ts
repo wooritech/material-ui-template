@@ -1,28 +1,8 @@
 import * as Immutable from 'immutable';
-import {
-  EditorState,
-  AtomicBlockUtils,
-  SelectionState,
-  ContentState,
-  ContentBlock,
-  Modifier,
-  genKey,
-  Editor,
-} from 'draft-js';
+import { EditorState, SelectionState, ContentBlock, Modifier } from 'draft-js';
 import BlockUtils from './blockUtils';
 import { RichEditorState } from '../modules';
-import ContentUtils from './contentUtils';
-
-export const defaultTableData = {
-  header: [{ text: '' }, { text: '' }, { text: '' }],
-  body: [
-    [{ text: '' }, { text: '' }, { text: '' }],
-    [{ text: '' }, { text: '' }, { text: '' }],
-  ],
-  footer: [{ text: '' }, { text: '' }, { text: '' }],
-};
-
-export type TableData = typeof defaultTableData;
+import { RichTableData, defaultTableData } from '../components/RichTable';
 
 class TableUtils {
   /**
@@ -49,7 +29,7 @@ class TableUtils {
    *  1. 현재 블럭이 text 가 없는 unstyled type 블럭이면 현재 블럭에 테이블 추가
    *  2. 현재 블럭에 text 가 있으면 split 한 다음 빈블럭을 찾아서 테이블 추가
    */
-  static insertTable = (editorState: EditorState, data?: TableData) => {
+  static insertTable = (editorState: EditorState, data?: RichTableData) => {
     const content = editorState.getCurrentContent();
     const selection = editorState.getSelection();
     let tableState = editorState;
@@ -77,7 +57,7 @@ class TableUtils {
    * createTableEntity
    * 테이블 데이터를 Entity에 넣을 경우
    */
-  static createTableEntity = (editorState: EditorState, data?: TableData) => {
+  static createTableEntity = (editorState: EditorState, data?: RichTableData) => {
     const contentState = editorState.getCurrentContent();
 
     /** 엔터티 추가 */
@@ -86,25 +66,21 @@ class TableUtils {
     return contentStateWithEntity.getLastCreatedEntityKey();
   };
 
+  /**
+   * setBlockTableData
+   */
   static setBlockTableData = (
     editorState: RichEditorState,
-    contentState: ContentState,
     block: ContentBlock,
-    data?: TableData,
+    data?: RichTableData,
   ): RichEditorState => {
-    const blockData = block
-      .getData()
-      .set('header', data?.header)
-      .set('body', data?.body)
-      .set('footer', data?.footer);
+    const content = editorState.getCurrentContent();
     const selection = SelectionState.createEmpty(block.getKey());
     return EditorState.push(
       editorState,
-      Modifier.mergeBlockData(contentState, selection, blockData),
+      Modifier.mergeBlockData(content, selection, data || Immutable.Map()),
       'change-block-data',
     );
-    // return BlockUtils.setBlockData(editorState, contentState, selection, blockData);
-    // return ContentUtils.setBlockData(editorState, blockData);
   };
 }
 

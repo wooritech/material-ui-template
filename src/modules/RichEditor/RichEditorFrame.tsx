@@ -96,6 +96,8 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
   const [readOnly, setReadOnly] = React.useState(false);
 
+  /** 
+    - [ ] 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
       case 'save':
@@ -112,31 +114,29 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
         );
         break;
-      case 'on-focus-table':
+      case 'focus-table':
         /** 테이블 블럭에서 테이블에 포커스 올라가면 발생
-         *  value = { contentState, block, data } */
+         *  포커스가 내부 컴포넌트로 올라갈때 readonly 처리를 해주어야
+         *  내부 컴포넌트의 키 동작이 유연하다. */
         setReadOnly(true);
         break;
-      case 'on-leave-table':
-        /** 테이블 블럭에서 테이블에 포커스 사라지면 발생
-         *  value = { contentState, block, data } */
+      case 'change-table-data':
+        onStateChange(TableUtils.setBlockTableData(richState, value.block, value.data));
+        break;
+      case 'leave-table':
+        /** 테이블 블럭에서 테이블에 포커스 사라지면 발생 */
         setReadOnly(false);
-        onStateChange(
-          TableUtils.setBlockTableData(richState, value.contentState, value.block, value.data),
-        );
         break;
       default:
         onRichCommand(command, value);
     }
   };
 
-  const handleStateChange = (state: RichEditorState) => {
-    // setBlockType(BlockUtils.getCurrentBlockType(state));
-    // console.log(readOnly, blockType);
-    // if (!readOnly && blockType === 'table') setReadOnly(true);
-    // else setReadOnly(false);
-    handleRichCommand('change-state', state);
-  };
+  /** 
+   - [x] editorState도 onRichCommand에서 처리 */
+  // const handleStateChange = (state: RichEditorState) => {
+  //   handleRichCommand('change-state', state);
+  // };
 
   return (
     <>
@@ -146,7 +146,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         editorState={richState}
         richConfig={richConfig}
         onRichCommand={handleRichCommand}
-        onStateChange={handleStateChange}
+        onStateChange={(state: RichEditorState) => handleRichCommand('change-state', state)}
       />
       <Divider light />
       <Grid container className={classes.container} spacing={1}>
@@ -154,7 +154,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           <div className={classes.editor}>
             <RichEditor
               editorState={richState}
-              onChange={handleStateChange}
+              onChange={(state: RichEditorState) => handleRichCommand('change-state', state)}
               blockRendererFn={richBlockRendererFn(handleRichCommand)}
               blockStyleFn={blockStyleFn}
               readOnly={readOnly}

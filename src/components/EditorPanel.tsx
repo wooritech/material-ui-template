@@ -78,7 +78,7 @@ const EditorPanel: React.FC = () => {
    * 왼쪽 목차 메뉴에서 노드를 선택할 경우 RichEditorRaw 타입의 데이터를 만들어서
    * new RichEditorDocument(raw) 로 생성하면 된다.
    */
-  const loadSampleData = (id = '51') => {
+  const loadSampleData = (id = '53') => {
     const docData = documentDatas.find((item) => {
       return item.id === id;
     });

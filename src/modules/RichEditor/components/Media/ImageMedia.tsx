@@ -152,7 +152,6 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
 export default ImageMedia;
 
 /*
-
 - [ ] Scroll 처리를 위해 Popper로 변경 필요
 - [ ] timer로 처리한 delay를 수정할 필요가 있다.??
 - [ ] 툴바 전면 수정이 필요해 보인다.

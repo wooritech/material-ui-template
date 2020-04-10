@@ -1,5 +1,5 @@
 import { ContentBlock } from 'draft-js';
-import { Media, Table } from '../components';
+import { Media, RichTable } from '../components';
 import { EventRichCommand } from '../types';
 
 const atomicRenderer = (onRichCommand: EventRichCommand) => {
@@ -15,7 +15,7 @@ const atomicRenderer = (onRichCommand: EventRichCommand) => {
 
 const tableRenderer = (onRichCommand: EventRichCommand) => {
   return {
-    component: Table,
+    component: RichTable,
     editable: false,
     /** 커스텀 프로퍼티 */
     props: {

@@ -310,4 +310,33 @@ export default [
       },
     },
   },
+  {
+    id: '53',
+    title: '리얼그리드 상태바',
+    raws: {
+      kr: {
+        blocks: [
+          {
+            key: 'empty-key',
+            text: '리치에디터 테이블 연습',
+            type: 'header-one',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+          {
+            key: '6gw3',
+            text: '',
+            type: 'table',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+        ],
+        entityMap: {},
+      },
+    },
+  },
 ];

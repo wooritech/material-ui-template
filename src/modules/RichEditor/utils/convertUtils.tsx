@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EditorState, RawDraftEntity } from 'draft-js';
 import { convertToHTML } from 'draft-convert';
+import { RichTableData } from '../components/RichTable';
 
 /**
  * draft-convert에서 ContentBlock 타입을 다르게 구현하고 있다.
@@ -28,11 +29,9 @@ const blockToHTML = (block: any) => {
   }
 
   if (block.type === 'table') {
-    console.log(block);
-    return {
-      start: '<table>',
-      end: '</table>',
-    };
+    // console.log('draft-convert talbe', block.data);
+    const tableData = new RichTableData(block.data);
+    return tableData.toHTML();
   }
 
   return null;
