@@ -2,7 +2,7 @@ import * as Immutable from 'immutable';
 import { EditorState, SelectionState, ContentBlock, Modifier } from 'draft-js';
 import BlockUtils from './blockUtils';
 import { RichEditorState } from '../modules';
-import { RichTableData, defaultTableData } from '../components/RichTable';
+import { RichTableData } from '../components/RichTable';
 
 class TableUtils {
   /**
@@ -39,7 +39,7 @@ class TableUtils {
 
     // entity key 보다는 block data를 이용하는게 업데이트도 편하고 용도에 맞는것 같다.
     // const entityKey = TableUtils.createTableEntity(editorState, data || defaultTableData);
-    const blockData = data || defaultTableData;
+    const blockData = data || new RichTableData();
     tableState = BlockUtils.insertNewFlagment(
       tableState,
       'before',

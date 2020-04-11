@@ -1,12 +1,17 @@
+import * as Immutable from 'immutable';
 import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 import { DraftBlockComponentProps } from '../types';
-import RichTableData from './RichTableData';
-import { TableCell } from './types';
+import RichTableData, { defaultTableData } from './RichTableData';
+import { TableCurrent, TableCell } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
+  },
+  toolbar: {
+    backgroundColor: '#fff',
   },
   table: {
     width: '100%',
@@ -39,10 +44,34 @@ const useStyles = makeStyles((theme: Theme) => ({
  * - 테이블 삭제
  */
 const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
-  const { contentState, block, blockProps } = props;
+  const { block, blockProps } = props;
+  const [current, setCurrent] = React.useState(
+    Immutable.Map({
+      isFocused: false,
+      type: '',
+      row: -1,
+      col: -1,
+      text: '',
+    }),
+  );
   const classes = useStyles();
   const blockKey = block.getKey();
-  const tableData = new RichTableData(block.getData().toJS());
+
+  /** 랜더링은 js 객체로 하고 데이터 처리는 immutable class로 한다. */
+  const blockData = block.getData().size === 0 ? defaultTableData : block.getData().toJS();
+  const tableDataObject = new RichTableData(blockData);
+  /**
+   - [ ] FIXME: RichTableData의 구조적 문제
+   * 데이터가 있는 경우와 없는 경우 어떤 차이에 의해 달리지는지 알아내야 한다.
+   * defaultTableData도 immutalbe.map()으로 처리해서 넣었지만 여전히 차이는 있다.
+   * _tails에 값이 있고 없고 차이가 생기는데 정확한 이유는 알수 없고, 동작에는 문제가 없다.
+   * 즉,
+   *  저장된 block에서 불러온 data로 만든 클래스에는 _tails에 값이 들어가고,
+   *  default로 만든 클래스에는 값이 들어가지 않는다.
+   */
+  // console.log(blockKey, blockData, tableDataObject);
+
+  const tableData = tableDataObject.toJS();
 
   /** 현재 테이블 블럭의 셀간 이동인지 확인 */
   const isRelatedFocusing = (element: EventTarget | null) => {
@@ -61,9 +90,11 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
     if (isRelatedFocusing(event.relatedTarget)) return;
 
     if (blockProps?.onRichCommand) {
-      blockProps.onRichCommand('focus-table');
-      console.log(`<< on-focus-table: (${blockKey})`);
+      blockProps.onRichCommand('enter-table');
+      console.log(`<< enter-table: (${blockKey})`);
     }
+
+    setCurrent(current.set('isFocused', true));
   };
 
   /** 포커스가 이 테이블을 벗어날때 발생 */
@@ -77,29 +108,94 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
       blockProps.onRichCommand('leave-table');
       console.log(`(${blockKey}) :leave-table >>`);
     }
+
+    setCurrent(current.set('isFocused', false));
+    // console.log(current.toJS());
   };
 
   /** header의 contentEditable에 의해 생성된 input을 벗어날때 이벤트
    * onChange이벤트, onInput이벤트등을 이용할 수도 있다. */
   const handleHeaderChange = (event: React.FocusEvent, index: number) => {
     const text = event.currentTarget.textContent || '';
-    const data = tableData.setHeaderCell(index, text);
-    blockProps.onRichCommand('change-table-data', { contentState, block, data });
+    const data = tableDataObject.setHeaderCell(index, text);
+    blockProps.onRichCommand('change-table-data', { block, data });
   };
 
   /** footer input을 벗어날때 이벤트 */
   const handleFooterChange = (event: React.FocusEvent, index: number) => {
     const text = event.currentTarget.textContent || '';
-    const data = tableData.setFooterCell(index, text);
-    blockProps.onRichCommand('change-table-data', { contentState, block, data });
+    const data = tableDataObject.setFooterCell(index, text);
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
+
+  /** 셀 선택 될때 current 정보 유지 */
+  const handleEnterCell = (
+    e: React.FocusEvent,
+    type: string,
+    row: number,
+    col: number,
+    text: string,
+  ) => {
+    /**
+     - [ ] FIXME handleFocus()와의 시간차 문제를 해결하고 setTimeout을 제거해야 한다.
+     문제는 처음 포커스가 올라올때 나중에 초기화 되는 문제 */
+    setTimeout(() => {
+      const newCurrent = current
+        .set('isFocused', true)
+        .set('type', type)
+        .set('row', row)
+        .set('col', col)
+        .set('text', text);
+      // console.log(newCurrent.toJS());
+      setCurrent(newCurrent);
+    }, 20);
   };
 
   /** cell input을 벗어날때 이벤트 */
   const handleCellChange = (event: React.FocusEvent, rowIndex: number, colIndex: number) => {
     const text = event.currentTarget.textContent || '';
-    const data = tableData.setBodyCell(rowIndex, colIndex, text);
-    blockProps.onRichCommand('change-table-data', { contentState, block, data });
+    const data = tableDataObject.setBodyCell(rowIndex, colIndex, text);
+    blockProps.onRichCommand('change-table-data', { block, data });
   };
+
+  /**
+   * 헤더 추가
+   */
+  const handleInsertHeaderClick = (event: React.MouseEvent) => {};
+
+  /**
+   * 풋터 추가
+   *
+   */
+  const handleInsertFooterClick = (event: React.MouseEvent) => {};
+
+  /**
+   * 컬럼 추가
+   * - 현재 컬럼 index에 새 컬럼 추가 */
+  const handleInsertColumnClick = (event: React.MouseEvent) => {
+    const col = Number(current.get('col'));
+    if (col > -1) {
+      const data = tableDataObject.insertColumn(col);
+      blockProps.onRichCommand('change-table-data', { block, data });
+    }
+  };
+
+  /**
+   * 행 추가
+   * - current가 header나 footer에 있을 수 있고, body에 행이 없을 수도 있다.
+   * - footer인 경우 맨 마지막줄 추가 */
+  const handleInsertRowClick = (event: React.MouseEvent) => {
+    let row = Number(current.get('row'));
+    if (current.get('type') === 'footer') row = Number.MAX_SAFE_INTEGER;
+    const data = tableDataObject.insertRow(row === -1 ? 0 : row);
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
+
+  /**
+   * 행 삭제
+   *
+   */
+  const handleRemoveRowClick = (event: React.MouseEvent) => {};
 
   return (
     <div className="public-DraftStyleDefault-ltr">
@@ -108,13 +204,16 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
           <thead>
             <tr>
               {tableData && tableData.header
-                ? tableData.get('header').map((header: TableCell, index: number) => (
+                ? tableData.header.map((header: TableCell, index: number) => (
                     <th className={classes.th} key={index.toString()}>
                       <div
                         aria-label={blockKey}
                         className={classes.tdInput}
                         contentEditable
                         suppressContentEditableWarning
+                        onFocus={(e) => {
+                          handleEnterCell(e, 'header', -1, index, header.text);
+                        }}
                         onBlur={(e) => {
                           handleHeaderChange(e, index);
                         }}
@@ -128,7 +227,7 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
           </thead>
           <tbody>
             {tableData && tableData.body
-              ? tableData.get('body').map((row: TableCell[], rowIndex: number) => (
+              ? tableData.body.map((row: TableCell[], rowIndex: number) => (
                   <tr key={rowIndex.toString()}>
                     {row.map((col: TableCell, colIndex: number) => (
                       <td className={classes.td} key={colIndex.toString()}>
@@ -137,6 +236,9 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
                           className={classes.tdInput}
                           contentEditable
                           suppressContentEditableWarning
+                          onFocus={(e) => {
+                            handleEnterCell(e, 'body', rowIndex, colIndex, col.text);
+                          }}
                           onBlur={(e) => {
                             handleCellChange(e, rowIndex, colIndex);
                           }}
@@ -152,13 +254,16 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
           <tfoot>
             <tr>
               {tableData && tableData.footer
-                ? tableData.get('footer').map((footer: TableCell, index: number) => (
+                ? tableData.footer.map((footer: TableCell, index: number) => (
                     <td className={classes.tf} key={index.toString()}>
                       <div
                         aria-label={blockKey}
                         className={classes.tdInput}
                         contentEditable
                         suppressContentEditableWarning
+                        onFocus={(e) => {
+                          handleEnterCell(e, 'footer', -1, index, footer.text);
+                        }}
                         onBlur={(e) => {
                           handleFooterChange(e, index);
                         }}
@@ -171,9 +276,77 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
             </tr>
           </tfoot>
         </table>
+        {current.get('isFocused') ? (
+          <div className={classes.toolbar}>
+            <Button onClick={handleInsertHeaderClick} aria-label={blockKey}>
+              헤더 추가
+            </Button>
+            <Button onClick={handleInsertFooterClick} aria-label={blockKey}>
+              풋터 추가
+            </Button>
+            <Button onClick={handleInsertColumnClick} aria-label={blockKey}>
+              컬럼 추가
+            </Button>
+            <Button onClick={handleInsertRowClick} aria-label={blockKey}>
+              행 추가
+            </Button>
+            <Button onClick={handleRemoveRowClick} aria-label={blockKey}>
+              행 삭제
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
 };
 
 export default RichTable;
+
+// RichTableData {__ownerID: undefined, _values: List}
+// header: (...)
+// body: (...)
+// footer: (...)
+// rowCount: (...)
+// __ownerID: undefined
+// _values: List
+// size: 3
+// _origin: 0
+// _capacity: 3
+// _level: 5
+// _root: null
+// _tail: VNode
+// array: Array(3)
+// 0: (4) [{…}, {…}, {…}, {…}]
+// 1: (3) [Array(4), Array(4), Array(4)]
+// 2: (4) [{…}, {…}, {…}, {…}]
+// length: 3
+// __proto__: Array(0)
+// ownerID: OwnerID {}
+// __proto__: Object
+// __ownerID: undefined
+// __hash: undefined
+// __altered: false
+// __proto__: IndexedCollection
+// __proto__: Record
+
+// RichTableData {__ownerID: undefined, _values: List}
+// header: (...)
+// body: (...)
+// footer: (...)
+// rowCount: (...)
+// __ownerID: undefined
+// _values: List
+// size: 3
+// _origin: 0
+// _capacity: 3
+// _level: 5
+// _root: null
+// _tail: VNode
+// array: (3) [List, List, List]
+// ownerID: OwnerID {}
+// __proto__: Object
+// __ownerID: undefined
+// __hash: undefined
+// __altered: false
+// __proto__: IndexedCollection
+// __proto__: Record

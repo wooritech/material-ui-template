@@ -29,6 +29,7 @@ const blockToHTML = (block: any) => {
   }
 
   if (block.type === 'table') {
+    /** block.data 는 순수한 js object로 넘어 온다. */
     // console.log('draft-convert talbe', block.data);
     const tableData = new RichTableData(block.data);
     return tableData.toHTML();

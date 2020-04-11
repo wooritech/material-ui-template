@@ -114,7 +114,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
         );
         break;
-      case 'focus-table':
+      case 'enter-table':
         /** 테이블 블럭에서 테이블에 포커스 올라가면 발생
          *  포커스가 내부 컴포넌트로 올라갈때 readonly 처리를 해주어야
          *  내부 컴포넌트의 키 동작이 유연하다. */
