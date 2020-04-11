@@ -41,13 +41,13 @@ export const tableStyles = (editing: boolean) => {
   };
 };
 
+const newcell = { text: '' };
+const newcells = [{ text: '' }, { text: '' }, { text: '' }];
+
 export const defaultTableData: TableData = {
-  header: [{ text: '' }, { text: '' }, { text: '' }],
-  body: [
-    [{ text: '' }, { text: '' }, { text: '' }],
-    [{ text: '' }, { text: '' }, { text: '' }],
-  ],
-  footer: [{ text: '' }, { text: '' }, { text: '' }],
+  header: newcells,
+  body: [newcells, newcells],
+  footer: newcells,
 };
 
 export default class RichTableData extends Immutable.Record(defaultTableData) implements TableData {
@@ -68,11 +68,23 @@ export default class RichTableData extends Immutable.Record(defaultTableData) im
     return this.get('footer');
   }
 
+  get hasHeader(): boolean {
+    /** array 가 아닐수는 없다. */
+    return this.header.length > 0;
+  }
+
+  get hasFooter(): boolean {
+    return this.footer.length > 0;
+  }
+
   /** body row count */
   get rowCount(): number {
     return this.body.length;
   }
 
+  /**
+   * header footer body 가 각각 없을수도 있다는 가정으로 처리 실제로는 body는 없을 수 없음
+   * 최소 1행을 남겨둠 */
   get colCount(): number {
     if (this.header) return this.header.length;
     if (this.footer) return this.footer.length;
@@ -81,15 +93,15 @@ export default class RichTableData extends Immutable.Record(defaultTableData) im
   }
 
   private insertHeaderCell(index: number) {
-    this.header.splice(index, 0, { text: 'new' });
+    this.header.splice(index, 0, newcell);
   }
 
   private insertBodyCells(index: number) {
-    this.body.map((row) => row.splice(index, 0, { text: '' }));
+    this.body.map((row) => row.splice(index, 0, newcell));
   }
 
   private insertFooterCell(index: number) {
-    this.footer.splice(index, 0, { text: '' });
+    this.footer.splice(index, 0, newcell);
   }
 
   private removeHeaderCell(index: number) {
@@ -104,11 +116,34 @@ export default class RichTableData extends Immutable.Record(defaultTableData) im
     this.footer.splice(index, 1);
   }
 
+  private self(): RichTableData {
+    return this as RichTableData;
+  }
+
+  private setHeader(header: TableCellList): RichTableData {
+    return this.set('header', header) as RichTableData;
+  }
+
+  private setFooter(footer: TableCellList): RichTableData {
+    return this.set('footer', footer) as RichTableData;
+  }
+
   insertColumn(index: number): RichTableData {
     this.insertHeaderCell(index);
     this.insertBodyCells(index);
     this.insertFooterCell(index);
-    return this as RichTableData;
+    return this.self();
+  }
+
+  /** 헤더 추가 */
+  insertHeader(): RichTableData {
+    if (!this.hasHeader) return this.setHeader(newcells);
+    return this.self();
+  }
+
+  insertFooter(): RichTableData {
+    if (!this.hasFooter) return this.setFooter(newcells);
+    return this.self();
   }
 
   /** body 행 추가 */
@@ -118,48 +153,58 @@ export default class RichTableData extends Immutable.Record(defaultTableData) im
       return { text: index.toString() };
     });
     this.body.splice(index, 0, newRow);
-    return this as RichTableData;
+    return this.self();
+  }
+
+  /** 현재 행 삭제, header, body, footer 동시 적용 */
+  removeRow(type: string, index: number): RichTableData {
+    switch (type) {
+      case 'header':
+        return this.removeHeader();
+      case 'body':
+        return this.removeBodyRow(index);
+      case 'footer':
+        return this.removeFooter();
+      default:
+        return this.self();
+    }
   }
 
   removeColumn(index: number): RichTableData {
+    if (this.colCount === 1) throw new Error('Please leave the last column!');
     this.removeHeaderCell(index);
     this.removeBodyCells(index);
     this.removeFooterCell(index);
-    return this as RichTableData;
+    return this.self();
   }
 
   removeBodyRow(index: number): RichTableData {
+    if (this.rowCount === 1) throw new Error(`Please leave the last row!`);
     this.body.splice(index, 1);
-    return this as RichTableData;
+    return this.self();
   }
 
   removeHeader(): RichTableData {
-    return this.set('header', []) as RichTableData;
+    return this.setHeader([]);
   }
 
   removeFooter(): RichTableData {
-    return this.set('footer', []) as RichTableData;
+    return this.setFooter([]);
   }
 
   setHeaderCell(index: number, text: string): RichTableData {
-    const header = this.get('header');
-    header[index] = { text };
-    // const newHeader = header.set(index, { text });
-    return this.set('header', header) as RichTableData;
+    this.header[index] = { text };
+    return this.self();
   }
 
   setBodyCell(rowIndex: number, colIndex: number, text: string): RichTableData {
-    const body = this.get('body');
-    body[rowIndex][colIndex] = { text };
-    // const newBody = body.setIn([rowIndex, colIndex], { text });
-    return this.set('body', body) as RichTableData;
+    this.body[rowIndex][colIndex] = { text };
+    return this.self();
   }
 
   setFooterCell(index: number, text: string): RichTableData {
-    const footer = this.get('footer');
-    footer[index] = { text };
-    // const newFooter = footer.set(index, { text });
-    return this.set('footer', footer) as RichTableData;
+    this.footer[index] = { text };
+    return this.self();
   }
 
   toHTML(): ReactElement {

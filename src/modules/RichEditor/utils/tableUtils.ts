@@ -66,6 +66,45 @@ class TableUtils {
     return contentStateWithEntity.getLastCreatedEntityKey();
   };
 
+  static removeTable = (editorState: EditorState, block: ContentBlock) => {
+    console.log(block);
+    const blockKey = block.getKey();
+    const content = editorState.getCurrentContent();
+    const selection = new SelectionState({
+      anchorKey: blockKey,
+      anchorOffset: 0,
+      focusKey: blockKey,
+      focusOffset: block.getLength(),
+    });
+    const withoutTable = Modifier.removeRange(content, selection, 'backward');
+    const resetBlock = Modifier.setBlockType(
+      withoutTable,
+      withoutTable.getSelectionAfter(),
+      'unstyled',
+    );
+    const newState = EditorState.push(
+      TableUtils.removeBlockTableData(editorState, block),
+      resetBlock,
+      'remove-range',
+    );
+    return EditorState.forceSelection(newState, resetBlock.getSelectionAfter());
+  };
+
+  /**
+  - [ ] FIXME 데이터가 지워지지 않는다. */
+  static removeBlockTableData = (
+    editorState: RichEditorState,
+    block: ContentBlock,
+  ): RichEditorState => {
+    const content = editorState.getCurrentContent();
+    const selection = SelectionState.createEmpty(block.getKey());
+    return EditorState.push(
+      editorState,
+      Modifier.mergeBlockData(content, selection, Immutable.Map()),
+      'change-block-data',
+    );
+  };
+
   /**
    * setBlockTableData
    */

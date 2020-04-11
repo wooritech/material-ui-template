@@ -4,31 +4,33 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { DraftBlockComponentProps } from '../types';
 import RichTableData, { defaultTableData } from './RichTableData';
-import { TableCurrent, TableCell } from './types';
+import { TableCell } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
   },
   toolbar: {
+    marginTop: '8px',
     backgroundColor: '#fff',
   },
   table: {
     width: '100%',
-    border: '1px solid red',
+    border: '1px dashed',
     borderCollapse: 'collapse',
     tableLayout: 'fixed',
   },
   th: {
     backgroundColor: '#eee',
-    border: '1px solid red',
+    border: '1px dashed',
+    textAlign: 'center',
   },
   td: {
-    border: '1px solid red',
+    border: '1px dashed',
   },
   tf: {
     backgroundColor: '#eee',
-    border: '1px solid red',
+    border: '1px dashed',
   },
   tdInput: {
     padding: theme.spacing(1),
@@ -158,16 +160,17 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
     blockProps.onRichCommand('change-table-data', { block, data });
   };
 
-  /**
-   * 헤더 추가
-   */
-  const handleInsertHeaderClick = (event: React.MouseEvent) => {};
+  /** 헤더 추가 */
+  const handleInsertHeaderClick = (event: React.MouseEvent) => {
+    const data = tableDataObject.insertHeader();
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
 
-  /**
-   * 풋터 추가
-   *
-   */
-  const handleInsertFooterClick = (event: React.MouseEvent) => {};
+  /** 풋터 추가 */
+  const handleInsertFooterClick = (event: React.MouseEvent) => {
+    const data = tableDataObject.insertFooter();
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
 
   /**
    * 컬럼 추가
@@ -176,6 +179,15 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
     const col = Number(current.get('col'));
     if (col > -1) {
       const data = tableDataObject.insertColumn(col);
+      blockProps.onRichCommand('change-table-data', { block, data });
+    }
+  };
+
+  /** 컬럼 삭제 */
+  const handleRemoveColumnClick = (event: React.MouseEvent) => {
+    const col = Number(current.get('col'));
+    if (col > -1) {
+      const data = tableDataObject.removeColumn(col);
       blockProps.onRichCommand('change-table-data', { block, data });
     }
   };
@@ -191,11 +203,18 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
     blockProps.onRichCommand('change-table-data', { block, data });
   };
 
-  /**
-   * 행 삭제
-   *
-   */
-  const handleRemoveRowClick = (event: React.MouseEvent) => {};
+  /** 행 삭제 */
+  const handleRemoveRowClick = (event: React.MouseEvent) => {
+    const type = String(current.get('type'));
+    const index = Number(current.get('row'));
+    const data = tableDataObject.removeRow(type, index);
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
+
+  /** 테이블 삭제 */
+  const handleRemoveTableClick = (event: React.MouseEvent) => {
+    blockProps.onRichCommand('remove-table', { block });
+  };
 
   return (
     <div className="public-DraftStyleDefault-ltr">
@@ -278,20 +297,34 @@ const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
         </table>
         {current.get('isFocused') ? (
           <div className={classes.toolbar}>
-            <Button onClick={handleInsertHeaderClick} aria-label={blockKey}>
+            <Button
+              onClick={handleInsertHeaderClick}
+              aria-label={blockKey}
+              disabled={tableDataObject.get('header').length > 0}
+            >
               헤더 추가
             </Button>
-            <Button onClick={handleInsertFooterClick} aria-label={blockKey}>
+            <Button
+              onClick={handleInsertFooterClick}
+              aria-label={blockKey}
+              disabled={tableDataObject.get('footer').length > 0}
+            >
               풋터 추가
             </Button>
             <Button onClick={handleInsertColumnClick} aria-label={blockKey}>
               컬럼 추가
+            </Button>
+            <Button onClick={handleRemoveColumnClick} aria-label={blockKey}>
+              컬럼 삭제
             </Button>
             <Button onClick={handleInsertRowClick} aria-label={blockKey}>
               행 추가
             </Button>
             <Button onClick={handleRemoveRowClick} aria-label={blockKey}>
               행 삭제
+            </Button>
+            <Button onClick={handleRemoveTableClick} aria-label={blockKey}>
+              테이블 삭제
             </Button>
           </div>
         ) : null}

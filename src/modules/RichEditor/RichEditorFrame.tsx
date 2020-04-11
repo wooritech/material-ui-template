@@ -127,6 +127,10 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         /** 테이블 블럭에서 테이블에 포커스 사라지면 발생 */
         setReadOnly(false);
         break;
+      case 'remove-table':
+        onStateChange(TableUtils.removeTable(richState, value.block));
+        setReadOnly(false);
+        break;
       default:
         onRichCommand(command, value);
     }
