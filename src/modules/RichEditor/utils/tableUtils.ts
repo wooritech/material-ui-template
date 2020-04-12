@@ -66,49 +66,52 @@ class TableUtils {
     return contentStateWithEntity.getLastCreatedEntityKey();
   };
 
+  /**
+   * 테이블 블럭의 데이터를 지우고 상태를 unstyled로 바꾼다.
+   * 블럭 자체를 삭제하지 않는다.
+   */
   static removeTable = (editorState: EditorState, block: ContentBlock) => {
-    console.log(block);
     const blockKey = block.getKey();
     const content = editorState.getCurrentContent();
+
+    /** forceSelection을 위해 selection을 다시 만든다. */
     const selection = new SelectionState({
       anchorKey: blockKey,
       anchorOffset: 0,
       focusKey: blockKey,
       focusOffset: block.getLength(),
     });
-    const withoutTable = Modifier.removeRange(content, selection, 'backward');
-    const resetBlock = Modifier.setBlockType(
-      withoutTable,
-      withoutTable.getSelectionAfter(),
-      'unstyled',
-    );
-    const newState = EditorState.push(
-      TableUtils.removeBlockTableData(editorState, block),
-      resetBlock,
-      'remove-range',
-    );
-    return EditorState.forceSelection(newState, resetBlock.getSelectionAfter());
+
+    const removedContent = Modifier.setBlockData(content, selection, Immutable.Map({}));
+    const unstyledContent = Modifier.setBlockType(removedContent, selection, 'unstyled');
+    const removedState = EditorState.push(editorState, unstyledContent, 'change-block-data');
+    /** 이 state가 최종 state 여야 한다. */
+    return EditorState.forceSelection(removedState, selection);
   };
 
   /**
-  - [ ] FIXME 데이터가 지워지지 않는다. */
-  static removeBlockTableData = (
+   * setBlockTableData
+   * 전체 데이터를 다시 쓴다.
+   */
+  static setBlockTableData = (
     editorState: RichEditorState,
     block: ContentBlock,
+    data?: RichTableData,
   ): RichEditorState => {
     const content = editorState.getCurrentContent();
     const selection = SelectionState.createEmpty(block.getKey());
     return EditorState.push(
       editorState,
-      Modifier.mergeBlockData(content, selection, Immutable.Map()),
+      Modifier.setBlockData(content, selection, data || Immutable.Map()),
       'change-block-data',
     );
   };
 
   /**
-   * setBlockTableData
+   * mergeBlockTableData
+   * 전체 데이터를 다시 쓸수는 없다.
    */
-  static setBlockTableData = (
+  static mergeBlockTableData = (
     editorState: RichEditorState,
     block: ContentBlock,
     data?: RichTableData,

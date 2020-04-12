@@ -121,7 +121,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setReadOnly(true);
         break;
       case 'change-table-data':
-        onStateChange(TableUtils.setBlockTableData(richState, value.block, value.data));
+        onStateChange(TableUtils.mergeBlockTableData(richState, value.block, value.data));
         break;
       case 'leave-table':
         /** 테이블 블럭에서 테이블에 포커스 사라지면 발생 */
