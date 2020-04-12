@@ -11,4 +11,8 @@ export type TypeRichCommand =
   | 'change-ext-mode'
   | 'change-title';
 export type TypeRichCommandValue = any; // string | RichEditorState | RichEditorDocument;
-export type EventRichCommand = (command: TypeRichCommand, value?: TypeRichCommandValue) => void;
+export type EventRichCommand = (
+  command: TypeRichCommand,
+  value?: TypeRichCommandValue,
+  callback?: (v: any) => void,
+) => void;

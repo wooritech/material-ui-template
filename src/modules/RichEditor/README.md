@@ -43,6 +43,48 @@
 
 ## Controller(툴바)
 
+### 툴바 설정
+
+  
+- Config: RichEditorConfig
+  - 에디터를 구성하기 위한 설정 값을 넘겨주기 위한 클래스 
+- 기본설정
+  - new RichEditorConfig() 로 기본 설정을 생성해서 넘겨준다. 
+  - 툴바를 구성하기 위해 config 를 생성하는 방법
+    - 1. configs.defaultToolbarConfig 를 참고하여 직접 config 객체를 만들어도 되고
+    - 2. configs.getToolbarConfigs() 함수를 사용해 원하는 컨트롤들만 보이게 할 수도 있다.
+      ```
+      getToolbarConfigs([
+        'UndoRedo',
+        'Divider',
+        'HeadingStyle',
+        'Divider',
+        'BlockStyle',
+        'Divider',
+        'InlineStyle',
+        'Divider',
+        'Image',
+        'Table',
+        'CodeDirector',
+        'Divider',
+        'Extension',
+      ]),
+      ```
+    - 3. toolbarConfig 속성을 이용해 툴바 직접 구성
+      ```
+      const toolbarConfig = [
+        {
+          name: 'UndoRedo',
+          type: 'BUTTONGROUP',
+          buttons: [
+            { label: 'Undo', value: 'undo', icon: 'undo_outlined' },
+            { label: 'Redo', value: 'redo', icon: 'redo_outlined' },
+          ],
+        },
+      ];
+      ```
+
+
 ### 컨트롤 버튼 만들기
 
 - controls/UndoRedoControls.tsx 와 같은 이미 만들어진 컨트롤 컴포넌트를 복사해서 새로운 컴포넌트로 이름을 바꾼다.
@@ -71,7 +113,12 @@
 
 ### Multi Language
 
+- [ ] 툴바 하나로 여러 에디터 사용
+- [ ] 툴바 버튼에 문서가 포함하고 있는 다른 언어의 목록을 표시하고 목록의 추가 메뉴로 새 언어 추가.(이것도 선택형으로 미리 정의된 언어만 추가 가능)
+
 ### Link
+
+- [ ] 데이터 블럭 구조 정리 (표준 구조로 수정)
 
 ### Image
 

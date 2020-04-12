@@ -11,6 +11,7 @@ export interface RichLanguageRaws {
 export interface RichDocumentRaw {
   id: string;
   title: string;
+  defaultLanguage: string;
   raws: RichLanguageRaws;
   children: RichEditorDocument[];
 }
@@ -18,6 +19,7 @@ export interface RichDocumentRaw {
 const defaultValue: Partial<RichDocumentRaw> = {
   id: '',
   title: '',
+  defaultLanguage: 'kr',
   raws: {
     kr: {
       blocks: [
@@ -48,6 +50,7 @@ const defaultValue: Partial<RichDocumentRaw> = {
  * @properties
  *   - @id
  *   - @title
+ *   - @defaultLanguage
  *   - @raws : 언어별 실제 문서 raw 를 가지고 있다.
  *     - @lang [lang: string] raw 는 Draft.RawDraftContentState
  */
@@ -63,6 +66,10 @@ export default class RichEditorDocument extends Record(defaultValue) implements 
 
   get id(): string {
     return this.get('id');
+  }
+
+  get defaultLanguage(): string {
+    return this.get('defaultLanguage');
   }
 
   get raws(): RichLanguageRaws {
@@ -93,7 +100,7 @@ export default class RichEditorDocument extends Record(defaultValue) implements 
   }
 
   /** 특정언어의 raw 를 입력한다. 기존에 있는 경우 덮어쓰게 된다. */
-  setRaw(raw: RawDraftContentState | any, language: string) {
-    return this.setIn(['raws', language], raw);
+  setRaw(raw: RawDraftContentState | any, language: string): RichEditorDocument {
+    return this.setIn(['raws', language], raw) as RichEditorDocument;
   }
 }

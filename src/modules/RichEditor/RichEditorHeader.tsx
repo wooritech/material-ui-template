@@ -45,7 +45,7 @@ const RichEditorHeader: React.FC<RichEditorHeaderProps> = (props) => {
       </Grid>
       <Grid item>
         <Grid container spacing={1} alignItems="center">
-          <Grid item>
+          {/* <Grid item>
             <Button
               color="primary"
               variant="outlined"
@@ -62,7 +62,7 @@ const RichEditorHeader: React.FC<RichEditorHeaderProps> = (props) => {
             >
               열기
             </Button>
-          </Grid>
+          </Grid> */}
           <Grid item>
             <Button
               color="primary"

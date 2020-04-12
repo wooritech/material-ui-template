@@ -18,8 +18,8 @@ function TabPanel(props: TabPanelProps) {
   const handleMleState = (state: RichEditorState) => {
     setEditorState(state);
   };
-
-  return <RichEditor editorState={editorState} onChange={handleMleState} />;
+  return <></>; // 에러 방지 처리.
+  // return <RichEditor editorState={editorState} onChange={handleMleState} />;
 }
 
 function a11yProps(index: any) {

@@ -8,11 +8,11 @@ import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditor, StatusBar } from './components';
 import { RichEditorState, RichEditorDocument } from './modules';
-import { Preview, RawView, MultiLanguageEditor } from './extensions';
+import { Preview, RawView } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils, TableUtils } from './utils';
+import { MediaUtils, TableUtils, EditorUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -27,8 +27,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '16px',
     color: '#24292e',
     // backgroundColor: '#eee',
-    // borderRadius: '3px',
-    padding: '5px',
+    borderRadius: '3px',
+    // padding: '5px',
+    padding: theme.spacing(1),
     /**
      * TODO: 스타일 수정 필요
      *  화면 크기에 따라 툴바의 높이가 변하면 전체 감싸고 있는 panel의 높이를 벗어남.
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   extentions: {
     overflow: 'auto',
+    fontSize: '1.15em',
     height: (props: { editorHeight: number }) => `calc(100vh - ${props.editorHeight}px)`,
     borderRadius: '3px',
     padding: theme.spacing(1),
@@ -71,10 +73,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface RichEditorFrameProps {
   richDoc: RichEditorDocument;
-  richState: RichEditorState;
   richConfig: RichEditorConfig;
   onRichCommand: EventRichCommand;
-  onStateChange: (richState: RichEditorState) => void;
   onConfigChange?: (config: RichEditorConfig) => void;
   showStatusbar?: boolean;
 }
@@ -84,34 +84,61 @@ interface RichEditorFrameProps {
  *
  */
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
-  const {
-    richDoc,
-    richState,
-    richConfig,
-    onRichCommand,
-    onStateChange,
-    onConfigChange,
-    showStatusbar,
-  } = props;
+  const { richDoc, richConfig, onRichCommand, onConfigChange, showStatusbar } = props;
   const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
   const [readOnly, setReadOnly] = React.useState(false);
 
+  /**
+   * 멀티 랭기지 처리를 위해 editorState를 Frame 내부로 가져오고
+   * mainState, subState 로 별개로 구성한다.
+   */
+  const [mainState, setMainState] = React.useState<RichEditorState>(
+    RichEditorState.createWithRichDocument(richDoc),
+  );
+  const [subState, setSubState] = React.useState<RichEditorState>(
+    RichEditorState.createWithRichDocument(richDoc, 'en'),
+  );
+
+  /**
+  - [ ] FIXME 임시 */
+  const saveDoc = (lang?: string) => {
+    const raw = EditorUtils.editorStateToRaw(mainState);
+    return richDoc.setRaw(raw, lang || richDoc.defaultLanguage);
+  };
   /** 
-    - [ ] 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
+    - [ ] TODO 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
       case 'save':
-        onRichCommand(command, RichEditorState.editorStateToRaw(richState));
+        onRichCommand(command, saveDoc());
         break;
-      case 'change-state':
-        onStateChange(value as RichEditorState);
+      case 'change-main-state':
+        setMainState(value);
+        break;
+      case 'change-sub-state':
+        setSubState(value);
         break;
       case 'change-ext-mode':
         if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
+      case 'open-multi-lang':
+        /**
+         * - 다중 언어시 메인 에디터 상태는 readonly
+        - [ ] TODO 다른언어 편집 창 열림 처리 
+        - [ ] TODO 툴바 상태를 다른언어 편집창과 연결 */
+        setReadOnly(true);
+        setSubState(RichEditorState.createWithRichDocument(richDoc, 'en'));
+        break;
+      case 'close-multi-lang':
+        /**
+         * value는 lang id 가 넘어와야 한다.
+        - [ ] TODO 다른언어 편집 창 닫힘 처리 */
+        // setSubState(RichEditorState.createWithRichDocument(richDoc));
+        saveDoc(value);
+        break;
       case 'change-img-align':
-        onStateChange(
-          MediaUtils.setBlockImageAlign(richState, value.contentState, value.block, value.align),
+        setMainState(
+          MediaUtils.setBlockImageAlign(mainState, value.contentState, value.block, value.align),
         );
         break;
       case 'enter-table':
@@ -121,14 +148,14 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setReadOnly(true);
         break;
       case 'change-table-data':
-        onStateChange(TableUtils.mergeBlockTableData(richState, value.block, value.data));
+        setMainState(TableUtils.mergeBlockTableData(mainState, value.block, value.data));
         break;
       case 'leave-table':
         /** 테이블 블럭에서 테이블에 포커스 사라지면 발생 */
         setReadOnly(false);
         break;
       case 'remove-table':
-        onStateChange(TableUtils.removeTable(richState, value.block));
+        setMainState(TableUtils.removeTable(mainState, value.block));
         setReadOnly(false);
         break;
       default:
@@ -147,18 +174,18 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       <RichEditorHeader richDoc={richDoc} onRichCommand={handleRichCommand} />
       <Divider light />
       <RichEditorToolbar
-        editorState={richState}
+        editorState={mainState}
         richConfig={richConfig}
         onRichCommand={handleRichCommand}
-        onStateChange={(state: RichEditorState) => handleRichCommand('change-state', state)}
+        onStateChange={(state: RichEditorState) => handleRichCommand('change-main-state', state)}
       />
       <Divider light />
       <Grid container className={classes.container} spacing={1}>
         <Grid item xs={richConfig.extension === undefined ? 12 : 6}>
           <div className={classes.editor}>
             <RichEditor
-              editorState={richState}
-              onChange={(state: RichEditorState) => handleRichCommand('change-state', state)}
+              editorState={mainState}
+              onChange={(state: RichEditorState) => handleRichCommand('change-main-state', state)}
               blockRendererFn={richBlockRendererFn(handleRichCommand)}
               blockStyleFn={blockStyleFn}
               readOnly={readOnly}
@@ -168,21 +195,27 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         {richConfig.extension === 'raw' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extRaw}`}>
-              <RawView editorState={richState} />
+              <RawView editorState={mainState} />
             </div>
           </Grid>
         ) : null}
         {richConfig.extension === 'lang' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extLang}`}>
-              <MultiLanguageEditor />
+              <RichEditor
+                editorState={subState}
+                onChange={(state: RichEditorState) => handleRichCommand('change-sub-state', state)}
+                blockRendererFn={richBlockRendererFn(handleRichCommand)}
+                blockStyleFn={blockStyleFn}
+                readOnly={readOnly}
+              />
             </div>
           </Grid>
         ) : null}
         {['browser', 'html'].includes(richConfig.extension || '') ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extPreview}`}>
-              <Preview view={richConfig.extension} editorState={richState} />
+              <Preview view={richConfig.extension} editorState={mainState} />
             </div>
           </Grid>
         ) : null}
@@ -192,7 +225,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           <Divider light />
           <Grid container className={classes.statusBar} wrap="nowrap">
             <Grid item xs>
-              <StatusBar richState={richState} />
+              <StatusBar richState={mainState} />
             </Grid>
           </Grid>
         </>

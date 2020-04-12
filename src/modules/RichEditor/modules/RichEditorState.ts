@@ -48,8 +48,9 @@ export default class RichEditorState extends EditorState {
     return EditorState.createWithContent(contentState, decorators || defaultDecorators);
   };
 
-  static createWithRichDocument = (doc: RichEditorDocument, language = 'kr'): EditorState => {
-    return RichEditorState.createWithRaw(doc.getRaw(language));
+  static createWithRichDocument = (doc: RichEditorDocument, language?: string): EditorState => {
+    const defaultLanguage = language || doc.defaultLanguage;
+    return RichEditorState.createWithRaw(doc.getRaw(defaultLanguage));
   };
 
   // static editorStateFromDoc = (doc: RichDocumentRaw, language = 'kr'): EditorState => {
