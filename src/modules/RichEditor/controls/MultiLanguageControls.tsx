@@ -3,16 +3,24 @@ import { ToolButtonPopper, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 
 const MultiLanguageControls: React.FC<EditorControlsProps> = (props) => {
-  const { onRichCommand, buttonItems } = props;
+  const { onRichCommand, buttonItems, richConfig } = props;
 
-  const [selectedLanguage, setSelectedLanguage] = React.useState('');
+  const [selectedLanguage, setSelectedLanguage] = React.useState(() => {
+    return richConfig.currentLanguage;
+  });
   const isSelectedLanguage = (): string => {
     return selectedLanguage;
   };
 
   const handleChange = (value: string) => {
+    if (richConfig.defaultLanguage === value || richConfig.currentLanguage === value) {
+      setSelectedLanguage(richConfig.defaultLanguage);
+      if (onRichCommand) onRichCommand('change-default-language', value);
+      return;
+    }
+
+    setSelectedLanguage(value);
     if (onRichCommand) onRichCommand('change-editing-language', value);
-    // if (onChange) onChange(RichUtils.toggleBlockType(editorState, value));
   };
 
   return (

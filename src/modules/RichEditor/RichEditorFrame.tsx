@@ -93,22 +93,22 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
    * mainState, subState 로 별개로 구성한다.
    */
   const [mainState, setMainState] = React.useState<RichEditorState>(
-    RichEditorState.createWithRichDocument(richDoc),
+    RichEditorState.createWithRichDocument(richDoc, richConfig.defaultLanguage),
   );
   const [subState, setSubState] = React.useState<RichEditorState>(RichEditorState.createEmpty());
 
   /**
   - [ ] FIXME 임시 */
-  const saveDoc = (lang?: string) => {
-    const raw = EditorUtils.editorStateToRaw(mainState);
-    return richDoc.setRaw(raw, lang || richDoc.defaultLanguage);
+  const saveDoc = (state: RichEditorState, lang: string) => {
+    const raw = EditorUtils.editorStateToRaw(state);
+    return { richDoc: richDoc.setRaw(raw, lang), lang };
   };
   /** 
     - [ ] TODO 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
       case 'save':
-        onRichCommand(command, saveDoc());
+        onRichCommand(command, saveDoc(mainState, richConfig.defaultLanguage));
         break;
       case 'change-main-state':
         setMainState(value);
@@ -117,6 +117,11 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setSubState(value);
         break;
       case 'change-ext-mode':
+        // 다중언어 편집중이면 편집중인 문서 저장 하고 default 상태로 돌려야 한다.
+        if (richConfig.extension === 'lang') {
+          handleRichCommand('close-editing-language');
+        }
+
         if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
       case 'close-multi-lang':
@@ -149,14 +154,52 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setMainState(TableUtils.removeTable(mainState, value.block));
         setReadOnly(false);
         break;
+      case 'open-editing-language':
+        /**
+         * 현재 다중언어 편집중이 아니고 다중언어 편집상태로 된다면?
+         *   - 메인 편집기를 readonly로
+         *   - 서브 편집기의 editorState를 richDoc 해당 언어의 문서를 가져와서 생성
+         *   - 다중언어 편집창 열기
+         *   - 기본언어를 선택하면 여기로 들어오면 안된다.
+         */
+        setReadOnly(true);
+        if (onConfigChange)
+          onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
+        setSubState(RichEditorState.createWithRichDocument(richDoc, value));
+        break;
       case 'change-editing-language':
         /**
-         * - 다중 언어시 메인 에디터 상태는 readonly
-        - [ ] TODO 다른언어 편집 창 열림 처리 
-        - [ ] TODO 툴바 상태를 다른언어 편집창과 연결 */
+         * 현재 다중언어 편집중이고 다중언어 편집상태로 된다면?
+         *   - 메인 편집기를 readonly로 유지
+         *   - 서브 편집기의 editorState를 richDoc 해당 언어의 문서를 가져와서 생성
+         *   - 다중언어 편집창 유지
+         *   - 기본언어를 선택하면 여기로 들어오면 안된다.
+         *   - 기존에 편집중인 문서는 저장.
+         */
+        console.log(command);
+        // 이미 다른 언어를 편집중이었다면
+        if (richConfig.extension === 'lang')
+          onRichCommand('save', saveDoc(subState, richConfig.currentLanguage));
+
         setReadOnly(true);
+        if (onConfigChange)
+          onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
         setSubState(RichEditorState.createWithRichDocument(richDoc, value));
-        if (onConfigChange) onConfigChange(richConfig.setExtension('lang'));
+        break;
+      case 'close-editing-language':
+        /**
+         * 현재 다중언어 편집중이고 기본언어를 선택 했다면?
+         *   - 편집중인 언어를 문서에 저장하고
+         *   - 다중언어 편집창을 닫는다.
+         *   - 기본언어 편집기 readonly 풀어준다.
+         */
+        console.log(command);
+        onRichCommand('save', saveDoc(subState, richConfig.currentLanguage));
+        if (onConfigChange)
+          onConfigChange(
+            richConfig.setExtension(undefined).setCurrentLanguage(richConfig.defaultLanguage),
+          );
+        setReadOnly(false);
         break;
       default:
         onRichCommand(command, value);

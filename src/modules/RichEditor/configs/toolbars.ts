@@ -93,7 +93,10 @@ const ToolbarSet: RichEditorToolbarConfig = [
       label: '한글',
       value: 'kr',
       options: [
+        { label: '한글', value: 'kr' },
         { label: '영문', value: 'en' },
+        /** 이 언어는 RichEditorDocument에 등록되어 있지 않기 때문에 오류를 유발한다
+         * TODO REFACTORING 이러한 언어 선택 과정은 수정이 필요함. */
         { label: '스페인어', value: 'es' },
       ],
       icon: 'translate_outlined',
@@ -103,9 +106,9 @@ const ToolbarSet: RichEditorToolbarConfig = [
     name: 'Extension',
     type: 'BUTTONGROUP',
     buttons: [
-      { label: '소스보기', value: 'raw', startIcon: 'navigate_before' },
       { label: '브라우저 보기', value: 'browser', icon: 'language_outlined' },
-      { label: 'HTML', value: 'html', icon: 'settings_ethernet_outlined' },
+      { label: '소스보기', value: 'raw' },
+      { label: 'HTML', value: 'html' },
     ],
   },
   {
