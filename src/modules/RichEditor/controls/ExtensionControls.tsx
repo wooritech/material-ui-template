@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolButtons, ButtonItemConfig } from '../components';
+import { ToolButtons, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 
 const ExtensionControls: React.FC<EditorControlsProps> = (props) => {
@@ -18,7 +18,7 @@ const ExtensionControls: React.FC<EditorControlsProps> = (props) => {
 
   return (
     <ToolButtons
-      buttonItems={buttonItems as ButtonItemConfig[]}
+      buttonItems={buttonItems as ButtonItemType[]}
       checkSelected={handleSelected}
       exclusive
       onChange={handleChange}

@@ -95,9 +95,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const [mainState, setMainState] = React.useState<RichEditorState>(
     RichEditorState.createWithRichDocument(richDoc),
   );
-  const [subState, setSubState] = React.useState<RichEditorState>(
-    RichEditorState.createWithRichDocument(richDoc, 'en'),
-  );
+  const [subState, setSubState] = React.useState<RichEditorState>(RichEditorState.createEmpty());
 
   /**
   - [ ] FIXME 임시 */
@@ -121,20 +119,13 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       case 'change-ext-mode':
         if (onConfigChange) onConfigChange(richConfig.setExtension(value));
         break;
-      case 'open-multi-lang':
-        /**
-         * - 다중 언어시 메인 에디터 상태는 readonly
-        - [ ] TODO 다른언어 편집 창 열림 처리 
-        - [ ] TODO 툴바 상태를 다른언어 편집창과 연결 */
-        setReadOnly(true);
-        setSubState(RichEditorState.createWithRichDocument(richDoc, 'en'));
-        break;
       case 'close-multi-lang':
         /**
          * value는 lang id 가 넘어와야 한다.
         - [ ] TODO 다른언어 편집 창 닫힘 처리 */
         // setSubState(RichEditorState.createWithRichDocument(richDoc));
-        saveDoc(value);
+        setReadOnly(false);
+        // saveDoc(value);
         break;
       case 'change-img-align':
         setMainState(
@@ -157,6 +148,15 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       case 'remove-table':
         setMainState(TableUtils.removeTable(mainState, value.block));
         setReadOnly(false);
+        break;
+      case 'change-editing-language':
+        /**
+         * - 다중 언어시 메인 에디터 상태는 readonly
+        - [ ] TODO 다른언어 편집 창 열림 처리 
+        - [ ] TODO 툴바 상태를 다른언어 편집창과 연결 */
+        setReadOnly(true);
+        setSubState(RichEditorState.createWithRichDocument(richDoc, value));
+        if (onConfigChange) onConfigChange(richConfig.setExtension('lang'));
         break;
       default:
         onRichCommand(command, value);
@@ -207,7 +207,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
                 onChange={(state: RichEditorState) => handleRichCommand('change-sub-state', state)}
                 blockRendererFn={richBlockRendererFn(handleRichCommand)}
                 blockStyleFn={blockStyleFn}
-                readOnly={readOnly}
+                readOnly={false}
               />
             </div>
           </Grid>

@@ -87,13 +87,25 @@ const ToolbarSet: RichEditorToolbarConfig = [
     buttons: [{ label: 'Images', value: 'images', icon: 'perm_media_outlined' }],
   },
   {
+    name: 'MultiLanguage',
+    type: 'POPPER',
+    buttons: {
+      label: '한글',
+      value: 'kr',
+      options: [
+        { label: '영문', value: 'en' },
+        { label: '스페인어', value: 'es' },
+      ],
+      icon: 'translate_outlined',
+    },
+  },
+  {
     name: 'Extension',
     type: 'BUTTONGROUP',
     buttons: [
-      { label: '다른 언어', value: 'lang', icon: 'g_translate_outlined' },
-      { label: '소스보기', value: 'raw', icon: 'settings_ethernet_outlined' },
+      { label: '소스보기', value: 'raw', startIcon: 'navigate_before' },
       { label: '브라우저 보기', value: 'browser', icon: 'language_outlined' },
-      { label: 'HTML', value: 'html' },
+      { label: 'HTML', value: 'html', icon: 'settings_ethernet_outlined' },
     ],
   },
   {
@@ -128,6 +140,8 @@ export const defaultToolbarConfig = getToolbarConfigs([
   'Image',
   'Table',
   'CodeDirector',
+  'Divider',
+  'MultiLanguage',
   'Divider',
   'Extension',
 ]);

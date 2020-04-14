@@ -8,7 +8,7 @@ module.exports = {
   extends: [
     // 우리테크 표준 린트 설정
     // - https://github.com/wooritech/eslint/tree/master/packages/eslint-config
-    // '@wooritech/eslint-config',
+    '@wooritech/eslint-config',
     // TS 파일 임포트 설정
     // - https://github.com/benmosher/eslint-plugin-import#typescript
     'plugin:import/typescript',

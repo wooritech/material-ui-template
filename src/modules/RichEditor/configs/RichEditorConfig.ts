@@ -3,7 +3,7 @@ import * as Immutable from 'immutable';
 import { RichEditorToolbarConfig } from './types';
 import { defaultToolbarConfig } from './toolbars';
 
-type RichEditorToolbarExtension = string | 'raw' | 'lang' | 'preview' | undefined;
+type RichEditorToolbarExtension = string | 'raw' | 'preview' | undefined;
 
 interface Config {
   toolbarConfig: RichEditorToolbarConfig;

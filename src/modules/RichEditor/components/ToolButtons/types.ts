@@ -11,11 +11,11 @@
  *   - icon만 보여줄려면 icon에 값을 넣어야 한다.
  *   - startIcon, endIcon에 값을 넣으면 label이 "뒤", "앞"에 각각 표시된다.
  */
-export interface ButtonItemConfig {
+export type ButtonItemType = {
   label: string;
   value: any;
   icon?: React.ReactElement | string;
   startIcon?: React.ReactElement | string;
   endIcon?: React.ReactElement | string;
-  options?: ButtonItemConfig[];
-}
+  options?: ButtonItemType[];
+};

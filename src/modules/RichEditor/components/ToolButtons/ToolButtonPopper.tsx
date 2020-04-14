@@ -10,7 +10,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import { ButtonItemConfig } from './types';
+import { ButtonItemType } from './types';
+import ToolButtonIcon from './ToolButtonIcon';
 import ToolButtonGroup from './ToolButtonGroup';
 
 const buttonStyles = makeStyles((theme: Theme) => ({
@@ -20,7 +21,7 @@ const buttonStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ToolButtonPopperProps {
-  buttonItem: ButtonItemConfig | undefined;
+  buttonItem: ButtonItemType | undefined;
   onChange?: (value: any) => void;
   checkSelected?: () => string;
 }
@@ -42,7 +43,7 @@ const ToolButtonPopper: React.FC<ToolButtonPopperProps> = (props) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLElement>(null);
 
-  // 호출부에서 editorState가 변경될때 호출(hooked)된다.
+  // 호출부에서 editorState등이 변경될때 호출(hooked)된다.
   const currentValue = checkSelected && checkSelected();
   const currentLabel = () => {
     return options.find((option) => option.value === currentValue)?.label || buttonItem.label;
@@ -70,6 +71,7 @@ const ToolButtonPopper: React.FC<ToolButtonPopperProps> = (props) => {
   return (
     <ToolButtonGroup size="small" exclusive aria-label="rich blockstyle" ref={anchorRef}>
       <ToggleButton style={{ border: 'none' }} value="" aria-label="" onClick={handlePoper}>
+        <ToolButtonIcon icon={buttonItem.icon} position="startIcon" />
         {currentLabel()}
         <ArrowDropDownIcon className={classes.endIcon} />
       </ToggleButton>

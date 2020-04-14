@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolButtons, ButtonItemConfig } from '../components';
+import { ToolButtons, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 import { MediaUtils } from '../utils';
 
@@ -52,7 +52,7 @@ const ImageControl: React.FC<EditorControlsProps> = (props) => {
           onChange={handleFile}
         />
         <ToolButtons
-          buttonItems={buttonItems as ButtonItemConfig[]}
+          buttonItems={buttonItems as ButtonItemType[]}
           exclusive={false}
           buttonComponent="span"
         />

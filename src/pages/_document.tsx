@@ -25,6 +25,7 @@ export default class MyDocument extends Document {
           />
           {/* material-table */}
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+          <script src="/realgridjs-lic.js" />
         </Head>
         <body>
           <Main />

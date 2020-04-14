@@ -50,7 +50,11 @@ export default class RichEditorState extends EditorState {
 
   static createWithRichDocument = (doc: RichEditorDocument, language?: string): EditorState => {
     const defaultLanguage = language || doc.defaultLanguage;
-    return RichEditorState.createWithRaw(doc.getRaw(defaultLanguage));
+    const raw = doc.getRaw(defaultLanguage);
+    /** 문서에는 미리 정해진 language block만 가지고 있고
+     * 새로운 언어 블럭을 추가할 때도 미리 정해진 언어만 추가할 수 있기 때문에 여기에서 오류가 날 경우는 뭔가 잘못된 경우다. */
+    if (!raw) throw new Error(`Don't have a '${language}' language block in this document.`);
+    return RichEditorState.createWithRaw(raw);
   };
 
   // static editorStateFromDoc = (doc: RichDocumentRaw, language = 'kr'): EditorState => {

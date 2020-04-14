@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditorState } from 'draft-js';
-import { ToolButtons, ButtonItemConfig } from '../components';
+import { ToolButtons, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 
 const CodeDirectorControls: React.FC<EditorControlsProps> = (props) => {
@@ -11,11 +11,7 @@ const CodeDirectorControls: React.FC<EditorControlsProps> = (props) => {
   };
 
   return (
-    <ToolButtons
-      buttonItems={buttonItems as ButtonItemConfig[]}
-      exclusive
-      onChange={handleChange}
-    />
+    <ToolButtons buttonItems={buttonItems as ButtonItemType[]} exclusive onChange={handleChange} />
   );
 };
 

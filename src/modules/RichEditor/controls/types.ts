@@ -1,5 +1,5 @@
 import { EditorState } from 'draft-js';
-import { ButtonItemConfig } from '../components';
+import { ButtonItemType } from '../components';
 import { EventRichCommand } from '../types';
 import { RichEditorConfig } from '../configs';
 
@@ -10,7 +10,7 @@ export interface EditorControlsProps {
   richConfig: RichEditorConfig;
   editorState: EditorState;
   // popper인 경우 buttonItem 하나만 있으면 된다.
-  buttonItems: ButtonItemConfig | ButtonItemConfig[];
+  buttonItems: ButtonItemType | ButtonItemType[];
   onRichCommand?: EventRichCommand;
   onToggle?: (blockType: string) => void;
   onChange?: (editorState: EditorState) => void;
