@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { RichUtils } from 'draft-js';
-import { ToolButtonPopper, ButtonItemConfig } from '../components';
+import { ToolButtonPopper, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 
 const HeadingStyleControls: React.FC<EditorControlsProps> = (props) => {
@@ -9,10 +9,7 @@ const HeadingStyleControls: React.FC<EditorControlsProps> = (props) => {
 
   const selection = editorState.getSelection();
   const getBlockType = (): string => {
-    return editorState
-      .getCurrentContent()
-      .getBlockForKey(selection.getStartKey())
-      .getType();
+    return editorState.getCurrentContent().getBlockForKey(selection.getStartKey()).getType();
   };
 
   const handleChange = (value: string) => {
@@ -21,7 +18,7 @@ const HeadingStyleControls: React.FC<EditorControlsProps> = (props) => {
 
   return (
     <ToolButtonPopper
-      buttonItem={buttonItems as ButtonItemConfig}
+      buttonItem={buttonItems as ButtonItemType}
       checkSelected={getBlockType}
       onChange={handleChange}
     />

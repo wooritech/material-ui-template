@@ -122,6 +122,67 @@
 
 ### Image
 
+- image control 에서 tool button 클릭시 atomicBlock 추가
+- richConfig.image.fileProcess = 'base64'
+  - 이미지는 파일로 불러와서 base64로 entityMap 추가
+- richConfig.image.fileProcess = 'upload-url'
+  - RichEditorCommand 'insert-local-image' 호출
+  - 에디터 밖에서 이미지를 업로드하고 콜백함수 호출
+  - 콜백함수로 넘어온 url 을 entityMap에 추가.
+
+#### ImageBlock
+```ts
+{
+  "key": "empsp",
+  "text": " ",
+  "type": "atomic",
+  "depth": 0,
+  "inlineStyleRanges": [],
+  "entityRanges": [
+    {
+      "offset": 0,
+      "length": 1,
+      "key": 0
+    }
+  ],
+  "data": {}
+}
+```
+#### EntityMap (base64 방식)
+```ts
+entityMap: {
+  "0": {
+      "type": "image",
+      "mutability": "IMMUTABLE",
+      "data": {
+        "src": "data:image/png;base64,iV...",
+        "name": "user.png",
+        "size": 1779
+      }
+    }
+}
+```
+
+#### EntityMap(update-url 방식)
+```ts
+entityMap: {
+  "0": {
+      "type": "image",
+      "mutability": "IMMUTABLE",
+      "data": {
+        "src": "https://t1.daumcdn.net/cfile/tistory/234A8049559BCC8D33",
+      }
+    }
+}
+```
+
+### renderer
+```tsx
+import Media from 'components/Media';
+
+return <Media />;
+```
+
 ### Table
 
 - [x] 컨트롤러에서 테이블 블럭 추가

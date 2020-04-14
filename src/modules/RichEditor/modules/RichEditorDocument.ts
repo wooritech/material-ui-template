@@ -11,7 +11,6 @@ export interface RichLanguageRaws {
 export interface RichDocumentRaw {
   id: string;
   title: string;
-  defaultLanguage: string;
   raws: RichLanguageRaws;
   children: RichEditorDocument[];
 }
@@ -19,22 +18,8 @@ export interface RichDocumentRaw {
 const defaultValue: Partial<RichDocumentRaw> = {
   id: '',
   title: '',
-  defaultLanguage: 'kr',
   raws: {
-    kr: {
-      blocks: [
-        {
-          key: 'empty-key',
-          text: '',
-          type: '',
-          depth: 0,
-          inlineStyleRanges: [],
-          entityRanges: [],
-          data: {},
-        },
-      ],
-      entityMap: {},
-    },
+    kr: {},
     en: {},
   },
 };
@@ -43,9 +28,7 @@ const defaultValue: Partial<RichDocumentRaw> = {
  * RichEditor 컴포넌트에서 사용되는 문서 타입.
  * 임시로 만든 구조이고 필요하면 변경 하면 된다.
  *
- * 문제는 defaultValue의 구조를 가지고 객체를 다시 정의 하기 때문에
- * defaultValue에 없는 구조는 Immutable 데이터로 만들어 지지 않는다.
- * !!특히 모든 language에 대해 빈 구조( en: {} )를 만들어 주어야 한다.
+ * 편집을 원하는 언어가 문서에 없으면 외부에서 추가.
  *
  * @properties
  *   - @id

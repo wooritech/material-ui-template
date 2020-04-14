@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { RichUtils } from 'draft-js';
-import { ToolButtons, ButtonItemConfig } from '../components';
+import { ToolButtons, ButtonItemType } from '../components';
 import { EditorControlsProps } from './types';
 
 const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
@@ -24,7 +24,7 @@ const BlockStyleControls: React.FC<EditorControlsProps> = (props) => {
 
   return (
     <ToolButtons
-      buttonItems={buttonItems as ButtonItemConfig[]}
+      buttonItems={buttonItems as ButtonItemType[]}
       checkSelected={isBlockType}
       defaultValue={selectedStyle}
       setValue={setStyle}

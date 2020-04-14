@@ -66,8 +66,12 @@ const EditorPanel: React.FC = () => {
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
     switch (command) {
       case 'save':
-        // 내용이 모두 저장된 RichDocuemnt 객체 반환
-        console.log(value);
+        /** 내용이 모두 저장된 RichDocuemnt 객체와 수정된 language 반환
+         * - 리턴값 { richDoc: RichEditorDocument, lang: string }
+         * - richDoc.toJS() 로 js 객체화 db에 저장 가능 형태로 변환.
+         */
+        console.log('rich command save', value, value.richDoc.toJS());
+        setRichDoc(value.richDoc);
         break;
       case 'change-title':
         if (value) {
@@ -94,7 +98,9 @@ const EditorPanel: React.FC = () => {
   // };
 
   /**
-   * 내부에서 config를 변경하고 핸들링 할 일이 뭐가 있을까?
+   * 현재 버전으로 내부에서 config를 저장 하지 않는다.
+   * - setRichConfig 반드시 필요
+   * - 나중에는 저장 기능을 Frame에 넣을 예정.
    */
   const handleConfigChange = (config: RichEditorConfig) => {
     setRichConfig(config);

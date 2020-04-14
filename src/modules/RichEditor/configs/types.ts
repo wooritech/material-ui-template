@@ -1,4 +1,4 @@
-import { ButtonItemConfig } from '../components';
+import { ButtonItemType } from '../components';
 
 export type RichEditorToolbarNames =
   | string
@@ -8,6 +8,7 @@ export type RichEditorToolbarNames =
   | 'HeadingStyle'
   | 'InlineStyle'
   | 'BlockStyle'
+  | 'MultiLanguage'
   | 'Extension'
   | 'Image'
   | 'Table'
@@ -17,7 +18,7 @@ export type RichEditorControls = {
   name: RichEditorToolbarNames;
   type: string | 'BUTTONGROUP' | 'POPPER' | 'DIVIDER';
   /** button group 인 경우는 배열로, popper인 경우 하나의 버튼그룹만 넘겨준다. divider 인 경우는 undefined */
-  buttons?: ButtonItemConfig | ButtonItemConfig[];
+  buttons?: ButtonItemType | ButtonItemType[];
 };
 
 /**
