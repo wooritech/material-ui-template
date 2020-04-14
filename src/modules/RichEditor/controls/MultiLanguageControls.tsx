@@ -12,15 +12,29 @@ const MultiLanguageControls: React.FC<EditorControlsProps> = (props) => {
     return selectedLanguage;
   };
 
+  // - TODO REFACTORING
   const handleChange = (value: string) => {
     if (richConfig.defaultLanguage === value || richConfig.currentLanguage === value) {
       setSelectedLanguage(richConfig.defaultLanguage);
-      if (onRichCommand) onRichCommand('change-default-language', value);
+      if (richConfig.defaultLanguage !== richConfig.currentLanguage) {
+        if (onRichCommand) onRichCommand('close-editing-language', value);
+      }
       return;
     }
 
-    setSelectedLanguage(value);
-    if (onRichCommand) onRichCommand('change-editing-language', value);
+    if (
+      richConfig.defaultLanguage === richConfig.currentLanguage &&
+      richConfig.defaultLanguage !== value
+    ) {
+      setSelectedLanguage(value);
+      if (onRichCommand) onRichCommand('open-editing-language', value);
+      return;
+    }
+
+    if (richConfig.currentLanguage !== value) {
+      setSelectedLanguage(value);
+      if (onRichCommand) onRichCommand('change-editing-language', value);
+    }
   };
 
   return (

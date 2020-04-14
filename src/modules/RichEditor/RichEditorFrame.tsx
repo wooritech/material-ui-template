@@ -162,6 +162,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
          *   - 다중언어 편집창 열기
          *   - 기본언어를 선택하면 여기로 들어오면 안된다.
          */
+        console.log(command);
         setReadOnly(true);
         if (onConfigChange)
           onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
@@ -212,15 +213,34 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   //   handleRichCommand('change-state', state);
   // };
 
+  const isEditingLanguage = () => {
+    return (
+      richConfig.extension === 'lang' && richConfig.defaultLanguage !== richConfig.currentLanguage
+    );
+  };
+
+  const getCurrentState = (): RichEditorState => {
+    // 다른언어 편집중인지 확인
+    if (isEditingLanguage()) return subState;
+
+    // 다른언어 편집중이 아니면
+    return mainState;
+  };
+
+  const handleToolbarStateChange = (state: RichEditorState) => {
+    const command = isEditingLanguage() ? 'change-sub-state' : 'change-main-state';
+    handleRichCommand(command, state);
+  };
+
   return (
     <>
       <RichEditorHeader richDoc={richDoc} onRichCommand={handleRichCommand} />
       <Divider light />
       <RichEditorToolbar
-        editorState={mainState}
+        editorState={getCurrentState()}
         richConfig={richConfig}
         onRichCommand={handleRichCommand}
-        onStateChange={(state: RichEditorState) => handleRichCommand('change-main-state', state)}
+        onStateChange={handleToolbarStateChange}
       />
       <Divider light />
       <Grid container className={classes.container} spacing={1}>
@@ -268,7 +288,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           <Divider light />
           <Grid container className={classes.statusBar} wrap="nowrap">
             <Grid item xs>
-              <StatusBar richState={mainState} />
+              <StatusBar richState={getCurrentState()} />
             </Grid>
           </Grid>
         </>
