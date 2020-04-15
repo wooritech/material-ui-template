@@ -8,7 +8,7 @@ import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditor, StatusBar } from './components';
 import { RichEditorState, RichEditorDocument } from './modules';
-import { Preview, RawView } from './extensions';
+import { Preview, RawView, Markdown } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
@@ -255,6 +255,18 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             />
           </div>
         </Grid>
+        {richConfig.extension === 'markdown' ? (
+          <Grid item xs={6}>
+            <div className={`${classes.extentions} ${classes.extPreview}`}>
+              <Markdown
+                editorState={mainState}
+                onStateChange={(state: RichEditorState) =>
+                  handleRichCommand('change-main-state', state)
+                }
+              />
+            </div>
+          </Grid>
+        ) : null}
         {richConfig.extension === 'raw' ? (
           <Grid item xs={6}>
             <div className={`${classes.extentions} ${classes.extRaw}`}>
