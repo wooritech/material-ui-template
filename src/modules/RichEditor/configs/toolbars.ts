@@ -109,6 +109,7 @@ const ToolbarSet: RichEditorToolbarConfig = [
       { label: '브라우저 보기', value: 'browser', icon: 'language_outlined' },
       { label: '소스보기', value: 'raw' },
       { label: 'HTML', value: 'html' },
+      { label: 'MD', value: 'markdown' },
     ],
   },
   {
