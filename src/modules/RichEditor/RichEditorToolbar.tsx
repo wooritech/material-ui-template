@@ -19,7 +19,7 @@ const useToolbarStyle = makeStyles((theme: Theme) => ({
     margin: theme.spacing(1, 0.5),
   },
   toolbar: {
-    margin: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    margin: theme.spacing(0, 1),
   },
 }));
 

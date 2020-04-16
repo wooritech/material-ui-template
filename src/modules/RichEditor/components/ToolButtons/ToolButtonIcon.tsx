@@ -1,19 +1,6 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
-
-const buttonStyles = makeStyles((theme: Theme) => ({
-  icon: {
-    marginLeft: theme.spacing(0),
-    marginRight: theme.spacing(0),
-  },
-  startIcon: {
-    marginRight: theme.spacing(1),
-  },
-  endIcon: {
-    marginLeft: theme.spacing(1),
-  },
-}));
+import buttonStyles from './styles';
 
 export interface ToolButtonIconProps {
   icon: React.ReactElement | string | undefined;

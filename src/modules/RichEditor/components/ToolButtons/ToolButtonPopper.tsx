@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
@@ -13,12 +12,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import { ButtonItemType } from './types';
 import ToolButtonIcon from './ToolButtonIcon';
 import ToolButtonGroup from './ToolButtonGroup';
-
-const buttonStyles = makeStyles((theme: Theme) => ({
-  endIcon: {
-    marginLeft: theme.spacing(1),
-  },
-}));
+import buttonStyles from './styles';
 
 interface ToolButtonPopperProps {
   buttonItem: ButtonItemType | undefined;
@@ -70,7 +64,7 @@ const ToolButtonPopper: React.FC<ToolButtonPopperProps> = (props) => {
 
   return (
     <ToolButtonGroup size="small" exclusive aria-label="rich blockstyle" ref={anchorRef}>
-      <ToggleButton style={{ border: 'none' }} value="" aria-label="" onClick={handlePoper}>
+      <ToggleButton className={classes.toggleButton} value="" aria-label="" onClick={handlePoper}>
         <ToolButtonIcon icon={buttonItem.icon} position="startIcon" />
         {currentLabel()}
         <ArrowDropDownIcon className={classes.endIcon} />

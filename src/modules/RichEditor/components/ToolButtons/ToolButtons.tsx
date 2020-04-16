@@ -5,6 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToolButtonGroup from './ToolButtonGroup';
 import ToolButtonIcon from './ToolButtonIcon';
 import { ButtonItemType } from './types';
+import buttonStyles from './styles';
 
 interface ToolButtonProps {
   buttonItems: ButtonItemType[];
@@ -23,6 +24,7 @@ interface ToolButtonProps {
  * @param props ToolButtonProps
  */
 const ToolButtons: React.FC<ToolButtonProps> = (props) => {
+  const classes = buttonStyles();
   const {
     buttonItems,
     exclusive,
@@ -62,16 +64,13 @@ const ToolButtons: React.FC<ToolButtonProps> = (props) => {
       {buttonItems.map((item, index) => {
         return (
           <ToggleButton
-            style={{ border: 'none' }}
+            className={classes.toggleButton}
             onMouseDown={(e: React.MouseEvent) => handleToggle(e, item.value)}
             value={item.value}
             selected={checkSelected ? checkSelected(item.value) : undefined}
             key={index.toString()}
             component={buttonComponent}
           >
-            {/* 
-            - [ ] REFACTORING
-            */}
             <ToolButtonIcon icon={item.startIcon} position="startIcon" />
             <ToolButtonIcon icon={item.icon} position="icon" />
             {!item.icon ? item.label : null}
