@@ -483,8 +483,55 @@ export default [
             entityRanges: [],
             data: {},
           },
+          {
+            key: '46eap',
+            text: '리얼 그리드 링크 에서 확인하세요.',
+            type: 'unstyled',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [
+              {
+                offset: 7,
+                length: 2,
+                key: 0,
+              },
+            ],
+            data: {},
+          },
+          {
+            key: '46ea1',
+            text: '이메일 링크를 확인하세요.',
+            type: 'unstyled',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [
+              {
+                offset: 4,
+                length: 2,
+                key: 1,
+              },
+            ],
+            data: {},
+          },
         ],
-        entityMap: {},
+        entityMap: {
+          '0': {
+            type: 'LINK',
+            mutability: 'MUTABLE',
+            data: {
+              url: 'https://www.realgrid.com',
+              href: 'https://www.realgrid.com',
+            },
+          },
+          '1': {
+            type: 'LINK',
+            mutability: 'MUTABLE',
+            data: {
+              url: 'mailto:onlydel@wooritech.com',
+              href: 'mailto:onlydel@wooritech.com',
+            },
+          },
+        },
       },
       en: {
         blocks: [

@@ -40,11 +40,11 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
     <div className={classes.root}>
       <div className={classes.toolbar}>
         <Button variant="outlined" color="primary" onClick={handleConvertClick}>
-          문서로 변환
+          RichEditor 문서로 변환
         </Button>
       </div>
       <TextField
-        label="마크다운"
+        label="마크다운 문서"
         // style={{ width: '100%', height: '100%' }}
         multiline
         rows={15}
