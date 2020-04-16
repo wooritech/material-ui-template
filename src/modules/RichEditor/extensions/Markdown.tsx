@@ -9,25 +9,25 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'block',
   },
-  pre: {
-    fontSize: '1.3em',
+  toolbar: {
+    height: '50px',
   },
 }));
 
-/** RichEditorPreviewProps */
+/** RichEditorMarkdownProps */
 interface RichEditorMarkdownProps {
   editorState: RichEditorState;
   onStateChange: (eidtorState: RichEditorState) => void;
 }
 
-/** PreviewExtension */
+/** Markdown */
 const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
-  const { editorState, onStateChange } = props;
+  const { onStateChange } = props;
   const classes = useStyles();
   const [mdText, setMdText] = React.useState('');
 
-  const handleChangeMd = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { value } = event.target as HTMLInputElement;
+  const handleChangeMd = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
     setMdText(value);
   };
 
@@ -38,10 +38,22 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
 
   return (
     <div className={classes.root}>
-      <Button variant="outlined" color="primary" onClick={handleConvertClick}>
-        Convert
-      </Button>
-      <TextField style={{ width: '100%' }} multiline onChange={handleChangeMd} />
+      <div className={classes.toolbar}>
+        <Button variant="outlined" color="primary" onClick={handleConvertClick}>
+          문서로 변환
+        </Button>
+      </div>
+      <TextField
+        label="마크다운"
+        // style={{ width: '100%', height: '100%' }}
+        multiline
+        rows={15}
+        fullWidth
+        variant="outlined"
+        onChange={handleChangeMd}
+        helperText="마크다운 문서입력 후 변환 버튼을 누르면 변환 됩니다."
+        autoFocus
+      />
     </div>
   );
 };

@@ -65,6 +65,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '1.0em',
     border: '1px solid #d0d0d0',
   },
+  extMarkdown: {
+    // type LineStyle = "dashed" | "dotted" | "double" | "groove" | "hidden" | "inset" | "none" | "outset" | "ridge" | "solid";
+    borderLeft: '1px dashed #aaa',
+  },
   divider: {
     backgroundColor: '#ddd',
     margin: theme.spacing(1),
@@ -257,7 +261,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         </Grid>
         {richConfig.extension === 'markdown' ? (
           <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extPreview}`}>
+            <div className={`${classes.extentions} ${classes.extMarkdown}`}>
               <Markdown
                 editorState={mainState}
                 onStateChange={(state: RichEditorState) =>
