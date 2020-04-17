@@ -15,6 +15,7 @@ import TableControls from './TableControls';
 import CodeDirectorControls from './CodeDirectorControls';
 
 import { EditorControlsProps } from './types';
+import RealGridControls from './RealGridControls';
 
 interface Props extends EditorControlsProps {
   readOnly: boolean;
@@ -36,6 +37,7 @@ const Map: { [kay: string]: React.FC | React.FC<EditorControlsProps> } = {
   Link: LinkControls,
   Image: ImageControls,
   Table: TableControls,
+  RealGrid: RealGridControls,
   CodeDirector: CodeDirectorControls,
   Divider,
 };

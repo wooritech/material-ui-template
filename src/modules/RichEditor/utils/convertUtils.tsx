@@ -35,6 +35,14 @@ const blockToHTML = (block: any) => {
     return tableData.toHTML();
   }
 
+  if (block.type === 'realgrid') {
+    return {
+      start: `<div><p>realgrid</>`,
+      end: '</div>',
+      empty: '',
+    };
+  }
+
   return null;
 };
 

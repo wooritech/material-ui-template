@@ -2,6 +2,8 @@ import RichEditor from './RichEditor';
 import { Media } from './Media';
 import { RichTable } from './RichTable';
 import StatusBar from './StatusBar';
+import RichRealGrid from './RealGrid';
+
 import { ToolButtonGroup, ToolButtons, ToolButtonPopper } from './ToolButtons';
 
 /**
@@ -20,5 +22,8 @@ export {
   ToolButtonGroup,
   ToolButtons,
   ToolButtonPopper,
+  /** status bar */
   StatusBar,
+  /** realgrid */
+  RichRealGrid,
 };

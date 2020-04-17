@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import ImageMedia from './ImageMedia';
-import { DraftBlockComponentProps } from '../types';
+import { BlockComponentProps } from '../types';
 
 /** Media */
-const Media: React.FC<DraftBlockComponentProps> = (props) => {
+const Media: React.FC<BlockComponentProps> = (props) => {
   // console.log(props.selection.getAnchorKey());
   const { contentState, block } = props;
 

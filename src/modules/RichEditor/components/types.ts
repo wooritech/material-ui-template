@@ -17,7 +17,7 @@ import { ContentState, ContentBlock, SelectionState } from 'draft-js';
     selection: SelectionState {_map: Map, __ownerID: undefined}
     tree: List {size: 1, _origin: 0, _capacity: 1, _level: 5, _root: null, …}
  */
-export interface DraftBlockComponentProps {
+export interface BlockComponentProps {
   contentState: ContentState;
   block: ContentBlock;
   blockProps: Record<any, any>;

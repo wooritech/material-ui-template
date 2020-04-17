@@ -32,8 +32,10 @@ const EditorPanel: React.FC = () => {
         // return item.id === '52';
         /** 테이블 연습 */
         // return item.id === '53';
-        /** 다중언어 연습 */
-        return item.id === '54';
+        /** 다중언어, 마크다운 연습 */
+        // return item.id === '54';
+        /** 리얼그리드 연습 */
+        return item.id === '55';
       }),
     ),
   );

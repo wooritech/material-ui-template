@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
  * 어쨋든 마우스가 툴바에 올라오면 editor selection이 clear 되는 문제가 있다. */
 import Popover from '@material-ui/core/Popover';
 import { ToolButtons } from '../ToolButtons';
-import { DraftBlockComponentProps } from '../types';
+import { BlockComponentProps } from '../types';
 
 const useStyles = makeStyles(() => ({
   popover: {
@@ -26,7 +26,7 @@ const buttons = [
   { label: 'right', value: 'right', icon: 'format_align_right' },
 ];
 
-interface ImageMediaProps extends DraftBlockComponentProps {
+interface ImageMediaProps extends BlockComponentProps {
   src: string;
   name: string;
   size: number;
