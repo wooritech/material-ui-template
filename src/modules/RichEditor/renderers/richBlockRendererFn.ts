@@ -1,5 +1,5 @@
 import { ContentBlock } from 'draft-js';
-import { Media, RichTable } from '../components';
+import { Media, RichTable, RichRealGrid } from '../components';
 import { EventRichCommand } from '../types';
 
 const atomicRenderer = (onRichCommand: EventRichCommand) => {
@@ -24,6 +24,16 @@ const tableRenderer = (onRichCommand: EventRichCommand) => {
   };
 };
 
+const realgridRenderer = (onRichCommand: EventRichCommand) => {
+  return {
+    component: RichRealGrid,
+    editable: false,
+    props: {
+      onRichCommand,
+    },
+  };
+};
+
 /**
  *
  */
@@ -33,6 +43,7 @@ const richBlockRendererFn = (onRichCommand: EventRichCommand) => {
 
     if (type === 'atomic') return atomicRenderer(onRichCommand);
     if (type === 'table') return tableRenderer(onRichCommand);
+    if (type === 'realgrid') return realgridRenderer(onRichCommand);
 
     return null;
   };

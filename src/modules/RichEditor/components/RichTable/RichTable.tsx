@@ -2,7 +2,7 @@ import * as Immutable from 'immutable';
 import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import { DraftBlockComponentProps } from '../types';
+import { BlockComponentProps } from '../types';
 import RichTableData, { defaultTableData } from './RichTableData';
 import { TableCell } from './types';
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
  * - 테이블의 내용 편집
  * - 테이블 삭제
  */
-const RichTable: React.FC<DraftBlockComponentProps> = (props) => {
+const RichTable: React.FC<BlockComponentProps> = (props) => {
   const { block, blockProps } = props;
   const [current, setCurrent] = React.useState(
     Immutable.Map({

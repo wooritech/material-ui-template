@@ -12,7 +12,7 @@ import { Preview, RawView, Markdown } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils, TableUtils, EditorUtils } from './utils';
+import { MediaUtils, TableUtils, EditorUtils, RealGridUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -237,6 +237,9 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       //   onConfigChange(richConfig.setExtension(undefined));
       //   setCustomComponent(undefined);
       //   break;
+      case 'remove-realgrid':
+        handleRichCommand('change-state', RealGridUtils.removeGrid(getCurrentState(), value.block));
+        break;
       default:
         onRichCommand(command, value);
     }

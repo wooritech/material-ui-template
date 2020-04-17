@@ -84,7 +84,7 @@ const ToolbarSet: RichEditorToolbarConfig = [
     name: 'Image',
     type: 'BUTTONGROUP',
     // buttons: [{ label: 'Images', value: 'images', icon: 'add_photo_alternate' }],
-    buttons: [{ label: 'Images', value: 'images', icon: 'perm_media_outlined' }],
+    buttons: [{ label: 'Images', value: 'images', icon: 'add_photo_alternate' }],
   },
   {
     name: 'MultiLanguage',
@@ -115,12 +115,18 @@ const ToolbarSet: RichEditorToolbarConfig = [
   {
     name: 'Table',
     type: 'BUTTONGROUP',
-    buttons: [{ label: 'Table', value: 'table', icon: 'grid_on_outlined' }],
+    // buttons: [{ label: 'Table', value: 'table', icon: 'grid_on_outlined' }],
+    buttons: [{ label: 'Table', value: 'table', icon: 'table_chart_outlined' }],
   },
   {
     name: 'Link',
     type: 'BUTTONGROUP',
     buttons: [{ label: 'Link', value: 'link', icon: 'insert_link_outlined' }],
+  },
+  {
+    name: 'RealGrid',
+    type: 'BUTTONGROUP',
+    buttons: [{ label: 'RealGrid', value: 'realgrid', icon: 'grid_on_outlined' }],
   },
   {
     name: 'CodeDirector',
@@ -149,6 +155,7 @@ export const defaultToolbarConfig = getToolbarConfigs([
   'Link',
   'Image',
   'Table',
+  'RealGrid',
   'CodeDirector',
   'Divider',
   'MultiLanguage',
