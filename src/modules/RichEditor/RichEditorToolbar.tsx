@@ -19,7 +19,7 @@ const useToolbarStyle = makeStyles((theme: Theme) => ({
     margin: theme.spacing(1, 0.5),
   },
   toolbar: {
-    margin: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    margin: theme.spacing(0, 1),
   },
 }));
 
@@ -27,13 +27,14 @@ interface RichEditorToolbarProps {
   richConfig: RichEditorConfig;
   editorState: RichEditorState;
   onRichCommand: EventRichCommand;
+  readOnly: boolean;
   onStateChange: (eidtorState: RichEditorState) => void;
 }
 
 /** 툴바에 버튼을 생성하는 컴포넌트 */
 const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
   const classes = useToolbarStyle();
-  const { richConfig, editorState, onStateChange, onRichCommand } = props;
+  const { richConfig, editorState, onStateChange, onRichCommand, readOnly } = props;
   const controlConfig = richConfig.toolbarConfig;
 
   return (
@@ -64,6 +65,7 @@ const RichEditorToolbar: React.FC<RichEditorToolbarProps> = (props) => {
                   onChange={onStateChange}
                   buttonItems={control.buttons}
                   onRichCommand={onRichCommand}
+                  readOnly={readOnly}
                 />
               );
             })}

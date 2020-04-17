@@ -23,3 +23,24 @@ export interface DraftBlockComponentProps {
   blockProps: Record<any, any>;
   selection: SelectionState;
 }
+
+/** decorator component에 넘어 오는 props 예 */
+// contentState: ContentState {_map: Map}
+// decoratedText: "링크"
+// dir: null
+// start: 4
+// end: 6
+// blockKey: "46ea1"
+// entityKey: "58"
+// offsetKey: "46ea1-1-0"
+// children: [{…}]
+export interface DecoratedComponentProps {
+  contentState: ContentState;
+  decoratedText: string;
+  // dir: null
+  start: number;
+  end: number;
+  blockKey: string;
+  entityKey: string;
+  offsetKey: string;
+}

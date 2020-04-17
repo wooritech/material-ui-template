@@ -118,6 +118,11 @@ const ToolbarSet: RichEditorToolbarConfig = [
     buttons: [{ label: 'Table', value: 'table', icon: 'grid_on_outlined' }],
   },
   {
+    name: 'Link',
+    type: 'BUTTONGROUP',
+    buttons: [{ label: 'Link', value: 'link', icon: 'insert_link_outlined' }],
+  },
+  {
     name: 'CodeDirector',
     type: 'BUTTONGROUP',
     buttons: [{ label: 'Code Director', value: 'code-director', icon: 'aspect_ratio_outlined' }],
@@ -141,6 +146,7 @@ export const defaultToolbarConfig = getToolbarConfigs([
   'Divider',
   'InlineStyle',
   'Divider',
+  'Link',
   'Image',
   'Table',
   'CodeDirector',

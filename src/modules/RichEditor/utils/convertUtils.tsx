@@ -52,6 +52,10 @@ const entityToHTML = (entity: RawDraftEntity, originalText: string) => {
   if (type === 'image') {
     return <img src={data.src} alt="alt" />;
   }
+
+  if (type === 'LINK') {
+    return <a href={data.url}>{originalText}</a>;
+  }
   return originalText;
 };
 

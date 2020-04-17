@@ -1,3 +1,4 @@
+import BlankControls from './BlankControls';
 import UndoRedoControls from './UndoRedoControls';
 import HeadingStyleControls from './HeadingStyleControls';
 import BlockStyleControls from './BlockStyleControls';
@@ -13,6 +14,7 @@ import ControlComponents from './ControlComponents';
 export * from './types';
 
 export {
+  BlankControls,
   UndoRedoControls,
   HeadingStyleControls,
   BlockStyleControls,

@@ -6,7 +6,7 @@ import {
   CompositeDecorator,
   RawDraftContentState,
 } from 'draft-js';
-import { createEmailPlugin, createUrlPlugin, createHashtagPlugin } from '../plugins';
+import LinkDecorator from '../decorators';
 import RichEditorDocument from './RichEditorDocument';
 
 const defaultRaw = {
@@ -24,14 +24,7 @@ const defaultRaw = {
   entityMap: {},
 };
 
-const emailPlugin = createEmailPlugin({});
-const urlPlugin = createUrlPlugin({});
-const hashtagPlugin = createHashtagPlugin({});
-const defaultDecorators = new CompositeDecorator([
-  emailPlugin.decorator,
-  urlPlugin.decorator,
-  hashtagPlugin.decorator,
-]);
+const defaultDecorators = new CompositeDecorator([LinkDecorator]);
 
 /**
  * Draft.js 의 EditorState 확장

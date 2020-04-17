@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     overFlowY: 'none',
     fontSize: 12,
   },
+  extCustom: {
+    borderLeft: '1px dashed #aaa',
+  },
   extRaw: {
     color: '#eee',
     fontSize: '1.3em',
@@ -79,7 +82,7 @@ interface RichEditorFrameProps {
   richDoc: RichEditorDocument;
   richConfig: RichEditorConfig;
   onRichCommand: EventRichCommand;
-  onConfigChange?: (config: RichEditorConfig) => void;
+  onConfigChange: (config: RichEditorConfig) => void;
   showStatusbar?: boolean;
 }
 
@@ -89,7 +92,7 @@ interface RichEditorFrameProps {
  */
 const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const { richDoc, richConfig, onRichCommand, onConfigChange, showStatusbar } = props;
-  const classes = useStyles({ editorHeight: showStatusbar ? 220 : 185 });
+  const classes = useStyles({ editorHeight: showStatusbar ? 198 : 163 });
   const [readOnly, setReadOnly] = React.useState(false);
 
   /**
@@ -101,12 +104,28 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   );
   const [subState, setSubState] = React.useState<RichEditorState>(RichEditorState.createEmpty());
 
+  const [customComponent, setCustomComponent] = React.useState<React.FC | undefined>(undefined);
   /**
   - [ ] FIXME 임시 */
   const saveDoc = (state: RichEditorState, lang: string) => {
     const raw = EditorUtils.editorStateToRaw(state);
     return { richDoc: richDoc.setRaw(raw, lang), lang };
   };
+
+  const isEditingLanguage = () => {
+    return (
+      richConfig.extension === 'lang' && richConfig.defaultLanguage !== richConfig.currentLanguage
+    );
+  };
+
+  const getCurrentState = (): RichEditorState => {
+    // 다른언어 편집중인지 확인
+    if (isEditingLanguage()) return subState;
+
+    // 다른언어 편집중이 아니면
+    return mainState;
+  };
+
   /** 
     - [ ] TODO 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
   const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
@@ -117,6 +136,10 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       case 'change-main-state':
         setMainState(value);
         break;
+      case 'change-state':
+        if (isEditingLanguage()) setSubState(value);
+        else setMainState(value);
+        break;
       case 'change-sub-state':
         setSubState(value);
         break;
@@ -126,7 +149,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           handleRichCommand('close-editing-language');
         }
 
-        if (onConfigChange) onConfigChange(richConfig.setExtension(value));
+        onConfigChange(richConfig.setExtension(value));
         break;
       case 'close-multi-lang':
         /**
@@ -168,8 +191,8 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
          */
         console.log(command);
         setReadOnly(true);
-        if (onConfigChange)
-          onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
+
+        onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
         setSubState(RichEditorState.createWithRichDocument(richDoc, value));
         break;
       case 'change-editing-language':
@@ -187,8 +210,8 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
           onRichCommand('save', saveDoc(subState, richConfig.currentLanguage));
 
         setReadOnly(true);
-        if (onConfigChange)
-          onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
+
+        onConfigChange(richConfig.setExtension('lang').setCurrentLanguage(value));
         setSubState(RichEditorState.createWithRichDocument(richDoc, value));
         break;
       case 'close-editing-language':
@@ -200,12 +223,20 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
          */
         console.log(command);
         onRichCommand('save', saveDoc(subState, richConfig.currentLanguage));
-        if (onConfigChange)
-          onConfigChange(
-            richConfig.setExtension(undefined).setCurrentLanguage(richConfig.defaultLanguage),
-          );
+
+        onConfigChange(
+          richConfig.setExtension(undefined).setCurrentLanguage(richConfig.defaultLanguage),
+        );
         setReadOnly(false);
         break;
+      // case 'open-custom-extension':
+      //   onConfigChange(richConfig.setExtension('custom'));
+      //   setCustomComponent(value.component);
+      //   break;
+      // case 'close-custom-extension':
+      //   onConfigChange(richConfig.setExtension(undefined));
+      //   setCustomComponent(undefined);
+      //   break;
       default:
         onRichCommand(command, value);
     }
@@ -216,20 +247,6 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   // const handleStateChange = (state: RichEditorState) => {
   //   handleRichCommand('change-state', state);
   // };
-
-  const isEditingLanguage = () => {
-    return (
-      richConfig.extension === 'lang' && richConfig.defaultLanguage !== richConfig.currentLanguage
-    );
-  };
-
-  const getCurrentState = (): RichEditorState => {
-    // 다른언어 편집중인지 확인
-    if (isEditingLanguage()) return subState;
-
-    // 다른언어 편집중이 아니면
-    return mainState;
-  };
 
   const handleToolbarStateChange = (state: RichEditorState) => {
     const command = isEditingLanguage() ? 'change-sub-state' : 'change-main-state';
@@ -242,6 +259,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       <Divider light />
       <RichEditorToolbar
         editorState={getCurrentState()}
+        readOnly={readOnly}
         richConfig={richConfig}
         onRichCommand={handleRichCommand}
         onStateChange={handleToolbarStateChange}
@@ -298,6 +316,28 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             </div>
           </Grid>
         ) : null}
+        {/* {richConfig.extension === 'custom'
+          ? () => {
+              // custom extension 은 생각해야 할게 너무 많다.
+              const customExtRef = React.useRef<HTMLInputElement | null>(null);
+              // if (!customExtRef) customExtRef.current.focus();
+              console.log(customExtRef);
+              const handleOnBlur = () => {
+                onRichCommand('close-custom-extension');
+              };
+              return (
+                <Grid item xs={6}>
+                  <div
+                    onBlur={handleOnBlur}
+                    className={`${classes.extentions} ${classes.extCustom}`}
+                  >
+                    <input ref={customExtRef} type="text" />
+                    {customComponent}
+                  </div>
+                </Grid>
+              );
+            }
+          : null} */}
       </Grid>
       {showStatusbar ? (
         <>
