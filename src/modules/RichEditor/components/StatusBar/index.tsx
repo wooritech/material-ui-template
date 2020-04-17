@@ -19,11 +19,17 @@ const StatusBar: React.FC<StatusBarProps> = (props) => {
     const block = ContentUtils.getSelectionBlock(state).toJS();
     const inlineStyle = state.getCurrentInlineStyle();
     const outs: string[] = [];
+    const url = ContentUtils.getLinkUrl(state);
     if (block.key) outs.push(block.key);
     if (block.type) outs.push(block.type);
     if (inlineStyle.count() > 0) outs.push(JSON.stringify(inlineStyle));
-    outs.push(BlockUtils.isEmptyBlock(state.getCurrentContent(), state.getSelection()).toString());
-    return outs.join(' / ');
+    outs.push(
+      BlockUtils.isEmptyBlock(state.getCurrentContent(), state.getSelection())
+        ? 'empty block'
+        : 'block',
+    );
+    if (url !== '') outs.push(url);
+    return outs.join(' | ');
   };
 
   return <div>{status(richState)}</div>;

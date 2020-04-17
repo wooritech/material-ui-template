@@ -17,6 +17,7 @@ interface RichEditorProps {
   blockRendererFn?: (block: ContentBlock) => any;
   onChange: (editorState: EditorState) => void;
   readOnly?: boolean | undefined;
+  // ref?: string | ((instance: Editor | null) => void) | React.RefObject<Editor> | null | undefined;
 }
 
 const RichEditor: React.FC<RichEditorProps> = (props) => {
@@ -25,6 +26,7 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
 
   return (
     <Editor
+      // ref={ref}
       blockStyleFn={blockStyleFn}
       blockRendererFn={blockRendererFn}
       customStyleMap={customStyleMap}
