@@ -6,6 +6,7 @@ import ContentUtils from './contentUtils';
 import MediaUtils from './mediaUtils';
 import TableUtils from './tableUtils';
 import RealGridUtils from './realgridUtils';
+import { MdUtils, defaultMdConvertOptions } from './mdUtils';
 
 export * from './tableUtils';
 
@@ -17,4 +18,6 @@ export {
   ContentUtils,
   TableUtils,
   RealGridUtils,
+  MdUtils,
+  defaultMdConvertOptions, 
 };

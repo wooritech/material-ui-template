@@ -6,6 +6,7 @@ import {
   CompositeDecorator,
   RawDraftContentState,
 } from 'draft-js';
+import { markdownToDraft } from 'markdown-draft-js';
 import LinkDecorator from '../decorators';
 import RichEditorDocument from './RichEditorDocument';
 
@@ -31,6 +32,11 @@ const defaultDecorators = new CompositeDecorator([LinkDecorator]);
  *
  */
 export default class RichEditorState extends EditorState {
+  static createWithMarkdown = (markdown: string, options?: any) => {
+    const raw = markdownToDraft(markdown, options);
+    return RichEditorState.createWithRaw(raw);
+  };
+
   static createWithRaw = (raw: any, decorators?: CompositeDecorator): EditorState => {
     const contentState = convertFromRaw(raw);
     return EditorState.createWithContent(contentState, decorators || defaultDecorators);
