@@ -44,6 +44,7 @@ const richBlockRendererFn = (onRichCommand: EventRichCommand) => {
     if (type === 'atomic') return atomicRenderer(onRichCommand);
     if (type === 'table') return tableRenderer(onRichCommand);
     if (type === 'realgrid') return realgridRenderer(onRichCommand);
+    if (type === 'realgrid-demo') return realgridRenderer(onRichCommand);
 
     return null;
   };

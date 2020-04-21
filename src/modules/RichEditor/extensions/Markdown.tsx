@@ -1,9 +1,9 @@
 import React from 'react';
-import { markdownToDraft } from 'markdown-draft-js';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { RichEditorState } from '../modules';
+import { defaultMdConvertOptions } from '../utils';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,8 +32,7 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
   };
 
   const handleConvertClick = () => {
-    const raw = markdownToDraft(mdText);
-    onStateChange(RichEditorState.createWithRaw(raw));
+    onStateChange(RichEditorState.createWithMarkdown(mdText, defaultMdConvertOptions));
   };
 
   return (
@@ -53,6 +52,7 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
         onChange={handleChangeMd}
         helperText="마크다운 문서입력 후 변환 버튼을 누르면 변환 됩니다."
         autoFocus
+        value={mdText}
       />
     </div>
   );

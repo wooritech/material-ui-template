@@ -33,9 +33,9 @@ const EditorPanel: React.FC = () => {
         /** 테이블 연습 */
         // return item.id === '53';
         /** 다중언어, 마크다운 연습 */
-        // return item.id === '54';
+        return item.id === '54';
         /** 리얼그리드 연습 */
-        return item.id === '55';
+        // return item.id === '55';
       }),
     ),
   );

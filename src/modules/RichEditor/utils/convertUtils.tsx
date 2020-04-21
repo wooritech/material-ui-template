@@ -10,7 +10,6 @@ import { RichTableData } from '../components/RichTable';
  *  - getType() 과 같이 함수로 접근할 수 없다.
  */
 const blockToHTML = (block: any) => {
-  // console.log(block.type);
   if (block.type === 'code-block') {
     return {
       start: '<pre>',
@@ -35,11 +34,19 @@ const blockToHTML = (block: any) => {
     return tableData.toHTML();
   }
 
+  if (block.type === 'realgrid-demo') {
+    return {
+      start: `<div style='width: 100%'><iframe src="https://realgrid.com?q=${block.data.id}">`,
+      end: '</iframe></div>',
+      // empty: '',
+    };
+  }
+
   if (block.type === 'realgrid') {
     return {
       start: `<div><p>realgrid</>`,
       end: '</div>',
-      empty: '',
+      // empty: '',
     };
   }
 
