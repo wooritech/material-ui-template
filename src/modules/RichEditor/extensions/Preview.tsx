@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable react/no-danger */
 import React from 'react';
@@ -9,6 +10,12 @@ import { ConvertUtils } from '../utils';
 const useStyles = makeStyles(() => ({
   root: {
     display: 'block',
+    height: '100%',
+  },
+  iframe: {
+    width: '100%',
+    height: '100%',
+    border: '0',
   },
   pre: {
     fontSize: '1.3em',
@@ -26,6 +33,17 @@ const Preview: React.FC<RichEditorPreviewProps> = (props) => {
   const { view, editorState } = props;
   const classes = useStyles();
   const contents = ConvertUtils.convertToHTML(editorState);
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+
+  React.useEffect(() => {
+    const iframeDoc = iframeRef?.current?.contentDocument;
+    if (iframeDoc) {
+      iframeDoc.open();
+      iframeDoc.write(contents);
+      iframeDoc.close();
+    }
+  });
+
   const option = {
     ocd: false,
     // indent_size: '4',
@@ -48,8 +66,13 @@ const Preview: React.FC<RichEditorPreviewProps> = (props) => {
   };
 
   return (
-    <div>
-      {view === 'browser' ? <div dangerouslySetInnerHTML={{ __html: contents }} /> : null}
+    <div className={classes.root}>
+      {/* {view === 'browser' ? <div dangerouslySetInnerHTML={{ __html: contents }} /> : null} */}
+      {view === 'browser' ? (
+        <iframe className={classes.iframe} title="richeditor_html_preview" ref={iframeRef}>
+          <p>iframe이 지원되지 않는 브라우저 입니다.</p>
+        </iframe>
+      ) : null}
       {view === 'html' ? <pre className={classes.pre}>{pretty(contents, option)}</pre> : null}
     </div>
   );
