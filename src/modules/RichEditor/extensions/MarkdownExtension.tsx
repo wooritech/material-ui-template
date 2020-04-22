@@ -8,20 +8,21 @@ import { defaultMdConvertOptions } from '../utils';
 const useStyles = makeStyles(() => ({
   root: {
     display: 'block',
+    padding: '8px',
   },
   toolbar: {
     height: '50px',
   },
 }));
 
-/** RichEditorMarkdownProps */
-interface RichEditorMarkdownProps {
+/** MarkdownExtensionProps */
+interface MarkdownExtensionProps {
   editorState: RichEditorState;
   onStateChange: (eidtorState: RichEditorState) => void;
 }
 
-/** Markdown */
-const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
+/** MarkdownExtension */
+const MarkdownExtension: React.FC<MarkdownExtensionProps> = (props) => {
   const { onStateChange } = props;
   const classes = useStyles();
   const [mdText, setMdText] = React.useState('');
@@ -44,7 +45,6 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
       </div>
       <TextField
         label="마크다운 문서"
-        // style={{ width: '100%', height: '100%' }}
         multiline
         rows={15}
         fullWidth
@@ -58,4 +58,4 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
   );
 };
 
-export default Markdown;
+export default MarkdownExtension;

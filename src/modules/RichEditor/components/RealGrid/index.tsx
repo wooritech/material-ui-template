@@ -21,7 +21,15 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
   const [focused, setFocused] = React.useState('blur');
 
   const handleFocused = (e: React.FocusEvent) => {
-    setFocused(e.type);
+    const fType = e.type;
+    setFocused(fType);
+    /** 포커스로 하는게 아니라 block type을 가지고 해야 겠다. */
+    if (fType === 'blur') blockProps.onRichCommand('change-ext-mode', undefined);
+    if (fType === 'focus') blockProps.onRichCommand('change-ext-mode', 'realgrid');
+  };
+
+  const handleShowExt = () => {
+    blockProps.onRichCommand('change-ext-mode', 'realgrid');
   };
 
   const handleRemoveClick = () => {
@@ -35,7 +43,7 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
       onBlur={handleFocused}
       className={`${classes.root} ${focused === 'focus' ? classes.focused : ''}`}
     >
-      <Button>RealGrid</Button>
+      <Button onClick={handleShowExt}>RealGrid</Button>
       <Button onClick={handleRemoveClick}>Remove Grid</Button>
     </div>
   );

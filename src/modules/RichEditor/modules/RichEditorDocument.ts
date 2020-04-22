@@ -2,10 +2,14 @@
 import { Record } from 'immutable';
 import { EditorState, RawDraftContentState } from 'draft-js';
 
+export interface RawRichContentState extends RawDraftContentState {
+  toc?: any;
+}
+
 export interface RichLanguageRaws {
   // any 없으면 타입오류
   // DraftInlineStyleType 타입의 리터럴 타입에 있는 값을 넣어 주었는데 오류가 생기는 이유는???
-  [language: string]: RawDraftContentState | any;
+  [language: string]: RawRichContentState | any;
 }
 
 export interface RichDocumentRaw {
