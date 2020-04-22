@@ -8,7 +8,7 @@ import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditor, StatusBar } from './components';
 import { RichEditorState, RichEditorDocument } from './modules';
-import { Preview, RawView, Markdown } from './extensions';
+import { ExtensionPanel } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
@@ -26,10 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'auto',
     fontSize: '16px',
     color: '#24292e',
-    // backgroundColor: '#eee',
-    borderRadius: '3px',
-    // padding: '5px',
-    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
     /**
      * TODO: 스타일 수정 필요
      *  화면 크기에 따라 툴바의 높이가 변하면 전체 감싸고 있는 panel의 높이를 벗어남.
@@ -38,10 +36,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   extentions: {
     overflow: 'auto',
-    fontSize: '1.15em',
+    paddingLeft: theme.spacing(1),
+    borderLeft: '1px dashed #aaa',
     height: (props: { editorHeight: number }) => `calc(100vh - ${props.editorHeight}px)`,
-    borderRadius: '3px',
-    padding: theme.spacing(1),
   },
   statusBar: {
     height: '40px',
@@ -52,25 +49,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     overFlowY: 'none',
     fontSize: 12,
   },
-  extCustom: {
-    borderLeft: '1px dashed #aaa',
-  },
-  extRaw: {
-    color: '#eee',
-    fontSize: '1.3em',
-    backgroundColor: '#0d0d0d',
-  },
   extLang: {
     color: '#0d0d0d',
     backgroundColor: '#e3f2fd',
-  },
-  extPreview: {
-    fontSize: '1.0em',
-    border: '1px solid #d0d0d0',
-  },
-  extMarkdown: {
-    // type LineStyle = "dashed" | "dotted" | "double" | "groove" | "hidden" | "inset" | "none" | "outset" | "ridge" | "solid";
-    borderLeft: '1px dashed #aaa',
   },
   divider: {
     backgroundColor: '#ddd',
@@ -280,24 +261,20 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             />
           </div>
         </Grid>
-        {richConfig.extension === 'markdown' ? (
-          <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extMarkdown}`}>
-              <Markdown
-                editorState={mainState}
-                onStateChange={(state: RichEditorState) =>
-                  handleRichCommand('change-main-state', state)
-                }
-              />
-            </div>
-          </Grid>
-        ) : null}
-        {richConfig.extension === 'raw' ? (
-          <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extRaw}`}>
-              <RawView editorState={mainState} />
-            </div>
-          </Grid>
+        {richConfig.extension !== undefined ? (
+          <>
+            <Grid item xs={6}>
+              <div className={classes.extentions}>
+                <ExtensionPanel
+                  extensionType={richConfig.extension}
+                  richState={mainState}
+                  onStateChange={(state: RichEditorState) =>
+                    handleRichCommand('change-main-state', state)
+                  }
+                />
+              </div>
+            </Grid>
+          </>
         ) : null}
         {richConfig.extension === 'lang' ? (
           <Grid item xs={6}>
@@ -312,35 +289,6 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             </div>
           </Grid>
         ) : null}
-        {['browser', 'html'].includes(richConfig.extension || '') ? (
-          <Grid item xs={6}>
-            <div className={`${classes.extentions} ${classes.extPreview}`}>
-              <Preview view={richConfig.extension} editorState={mainState} />
-            </div>
-          </Grid>
-        ) : null}
-        {/* {richConfig.extension === 'custom'
-          ? () => {
-              // custom extension 은 생각해야 할게 너무 많다.
-              const customExtRef = React.useRef<HTMLInputElement | null>(null);
-              // if (!customExtRef) customExtRef.current.focus();
-              console.log(customExtRef);
-              const handleOnBlur = () => {
-                onRichCommand('close-custom-extension');
-              };
-              return (
-                <Grid item xs={6}>
-                  <div
-                    onBlur={handleOnBlur}
-                    className={`${classes.extentions} ${classes.extCustom}`}
-                  >
-                    <input ref={customExtRef} type="text" />
-                    {customComponent}
-                  </div>
-                </Grid>
-              );
-            }
-          : null} */}
       </Grid>
       {showStatusbar ? (
         <>

@@ -18,19 +18,23 @@ const useStyles = makeStyles(() => ({
     border: '0',
   },
   pre: {
+    overflow: 'auto',
+    margin: '0',
+    color: '#eee',
     fontSize: '1.3em',
+    backgroundColor: '#0d0d0d',
   },
 }));
 
 /** RichEditorPreviewProps */
 interface RichEditorPreviewProps {
-  view: string | undefined;
+  viewType: string | undefined;
   editorState: RichEditorState;
 }
 
 /** PreviewExtension */
 const Preview: React.FC<RichEditorPreviewProps> = (props) => {
-  const { view, editorState } = props;
+  const { viewType, editorState } = props;
   const classes = useStyles();
   const contents = ConvertUtils.convertToHTML(editorState);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
@@ -67,13 +71,13 @@ const Preview: React.FC<RichEditorPreviewProps> = (props) => {
 
   return (
     <div className={classes.root}>
-      {/* {view === 'browser' ? <div dangerouslySetInnerHTML={{ __html: contents }} /> : null} */}
-      {view === 'browser' ? (
+      {/* {viewType === 'browser' ? <div dangerouslySetInnerHTML={{ __html: contents }} /> : null} */}
+      {viewType === 'browser' ? (
         <iframe className={classes.iframe} title="richeditor_html_preview" ref={iframeRef}>
           <p>iframe이 지원되지 않는 브라우저 입니다.</p>
         </iframe>
       ) : null}
-      {view === 'html' ? <pre className={classes.pre}>{pretty(contents, option)}</pre> : null}
+      {viewType === 'html' ? <pre className={classes.pre}>{pretty(contents, option)}</pre> : null}
     </div>
   );
 };
