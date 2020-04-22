@@ -3,12 +3,19 @@ import { convertToRaw } from 'draft-js';
 
 /** Editor */
 import { RichEditor } from './components';
-import { Preview, RawView } from './extensions';
 import { RichEditorDocument, RichEditorState } from './modules';
 
 /** Toolbar controls */
 import { RichEditorConfig, defaultToolbarConfig, getToolbarConfigs } from './configs';
 import RichEditorToolbar from './RichEditorToolbar';
+
+export {
+  ExtensionPanel,
+  PreviewExtension,
+  RawViewExtension,
+  MarkdownExtension,
+  RealGridnExtension,
+} from './extensions';
 
 /**
  * export types or interfaces
@@ -33,9 +40,6 @@ export {
   /** modules */
   RichEditorState,
   RichEditorDocument,
-  /** extension */
-  RawView,
-  Preview,
   /** utils */
   convertToRaw,
 };

@@ -26,14 +26,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-/** RichEditorPreviewProps */
-interface RichEditorPreviewProps {
+/** PreviewExtensionProps */
+interface PreviewExtensionProps {
   viewType: string | undefined;
   editorState: RichEditorState;
 }
 
 /** PreviewExtension */
-const Preview: React.FC<RichEditorPreviewProps> = (props) => {
+const PreviewExtension: React.FC<PreviewExtensionProps> = (props) => {
   const { viewType, editorState } = props;
   const classes = useStyles();
   const contents = ConvertUtils.convertToHTML(editorState);
@@ -82,4 +82,4 @@ const Preview: React.FC<RichEditorPreviewProps> = (props) => {
   );
 };
 
-export default Preview;
+export default PreviewExtension;

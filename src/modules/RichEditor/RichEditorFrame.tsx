@@ -109,7 +109,11 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
 
   /** 
     - [ ] TODO 나중에 컴포넌트 별로 분리 우선 한군데 다 모아 보자. */
-  const handleRichCommand = (command: string, value?: TypeRichCommandValue) => {
+  const handleRichCommand = (
+    command: string,
+    value?: TypeRichCommandValue,
+    callback?: (v: any) => void,
+  ) => {
     switch (command) {
       case 'save':
         onRichCommand(command, saveDoc(mainState, richConfig.defaultLanguage));
@@ -125,12 +129,15 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setSubState(value);
         break;
       case 'change-ext-mode':
+        console.log('change-ext-mode', value);
         // 다중언어 편집중이면 편집중인 문서 저장 하고 default 상태로 돌려야 한다.
         if (richConfig.extension === 'lang') {
           handleRichCommand('close-editing-language');
         }
 
         onConfigChange(richConfig.setExtension(value));
+        // realgrid인 경우 focus처리 때문에 제대로 동작하지 않는 다. 콜백으로 알려준다.
+        if (callback) callback(value === 'realgrid' ? 'focus' : 'blur');
         break;
       case 'close-multi-lang':
         /**

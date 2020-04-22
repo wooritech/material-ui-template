@@ -11,19 +11,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-/** RawViewProps */
-interface RawViewProps {
+/** RawViewExtensionProps */
+interface RawViewExtensionProps {
   editorState: RichEditorState;
 }
 
 /**
- * RawView Extension
+ * RawViewExtension
  */
-const RawView: React.FC<RawViewProps> = (props) => {
+const RawViewExtension: React.FC<RawViewExtensionProps> = (props) => {
   const classes = useStyles();
   const { editorState } = props;
   const contents = RichEditorState.editorStateToRawString(editorState);
   return <pre className={classes.pre}>{contents}</pre>;
 };
 
-export default RawView;
+export default RawViewExtension;

@@ -15,14 +15,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-/** RichEditorMarkdownProps */
-interface RichEditorMarkdownProps {
+/** MarkdownExtensionProps */
+interface MarkdownExtensionProps {
   editorState: RichEditorState;
   onStateChange: (eidtorState: RichEditorState) => void;
 }
 
-/** Markdown */
-const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
+/** MarkdownExtension */
+const MarkdownExtension: React.FC<MarkdownExtensionProps> = (props) => {
   const { onStateChange } = props;
   const classes = useStyles();
   const [mdText, setMdText] = React.useState('');
@@ -58,4 +58,4 @@ const Markdown: React.FC<RichEditorMarkdownProps> = (props) => {
   );
 };
 
-export default Markdown;
+export default MarkdownExtension;
