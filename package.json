@@ -36,6 +36,7 @@
     "next": "^9.3.4",
     "pretty": "^2.0.0",
     "prismjs": "^1.19.0",
+    "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^10.2.1",

@@ -11,6 +11,10 @@ const config = {
   webpack: (webpackConfig) => {
     // 자주 사용되는 최상위 경로 별칭
     webpackConfig.resolve.alias['~'] = path.resolve(`${__dirname}/src`);
+    webpackConfig.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
     return webpackConfig;
   },
   publicRuntimeConfig: {

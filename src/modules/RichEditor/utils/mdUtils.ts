@@ -13,27 +13,27 @@ class MdUtils {
 
     // inline parser 예제,
     // 조건이 맞으면 state.push() 로 추가한 토큰의 타입에 해당하는 blockEntities 함수 실행.
-    const inlineParser = (state: any, silent: any) => {
-      if (!state.src) return false;
+    // const inlineParser = (state: any, silent: any) => {
+    //   if (!state.src) return false;
 
-      // {{text}} 의 형식인지 확인한다.
-      if (state.src[state.pos] === '{' && state.src[state.pos + 1] === '{') {
-        const endBrPos = state.src.indexOf('}}', state.pos);
-        if (endBrPos > -1) {
-          const content = state.src.slice(state.pos + 2, endBrPos);
-          console.log(endBrPos, state.src.slice(state.pos + 2, endBrPos), state.tokens);
-          if (!silent) {
-            state.push({
-              type: 'realgrid_open',
-              level: state.level,
-            });
-          }
-          // pos를 이동시켜주지 않으면 다음 src를 읽지 않기 때문에 무한 루프에 빠질 수 있다.
-          state.pos += endBrPos + 2;
-          return true;
-        }
-      }
-    };
+    //   // {{text}} 의 형식인지 확인한다.
+    //   if (state.src[state.pos] === '{' && state.src[state.pos + 1] === '{') {
+    //     const endBrPos = state.src.indexOf('}}', state.pos);
+    //     if (endBrPos > -1) {
+    //       const content = state.src.slice(state.pos + 2, endBrPos);
+    //       console.log(endBrPos, state.src.slice(state.pos + 2, endBrPos), state.tokens);
+    //       if (!silent) {
+    //         state.push({
+    //           type: 'realgrid_open',
+    //           level: state.level,
+    //         });
+    //       }
+    //       // pos를 이동시켜주지 않으면 다음 src를 읽지 않기 때문에 무한 루프에 빠질 수 있다.
+    //       state.pos += endBrPos + 2;
+    //       return true;
+    //     }
+    //   }
+    // };
 
     /**
      * 형식
