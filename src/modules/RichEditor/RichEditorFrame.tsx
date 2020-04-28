@@ -4,15 +4,16 @@ import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import { ContentBlock } from 'draft-js';
 import RichEditorHeader from './RichEditorHeader';
 import RichEditorToolbar from './RichEditorToolbar';
 import { RichEditor, StatusBar } from './components';
 import { RichEditorState, RichEditorDocument } from './modules';
-import { ExtensionPanel } from './extensions';
+import { ExtensionPanel, getExtension } from './extensions';
 import { RichEditorConfig } from './configs';
 import { EventRichCommand, TypeRichCommandValue } from './types';
 import { blockStyleFn, richBlockRendererFn } from './renderers';
-import { MediaUtils, TableUtils, EditorUtils, RealGridUtils } from './utils';
+import { MediaUtils, TableUtils, EditorUtils, RealGridUtils, BlockUtils } from './utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -75,6 +76,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const { richDoc, richConfig, onRichCommand, onConfigChange, showStatusbar } = props;
   const classes = useStyles({ editorHeight: showStatusbar ? 198 : 163 });
   const [readOnly, setReadOnly] = React.useState(false);
+  const [extensionBlock, setExtensionBlock] = React.useState<ContentBlock | undefined>();
 
   /**
    * 멀티 랭기지 처리를 위해 editorState를 Frame 내부로 가져오고
@@ -129,15 +131,16 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
         setSubState(value);
         break;
       case 'change-ext-mode':
-        console.log('change-ext-mode', value);
         // 다중언어 편집중이면 편집중인 문서 저장 하고 default 상태로 돌려야 한다.
         if (richConfig.extension === 'lang') {
           handleRichCommand('close-editing-language');
         }
 
-        onConfigChange(richConfig.setExtension(value));
-        // realgrid인 경우 focus처리 때문에 제대로 동작하지 않는 다. 콜백으로 알려준다.
-        if (callback) callback(value === 'realgrid' ? 'focus' : 'blur');
+        if (value.mode !== richConfig.extension) {
+          // console.log('change-ext-mode', value, richConfig.extension);
+          onConfigChange(richConfig.setExtension(value.mode));
+          setExtensionBlock(value.block);
+        }
         break;
       case 'close-multi-lang':
         /**
@@ -157,6 +160,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
          *  포커스가 내부 컴포넌트로 올라갈때 readonly 처리를 해주어야
          *  내부 컴포넌트의 키 동작이 유연하다. */
         setReadOnly(true);
+        // handleRichCommand('change-state', BlockUtils.selectBlock(mainState, value.block));
         break;
       case 'change-table-data':
         setMainState(TableUtils.mergeBlockTableData(mainState, value.block, value.data));
@@ -225,6 +229,10 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       //   onConfigChange(richConfig.setExtension(undefined));
       //   setCustomComponent(undefined);
       //   break;
+      case 'select-block':
+        console.log('select-block', value);
+        handleRichCommand('change-state', BlockUtils.selectBlock(mainState, value.block));
+        break;
       case 'remove-realgrid':
         handleRichCommand('change-state', RealGridUtils.removeGrid(getCurrentState(), value.block));
         break;
@@ -242,6 +250,12 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const handleToolbarStateChange = (state: RichEditorState) => {
     const command = isEditingLanguage() ? 'change-sub-state' : 'change-main-state';
     handleRichCommand(command, state);
+  };
+
+  const handleChangeBlock = (block: ContentBlock) => {
+    const mode = getExtension(block, richConfig);
+    handleRichCommand('change-ext-mode', { mode, block });
+    // console.log('handleChangeBlock:', key);
   };
 
   return (
@@ -265,6 +279,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
               blockRendererFn={richBlockRendererFn(handleRichCommand)}
               blockStyleFn={blockStyleFn}
               readOnly={readOnly}
+              onChangeBlock={handleChangeBlock}
             />
           </div>
         </Grid>
@@ -273,6 +288,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
             <Grid item xs={6}>
               <div className={classes.extentions}>
                 <ExtensionPanel
+                  extensionBlock={extensionBlock}
                   extensionType={richConfig.extension}
                   richState={mainState}
                   onStateChange={(state: RichEditorState) =>

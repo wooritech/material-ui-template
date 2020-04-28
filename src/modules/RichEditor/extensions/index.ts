@@ -3,6 +3,7 @@ import PreviewExtension from './PreviewExtension';
 import RawViewExtension from './RawViewExtension';
 import MarkdownExtension from './MarkdownExtension';
 import RealGridnExtension from './RealGridExtension';
+import getExtension from './getExtension';
 
 export {
   ExtensionPanel,
@@ -10,4 +11,5 @@ export {
   RawViewExtension,
   MarkdownExtension,
   RealGridnExtension,
+  getExtension,
 };

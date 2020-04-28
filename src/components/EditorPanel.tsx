@@ -27,13 +27,13 @@ const EditorPanel: React.FC = () => {
         /** 빈 문서 */
         // return item.id === '50';
         /** 복잡한 문서 */
-        // return item.id === '51';
+        return item.id === '51';
         /** 헤더 연습 */
         // return item.id === '52';
         /** 테이블 연습 */
         // return item.id === '53';
         /** 다중언어, 마크다운 연습 */
-        return item.id === '54';
+        // return item.id === '54';
         /** 리얼그리드 연습 */
         // return item.id === '55';
       }),

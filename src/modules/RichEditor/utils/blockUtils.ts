@@ -19,6 +19,57 @@ class BlockUtils {
     return RichUtils.getCurrentBlockType(editorState);
   };
 
+  /** key 블럭의 block type */
+  static getBlockType = (editorState: EditorState, key: string): string => {
+    const content = editorState.getCurrentContent();
+    const block = content.getBlockForKey(key);
+
+    return block?.getType();
+  };
+
+  /** selection의 anchor key 블럭 반환 */
+  static getCurrentAnchorBlock = (editorState: EditorState): ContentBlock => {
+    const selection = editorState.getSelection();
+    const anchorKey = selection.getAnchorKey();
+    const contentState = editorState.getCurrentContent();
+
+    return contentState.getBlockForKey(anchorKey);
+  };
+
+  /** 서로 다른 블럭인가? */
+  static diffBlock = (block1: ContentBlock, block2: ContentBlock): boolean => {
+    return block1.getKey() !== block2.getKey();
+  };
+
+  /** 블럭 선택 */
+  static selectBlock = (editorState: EditorState, block: ContentBlock): EditorState => {
+    // const editorState = getEditorState();
+
+    // TODO verify that always a key-0-0 exists
+    // const offsetKey = DraftOffsetKey.encode(block.getKey(), 0, 0);
+    const offsetKey = `${block.getKey()}-${0}-${0}`;
+    const node = document.querySelectorAll(`[data-offset-key="${offsetKey}"]`)[0];
+    // set the native selection to the node so the caret is not in the text and
+    // the selectionState matches the native selection
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.setStart(node, 0);
+    range.setEnd(node, 0);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    return EditorState.forceSelection(
+      editorState,
+      new SelectionState({
+        anchorKey: block.getKey(),
+        anchorOffset: 0,
+        focusKey: block.getKey(),
+        focusOffset: 0,
+        isBackward: false,
+      }),
+    );
+  };
+
   /**
    * 블럭 분리
    */
