@@ -91,6 +91,10 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
     /** 셀 간 이동시 테이블 focus 이벤트는 보류 */
     if (isRelatedFocusing(event.relatedTarget)) return;
 
+    const onCompleteReadonly = () => {
+      blockProps.onRichCommand('enter-table', { block });
+    };
+
     if (fType === 'focus') {
       console.log(`<< enter-table: (${blockKey})`);
       blockProps.onRichCommand('select-block', { block });
@@ -99,10 +103,13 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
        *   블럭선택 -> onChangeBlock 이벤트 -> readonly(true) 의 순으로 되어야 하는데 sync가 안 맞는다
        *   그래도 state 의 chnage는 stack 구조여서 readonly 가 풀리면 onChangeBlock 이벤트가 발생한다.
        *   즉, 블럭선택 -> readonly(true) ... readonly(false) -> onChangeBlock 이 된다.
+       *
+       * 이게 정확한 문제 해결이 안된다. 20200428
        */
       setTimeout(() => {
         blockProps.onRichCommand('enter-table', { block });
-      }, 10);
+      }, 100);
+
       setCurrent(current.set('isFocused', true));
     }
 

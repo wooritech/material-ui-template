@@ -14,7 +14,10 @@ const ExtensionControls: React.FC<EditorControlsProps> = (props) => {
 
   const handleChange = (value: string) => {
     if (onRichCommand)
-      onRichCommand('change-ext-mode', handleSelected(value) ? undefined : { mode: value });
+      onRichCommand(
+        'change-ext-mode',
+        handleSelected(value) ? { mode: undefined } : { mode: value },
+      );
   };
 
   return (

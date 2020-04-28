@@ -42,6 +42,10 @@ export default class RichEditorConfig extends Immutable.Record(defaultConfig) im
     return this.get('extension');
   }
 
+  get isCustomExtension(): boolean {
+    return ['lang', 'raw', 'browser', 'html'].includes(this.get('extension'));
+  }
+
   get defaultLanguage(): string {
     return this.get('defaultLanguage');
   }

@@ -20,6 +20,13 @@ class BlockUtils {
     return RichUtils.getCurrentBlockType(editorState);
   };
 
+  static isCurrentBlock = (editorState: EditorState, block: ContentBlock | string): boolean => {
+    const content = editorState.getCurrentContent();
+    const currentBlock = BlockUtils.getCurrentAnchorBlock(editorState);
+    const targetBlock = typeof block === 'string' ? content.getBlockForKey(block) : block;
+    return currentBlock.getKey() === targetBlock.getKey();
+  };
+
   /** key 블럭의 block type */
   static getBlockType = (editorState: EditorState, key: string): string => {
     const content = editorState.getCurrentContent();

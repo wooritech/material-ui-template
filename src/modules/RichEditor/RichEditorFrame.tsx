@@ -114,7 +114,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
   const handleRichCommand = (
     command: string,
     value?: TypeRichCommandValue,
-    callback?: (v: any) => void,
+    callback?: (v?: any) => void,
   ) => {
     switch (command) {
       case 'save':
@@ -130,17 +130,21 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       case 'change-sub-state':
         setSubState(value);
         break;
+      case 'change-custom-ext-mode':
+        if (richConfig.isCustomExtension && value.mode === undefined) return;
+        if (value.mode !== richConfig.extension) {
+          // console.log('change-ext-mode', value, richConfig.extension);
+          onConfigChange(richConfig.setExtension(value.mode));
+        }
+        setExtensionBlock(value.block);
+        break;
       case 'change-ext-mode':
         // 다중언어 편집중이면 편집중인 문서 저장 하고 default 상태로 돌려야 한다.
         if (richConfig.extension === 'lang') {
           handleRichCommand('close-editing-language');
         }
-
-        if (value.mode !== richConfig.extension) {
-          // console.log('change-ext-mode', value, richConfig.extension);
-          onConfigChange(richConfig.setExtension(value.mode));
-          setExtensionBlock(value.block);
-        }
+        onConfigChange(richConfig.setExtension(value.mode));
+        setExtensionBlock(value.block);
         break;
       case 'close-multi-lang':
         /**
@@ -230,8 +234,11 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       //   setCustomComponent(undefined);
       //   break;
       case 'select-block':
-        console.debug('select-block:', value.block.getKey(), value.block.getType());
-        handleRichCommand('change-state', BlockUtils.selectBlock(mainState, value.block));
+        // 선택된 블럭과 다르면 변경
+        if (!BlockUtils.isCurrentBlock(mainState, value.block.getKey())) {
+          setMainState(BlockUtils.selectBlock(mainState, value.block));
+          console.log('select-block:', value.block.getKey(), value.block.getType());
+        }
         break;
       case 'remove-realgrid':
         handleRichCommand('change-state', RealGridUtils.removeGrid(getCurrentState(), value.block));
@@ -254,7 +261,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
 
   const handleChangeBlock = (block: ContentBlock) => {
     const mode = getExtension(block, richConfig);
-    handleRichCommand('change-ext-mode', { mode, block });
+    handleRichCommand('change-custom-ext-mode', { mode, block });
     // console.log('handleChangeBlock:', key);
   };
 
