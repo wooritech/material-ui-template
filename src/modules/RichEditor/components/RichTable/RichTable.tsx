@@ -86,33 +86,38 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
 
   /** 포커스가 이 테이블에 들어올때 발생 */
   const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-    event.preventDefault();
+    const fType = event.type;
 
     /** 셀 간 이동시 테이블 focus 이벤트는 보류 */
     if (isRelatedFocusing(event.relatedTarget)) return;
 
-    if (blockProps?.onRichCommand) {
-      blockProps.onRichCommand('enter-table');
+    const onCompleteReadonly = () => {
+      blockProps.onRichCommand('enter-table', { block });
+    };
+
+    if (fType === 'focus') {
       console.log(`<< enter-table: (${blockKey})`);
+      blockProps.onRichCommand('select-block', { block });
+      /**
+       * setTimeout() 사용한 이유
+       *   블럭선택 -> onChangeBlock 이벤트 -> readonly(true) 의 순으로 되어야 하는데 sync가 안 맞는다
+       *   그래도 state 의 chnage는 stack 구조여서 readonly 가 풀리면 onChangeBlock 이벤트가 발생한다.
+       *   즉, 블럭선택 -> readonly(true) ... readonly(false) -> onChangeBlock 이 된다.
+       *
+       * 이게 정확한 문제 해결이 안된다. 20200428
+       */
+      setTimeout(() => {
+        blockProps.onRichCommand('enter-table', { block });
+      }, 100);
+
+      setCurrent(current.set('isFocused', true));
     }
 
-    setCurrent(current.set('isFocused', true));
-  };
-
-  /** 포커스가 이 테이블을 벗어날때 발생 */
-  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-    event.preventDefault();
-
-    /** 셀 간 이동시 테이블 leave 이벤트는 보류 */
-    if (isRelatedFocusing(event.relatedTarget)) return;
-
-    if (blockProps?.onRichCommand) {
-      blockProps.onRichCommand('leave-table');
+    if (fType === 'blur') {
       console.log(`(${blockKey}) :leave-table >>`);
+      blockProps.onRichCommand('leave-table');
+      setCurrent(current.set('isFocused', false));
     }
-
-    setCurrent(current.set('isFocused', false));
-    // console.log(current.toJS());
   };
 
   /** header의 contentEditable에 의해 생성된 input을 벗어날때 이벤트
@@ -218,7 +223,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
 
   return (
     <div className="public-DraftStyleDefault-ltr">
-      <div className={classes.root} onFocus={handleFocus} onBlur={handleBlur} id={blockKey}>
+      <div className={classes.root} onFocus={handleFocus} onBlur={handleFocus} id={blockKey}>
         <table className={classes.table}>
           <thead>
             <tr>

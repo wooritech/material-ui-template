@@ -27,6 +27,7 @@ const defaultConfig: Partial<Config> = {
   },
 };
 
+// richeditor의 config + state 관리
 export default class RichEditorConfig extends Immutable.Record(defaultConfig) implements Config {
   constructor(toolbarConfig?: RichEditorToolbarConfig) {
     if (toolbarConfig) super({ toolbarConfig });
@@ -39,6 +40,10 @@ export default class RichEditorConfig extends Immutable.Record(defaultConfig) im
 
   get extension(): RichEditorToolbarExtension {
     return this.get('extension');
+  }
+
+  get isCustomExtension(): boolean {
+    return ['lang', 'raw', 'browser', 'html'].includes(this.get('extension'));
   }
 
   get defaultLanguage(): string {

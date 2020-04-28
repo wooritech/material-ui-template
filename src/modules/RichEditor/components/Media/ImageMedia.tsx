@@ -37,48 +37,46 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
   const { src, name, block, blockProps, contentState } = props;
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  let needTools = false;
+  const needTools = false;
 
   const handleMouseMove = () => {
-    // console.log('img, mouse move');
-    needTools = true;
+    // // console.log('img, mouse move');
+    // needTools = true;
   };
 
   const handleMouseOver = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     // console.log('img, mouse over');
-    if (!needTools) {
-      needTools = true;
-      setAnchorEl(event.currentTarget);
-    }
+    // if (!needTools) {
+    //   needTools = true;
+    //   setAnchorEl(event.currentTarget);
+    // }
   };
 
   const handleMouseLeave = () => {
-    needTools = false;
-
-    /** 타켓을 벗어나서 툴바로 올라간 경우 툴바를 유지한다. */
-    setTimeout(() => {
-      if (!needTools) {
-        // console.log('img, mouse leave');
-        setAnchorEl(null);
-      }
-    }, 200);
+    // needTools = false;
+    // /** 타켓을 벗어나서 툴바로 올라간 경우 툴바를 유지한다. */
+    // setTimeout(() => {
+    //   if (!needTools) {
+    //     // console.log('img, mouse leave');
+    //     setAnchorEl(null);
+    //   }
+    // }, 200);
   };
 
   const handleEnterToolbar = () => {
     // console.log('img, toober enter');
-    needTools = true;
+    // needTools = true;
   };
 
   const handleLeaveToolbar = () => {
-    needTools = false;
-
-    /** 툴바를 벗어나서 타켓 엘리멘트로 올라간 경우 툴바를 유지한다. */
-    setTimeout(() => {
-      if (!needTools) {
-        // console.log('img, toober leave');
-        setAnchorEl(null);
-      }
-    }, 200);
+    // needTools = false;
+    // /** 툴바를 벗어나서 타켓 엘리멘트로 올라간 경우 툴바를 유지한다. */
+    // setTimeout(() => {
+    //   if (!needTools) {
+    //     // console.log('img, toober leave');
+    //     setAnchorEl(null);
+    //   }
+    // }, 200);
   };
 
   const open = Boolean(anchorEl);
@@ -110,7 +108,7 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
         alt={name}
         aria-describedby={id}
       />
-      <Popover
+      {/* <Popover
         id="mouse-over-popover"
         className={classes.popover}
         classes={{
@@ -118,9 +116,9 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
         }}
         open={open}
         anchorEl={anchorEl}
-        /** 앵커 위치값을 무엇으로 참조 할 것인가? 'anchorEl' | 'anchorPosition' | 'none' */
+        // 앵커 위치값을 무엇으로 참조 할 것인가? 'anchorEl' | 'anchorPosition' | 'none'
         anchorReference="anchorEl"
-        /** 앵커 위치: 윈도우에서 위치값. */
+        // 앵커 위치: 윈도우에서 위치값.
         // anchorPosition={{ left: 100, top: 100 }}
         anchorOrigin={{
           vertical: 'bottom',
@@ -130,8 +128,8 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
           vertical: 'top',
           horizontal: 'left',
         }}
-        /** Popper는 Modal을 base로 한다.:  벗어날때 포커스 처리 방식,
-         * 이 값을 false로 하면 Editor에 포커스가 이동하면서 첫 줄로 이동하게 된다. */
+        // Popper는 Modal을 base로 한다.:  벗어날때 포커스 처리 방식,
+        // 이 값을 false로 하면 Editor에 포커스가 이동하면서 첫 줄로 이동하게 된다.
         disableRestoreFocus
         onMouseEnter={handleEnterToolbar}
         onMouseLeave={handleLeaveToolbar}
@@ -144,7 +142,7 @@ const ImageMedia: React.FC<ImageMediaProps> = (props) => {
             onChange={handleChange}
           />
         </div>
-      </Popover>
+      </Popover> */}
     </>
   );
 };

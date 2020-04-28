@@ -35,6 +35,24 @@ export default [
             data: {},
           },
           {
+            key: 'fvl8d',
+            text: '그리드 구성',
+            type: 'header-two',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+          {
+            key: 'd2e22',
+            text: '',
+            type: 'realgrid',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+          {
             key: 'fvl8e',
             text: '컴포넌트 구성',
             type: 'header-two',
@@ -1318,6 +1336,97 @@ export default [
           },
           {
             key: 'dkfjs',
+            text: '',
+            type: 'unstyled',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {},
+          },
+          {
+            key: 'a5mm3',
+            text: '',
+            type: 'table',
+            depth: 0,
+            inlineStyleRanges: [],
+            entityRanges: [],
+            data: {
+              header: [
+                {
+                  text: 'Header 1',
+                },
+                {
+                  text: 'Header 2',
+                },
+                {
+                  text: 'Header 3',
+                },
+                {
+                  text: 'Header 4',
+                },
+              ],
+              body: [
+                [
+                  {
+                    text: 'Col 1, Row 1',
+                  },
+                  {
+                    text: 'Col 2, Row 1',
+                  },
+                  {
+                    text: 'Col 3, Row 1',
+                  },
+                  {
+                    text: 'Col 4, Row 1',
+                  },
+                ],
+                [
+                  {
+                    text: 'Col 1, Row 2',
+                  },
+                  {
+                    text: 'Col 2, Row 2',
+                  },
+                  {
+                    text: 'Col 3, Row 2',
+                  },
+                  {
+                    text: 'Col 4, Row 2',
+                  },
+                ],
+                [
+                  {
+                    text: 'Col 1, Row 3',
+                  },
+                  {
+                    text: 'Col 2, Row 3',
+                  },
+                  {
+                    text: 'Col 3, Row 3',
+                  },
+                  {
+                    text: 'Col 4, Row 3',
+                  },
+                ],
+              ],
+              footer: [
+                {
+                  text: 'Footer 1',
+                },
+                {
+                  text: 'Footer 2',
+                },
+                {
+                  text: 'Footer 3',
+                },
+                {
+                  text: 'Footer 4',
+                },
+              ],
+            },
+          },
+          {
+            key: '2p8h6',
             text: '',
             type: 'unstyled',
             depth: 0,
