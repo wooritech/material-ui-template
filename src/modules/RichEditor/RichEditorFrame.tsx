@@ -230,7 +230,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
       //   setCustomComponent(undefined);
       //   break;
       case 'select-block':
-        console.log('select-block', value);
+        console.debug('select-block:', value.block.getKey(), value.block.getType());
         handleRichCommand('change-state', BlockUtils.selectBlock(mainState, value.block));
         break;
       case 'remove-realgrid':

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Immutable from 'immutable';
 import {
@@ -51,12 +52,14 @@ class BlockUtils {
     const node = document.querySelectorAll(`[data-offset-key="${offsetKey}"]`)[0];
     // set the native selection to the node so the caret is not in the text and
     // the selectionState matches the native selection
+    // window range 객체에 derecate 되는 함수가 있는데 괜찮은가 모르겠다.
     const selection = window.getSelection();
     const range = document.createRange();
     range.setStart(node, 0);
     range.setEnd(node, 0);
     selection?.removeAllRanges();
     selection?.addRange(range);
+    // console.log(node, selection, range);
 
     return EditorState.forceSelection(
       editorState,

@@ -28,14 +28,14 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
   const [currentBlock, setCurrentBlock] = React.useState<ContentBlock>();
 
   const handleChange = (state: EditorState) => {
-    onChange(state);
     /** 선택된 anchor 블럭의 키가 달라지면 onChangeBlock 호출 */
     const block = BlockUtils.getCurrentAnchorBlock(state);
     if (currentBlock?.getKey() !== block.getKey()) {
-      console.log('onChangeBlock:', currentBlock?.getKey(), block.getKey());
+      console.log('onChangeBlock:', currentBlock?.getKey(), ' ==> ', block.getKey());
       if (onChangeBlock) onChangeBlock(block);
       setCurrentBlock(block);
     }
+    onChange(state);
   };
 
   return (
