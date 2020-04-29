@@ -259,6 +259,7 @@ const RichEditorFrame: React.FC<RichEditorFrameProps> = (props) => {
     handleRichCommand(command, state);
   };
 
+  /** 블럭의 anchor 키가 변경될때 발생하는 이벤트  */
   const handleChangeBlock = (block: ContentBlock) => {
     const mode = getExtension(block, richConfig);
     handleRichCommand('change-custom-ext-mode', { mode, block });
