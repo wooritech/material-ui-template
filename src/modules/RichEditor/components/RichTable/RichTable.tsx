@@ -3,7 +3,7 @@ import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { BlockComponentProps } from '../types';
-import RichTableData, { defaultTableData } from './RichTableData';
+import RichTableData from './RichTableData';
 import { TableCell } from './types';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -60,7 +60,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   const blockKey = block.getKey();
 
   /** 랜더링은 js 객체로 하고 데이터 처리는 immutable class로 한다. */
-  const blockData = block.getData().size === 0 ? defaultTableData : block.getData().toJS();
+  const blockData = block.getData().size === 0 ? undefined : block.getData().toJS();
   const tableDataObject = new RichTableData(blockData);
   /**
    - [ ] FIXME: RichTableData의 구조적 문제
@@ -91,12 +91,8 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
     /** 셀 간 이동시 테이블 focus 이벤트는 보류 */
     if (isRelatedFocusing(event.relatedTarget)) return;
 
-    const onCompleteReadonly = () => {
-      blockProps.onRichCommand('enter-table', { block });
-    };
-
     if (fType === 'focus') {
-      console.log(`<< enter-table: (${blockKey})`);
+      // console.log(`<< enter-table: (${blockKey})`);
       blockProps.onRichCommand('select-block', { block });
       /**
        * setTimeout() 사용한 이유
@@ -108,31 +104,16 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
        */
       setTimeout(() => {
         blockProps.onRichCommand('enter-table', { block });
-      }, 100);
+      }, 50);
 
       setCurrent(current.set('isFocused', true));
     }
 
     if (fType === 'blur') {
-      console.log(`(${blockKey}) :leave-table >>`);
+      // console.log(`(${blockKey}) :leave-table >>`);
       blockProps.onRichCommand('leave-table');
       setCurrent(current.set('isFocused', false));
     }
-  };
-
-  /** header의 contentEditable에 의해 생성된 input을 벗어날때 이벤트
-   * onChange이벤트, onInput이벤트등을 이용할 수도 있다. */
-  const handleHeaderChange = (event: React.FocusEvent, index: number) => {
-    const text = event.currentTarget.textContent || '';
-    const data = tableDataObject.setHeaderCell(index, text);
-    blockProps.onRichCommand('change-table-data', { block, data });
-  };
-
-  /** footer input을 벗어날때 이벤트 */
-  const handleFooterChange = (event: React.FocusEvent, index: number) => {
-    const text = event.currentTarget.textContent || '';
-    const data = tableDataObject.setFooterCell(index, text);
-    blockProps.onRichCommand('change-table-data', { block, data });
   };
 
   /** 셀 선택 될때 current 정보 유지 */
@@ -158,6 +139,21 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
     }, 20);
   };
 
+  /** header의 contentEditable에 의해 생성된 input을 벗어날때 이벤트
+   * onChange이벤트, onInput이벤트등을 이용할 수도 있다. */
+  const handleHeaderChange = (event: React.FocusEvent, index: number) => {
+    const text = event.currentTarget.textContent || '';
+    const data = tableDataObject.setHeaderCell(index, text);
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
+
+  /** footer input을 벗어날때 이벤트 */
+  const handleFooterChange = (event: React.FocusEvent, index: number) => {
+    const text = event.currentTarget.textContent || '';
+    const data = tableDataObject.setFooterCell(index, text);
+    blockProps.onRichCommand('change-table-data', { block, data });
+  };
+
   /** cell input을 벗어날때 이벤트 */
   const handleCellChange = (event: React.FocusEvent, rowIndex: number, colIndex: number) => {
     const text = event.currentTarget.textContent || '';
@@ -166,13 +162,13 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   };
 
   /** 헤더 추가 */
-  const handleInsertHeaderClick = (event: React.MouseEvent) => {
+  const handleInsertHeaderClick = () => {
     const data = tableDataObject.insertHeader();
     blockProps.onRichCommand('change-table-data', { block, data });
   };
 
   /** 풋터 추가 */
-  const handleInsertFooterClick = (event: React.MouseEvent) => {
+  const handleInsertFooterClick = () => {
     const data = tableDataObject.insertFooter();
     blockProps.onRichCommand('change-table-data', { block, data });
   };
@@ -180,7 +176,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   /**
    * 컬럼 추가
    * - 현재 컬럼 index에 새 컬럼 추가 */
-  const handleInsertColumnClick = (event: React.MouseEvent) => {
+  const handleInsertColumnClick = () => {
     const col = Number(current.get('col'));
     if (col > -1) {
       const data = tableDataObject.insertColumn(col);
@@ -189,7 +185,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   };
 
   /** 컬럼 삭제 */
-  const handleRemoveColumnClick = (event: React.MouseEvent) => {
+  const handleRemoveColumnClick = () => {
     const col = Number(current.get('col'));
     if (col > -1) {
       const data = tableDataObject.removeColumn(col);
@@ -201,7 +197,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
    * 행 추가
    * - current가 header나 footer에 있을 수 있고, body에 행이 없을 수도 있다.
    * - footer인 경우 맨 마지막줄 추가 */
-  const handleInsertRowClick = (event: React.MouseEvent) => {
+  const handleInsertRowClick = () => {
     let row = Number(current.get('row'));
     if (current.get('type') === 'footer') row = Number.MAX_SAFE_INTEGER;
     const data = tableDataObject.insertRow(row === -1 ? 0 : row);
@@ -209,7 +205,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   };
 
   /** 행 삭제 */
-  const handleRemoveRowClick = (event: React.MouseEvent) => {
+  const handleRemoveRowClick = () => {
     const type = String(current.get('type'));
     const index = Number(current.get('row'));
     const data = tableDataObject.removeRow(type, index);
@@ -217,7 +213,7 @@ const RichTable: React.FC<BlockComponentProps> = (props) => {
   };
 
   /** 테이블 삭제 */
-  const handleRemoveTableClick = (event: React.MouseEvent) => {
+  const handleRemoveTableClick = () => {
     blockProps.onRichCommand('remove-table', { block });
   };
 

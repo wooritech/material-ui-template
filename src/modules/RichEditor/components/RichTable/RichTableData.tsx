@@ -52,8 +52,17 @@ export const defaultTableData: TableData = {
 
 export default class RichTableData extends Immutable.Record(defaultTableData) implements TableData {
   constructor(tableData?: TableData) {
+    /** defaultTableData를 사용해서 기본값을 세팅하면 알수 없는 초기화 오류 발생 issue */
     if (tableData) super(tableData);
-    else super(Immutable.Map(defaultTableData));
+    else
+      super({
+        header: [{ text: '' }, { text: '' }, { text: '' }],
+        body: [
+          [{ text: '' }, { text: '' }, { text: '' }],
+          [{ text: '' }, { text: '' }, { text: '' }],
+        ],
+        footer: [{ text: '' }, { text: '' }, { text: '' }],
+      });
   }
 
   get header(): TableCellList {
