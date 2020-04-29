@@ -1,20 +1,8 @@
 /* eslint-disable global-require */
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import { BlockComponentProps } from '../types';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    width: '100%',
-    height: '200px',
-    border: '0.12rem dashed #a0a0a0',
-  },
-  focused: {
-    backgroundColor: '#eee',
-  },
-}));
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const data = [
   {
@@ -151,11 +139,7 @@ const columns = [
   },
 ];
 
-const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
-  const classes = useStyles();
-  const { block, blockProps } = props;
-  const [focused, setFocused] = React.useState('blur');
-
+const RealGridSamplePage = () => {
   const realgridRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     // if (typeof window !== 'undefined') {
@@ -186,40 +170,31 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
     // }
   }, []);
 
-  const handleFocused = (e: React.FocusEvent) => {
-    const fType = e.type;
-    setFocused(fType);
-    /** 포커스로 하는게 아니라 block type을 가지고 해야 겠다. */
-    // if (fType === 'blur') blockProps.onRichCommand('change-ext-mode', undefined);
-    if (fType === 'focus') blockProps.onRichCommand('select-block', { block });
-  };
+  const [value, setValue] = React.useState(2);
 
-  const handleShowExt = () => {
-    // blockProps.onRichCommand('change-ext-mode', 'realgrid');
-    // blockProps.onRichCommand('select-block', block);
-  };
-
-  const handleRemoveClick = () => {
-    blockProps.onRichCommand('remove-realgrid', { block });
+  const handleChange = (event: React.ChangeEvent<{}>, v: any) => {
+    setValue(v);
   };
 
   return (
-    <div
-      tabIndex={0}
-      onFocus={handleFocused}
-      onBlur={handleFocused}
-      className={`${classes.root} ${focused === 'focus' ? classes.focused : ''}`}
-    >
-      <div
-        style={{ width: '100%', height: '100%' }}
-        ref={realgridRef}
-        className="App"
-        contentEditable={false}
-      />
-      <Button onClick={handleShowExt}>RealGrid</Button>
-      <Button onClick={handleRemoveClick}>Remove Grid</Button>
-    </div>
+    <>
+      <Paper square>
+        <Tabs
+          value={value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleChange}
+          aria-label="disabled tabs example"
+        >
+          <Tab label="필드" />
+          <Tab label="컬럼" />
+          <Tab label="데이터" />
+        </Tabs>
+      </Paper>
+
+      <div style={{ width: '500px', height: '500px' }} ref={realgridRef} className="App" />
+    </>
   );
 };
 
-export default RichRealGrid;
+export default RealGridSamplePage;
