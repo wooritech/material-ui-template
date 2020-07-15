@@ -2,14 +2,25 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { LocalDataProvider, GridView } from 'realgrid';
 import Button from '@material-ui/core/Button';
 import { BlockComponentProps } from '../types';
 
 const useStyles = makeStyles(() => ({
   root: {
+    outline: 'none',
     width: '100%',
-    height: '200px',
+    height: '220px',
     border: '0.12rem dashed #a0a0a0',
+  },
+  grid: {
+    width: '100%',
+    height: '100%',
+  },
+  toolbar: {
+    marginTop: '8px',
+    height: '30px',
+    backgroundColor: '#fff',
   },
   focused: {
     backgroundColor: '#eee',
@@ -160,14 +171,14 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
   React.useEffect(() => {
     // if (typeof window !== 'undefined') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const RealGrid = require('realgrid');
+    const RealGridClass = require('realgrid');
 
     // const container = document.createElement('');
     // realgridRef.current?.appendChild(con);
 
     // container.id = 'realgrid';
-    const ds = new RealGrid.LocalDataProvider(false);
-    const grid = new RealGrid.GridView(realgridRef.current);
+    const ds: LocalDataProvider = new RealGridClass.LocalDataProvider(false);
+    const grid: GridView = new RealGridClass.GridView(realgridRef.current);
     ds.setFields(fields);
 
     grid.displayOptions.emptyMessage = '데이터가 없어요.';
@@ -181,43 +192,54 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
 
     ds.setRows(data);
 
-    grid.editOptions.insertable = true;
-    grid.editOptions.appendable = true;
+    grid.editOptions.insertable = false;
+    grid.editOptions.appendable = false;
+    // tabindex를 제거하면 해당 이슈 해결
+    // https://github.com/realgrid/realgriddom/issues/1100
+    console.log((realgridRef.current?.firstChild as HTMLDivElement).removeAttribute('tabIndex'));
+
+    // grid.container.disabled = true;
     // }
   }, []);
 
   const handleFocused = (e: React.FocusEvent) => {
+    console.log(e.currentTarget, e.type);
     const fType = e.type;
-    setFocused(fType);
+    if (focused !== fType) setFocused(fType);
     /** 포커스로 하는게 아니라 block type을 가지고 해야 겠다. */
     // if (fType === 'blur') blockProps.onRichCommand('change-ext-mode', undefined);
     if (fType === 'focus') blockProps.onRichCommand('select-block', { block });
   };
 
-  const handleShowExt = () => {
-    // blockProps.onRichCommand('change-ext-mode', 'realgrid');
-    // blockProps.onRichCommand('select-block', block);
-  };
+  // const handleShowExt = () => {
+  //   blockProps.onRichCommand('change-ext-mode', { mode: 'realgrid' });
+  //   // blockProps.onRichCommand('select-block', block);
+  // };
 
-  const handleRemoveClick = () => {
-    blockProps.onRichCommand('remove-realgrid', { block });
-  };
+  // const handleRemoveClick = () => {
+  //   blockProps.onRichCommand('remove-realgrid', { block });
+  // };
 
   return (
     <div
-      tabIndex={0}
-      onFocus={handleFocused}
-      onBlur={handleFocused}
-      className={`${classes.root} ${focused === 'focus' ? classes.focused : ''}`}
+      className={`public-DraftStyleDefault-ltr ${classes.root} ${
+        focused === 'focus' ? classes.focused : ''
+      }`}
     >
       <div
-        style={{ width: '100%', height: '100%' }}
+        onFocus={handleFocused}
+        onBlur={handleFocused}
+        tabIndex={0}
         ref={realgridRef}
-        className="App"
+        className={classes.grid}
         contentEditable={false}
       />
-      <Button onClick={handleShowExt}>RealGrid</Button>
-      <Button onClick={handleRemoveClick}>Remove Grid</Button>
+      {/* {focused === 'focus' ? (
+        <div className={classes.toolbar}>
+          <Button onClick={handleShowExt}>RealGrid</Button>
+          <Button onClick={handleRemoveClick}>Remove Grid</Button>{' '}
+        </div>
+      ) : null} */}
     </div>
   );
 };

@@ -1,8 +1,5 @@
 /* eslint-disable global-require */
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 const data = [
   {
@@ -141,17 +138,12 @@ const columns = [
 
 const RealGridSamplePage = () => {
   const realgridRef = React.useRef<HTMLDivElement>(null);
+  let grid: any;
   React.useEffect(() => {
-    // if (typeof window !== 'undefined') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const RealGrid = require('realgrid');
-
-    // const container = document.createElement('');
-    // realgridRef.current?.appendChild(con);
-
-    // container.id = 'realgrid';
     const ds = new RealGrid.LocalDataProvider(false);
-    const grid = new RealGrid.GridView(realgridRef.current);
+    grid = new RealGrid.GridView(realgridRef.current);
     ds.setFields(fields);
 
     grid.displayOptions.emptyMessage = '데이터가 없어요.';
@@ -165,34 +157,41 @@ const RealGridSamplePage = () => {
 
     ds.setRows(data);
 
-    grid.editOptions.insertable = true;
-    grid.editOptions.appendable = true;
+    grid.editOptions.insertable = false;
+    grid.editOptions.appendable = false;
+
     // }
   }, []);
 
+  // console.log(grid?.container);
   const [value, setValue] = React.useState(2);
 
   const handleChange = (event: React.ChangeEvent<{}>, v: any) => {
     setValue(v);
   };
 
+  const handleFocus = (e: React.FocusEvent) => {
+    console.log(e.type, e.currentTarget);
+  };
+
   return (
     <>
-      <Paper square>
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChange}
-          aria-label="disabled tabs example"
-        >
-          <Tab label="필드" />
-          <Tab label="컬럼" />
-          <Tab label="데이터" />
-        </Tabs>
-      </Paper>
-
-      <div style={{ width: '500px', height: '500px' }} ref={realgridRef} className="App" />
+      {/* <div
+        style={{ width: '500px', height: '500px' }}
+        tabIndex={0}
+        onFocus={handleFocus}
+        onBlur={handleFocus}
+      > */}
+      <div
+        id="grid"
+        tabIndex={1}
+        onFocus={handleFocus}
+        onBlur={handleFocus}
+        style={{ width: '500px', height: '500px' }}
+        ref={realgridRef}
+        className="App"
+      />
+      {/* </div> */}
     </>
   );
 };
