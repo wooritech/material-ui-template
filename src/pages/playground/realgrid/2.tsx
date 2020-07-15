@@ -1,31 +1,5 @@
 /* eslint-disable global-require */
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { LocalDataProvider, GridView } from 'realgrid';
-import Button from '@material-ui/core/Button';
-import { BlockComponentProps } from '../types';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    outline: 'none',
-    width: '100%',
-    height: '220px',
-    border: '0.12rem dashed #a0a0a0',
-  },
-  grid: {
-    width: '100%',
-    height: '100%',
-  },
-  toolbar: {
-    marginTop: '8px',
-    height: '30px',
-    backgroundColor: '#fff',
-  },
-  focused: {
-    backgroundColor: '#eee',
-  },
-}));
 
 const data = [
   {
@@ -162,23 +136,14 @@ const columns = [
   },
 ];
 
-const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
-  const classes = useStyles();
-  const { block, blockProps } = props;
-  const [focused, setFocused] = React.useState('blur');
-
+const RealGridSamplePage = () => {
   const realgridRef = React.useRef<HTMLDivElement>(null);
+  let grid: any;
   React.useEffect(() => {
-    // if (typeof window !== 'undefined') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const RealGridClass = require('realgrid');
-
-    // const container = document.createElement('');
-    // realgridRef.current?.appendChild(con);
-
-    // container.id = 'realgrid';
-    const ds: LocalDataProvider = new RealGridClass.LocalDataProvider(false);
-    const grid: GridView = new RealGridClass.GridView(realgridRef.current);
+    const RealGrid = require('realgrid');
+    const ds = new RealGrid.LocalDataProvider(false);
+    grid = new RealGrid.GridView(realgridRef.current);
     ds.setFields(fields);
 
     grid.displayOptions.emptyMessage = '데이터가 없어요.';
@@ -194,54 +159,41 @@ const RichRealGrid: React.FC<BlockComponentProps> = (props) => {
 
     grid.editOptions.insertable = false;
     grid.editOptions.appendable = false;
-    // tabindex를 제거하면 해당 이슈 해결
-    // https://github.com/realgrid/realgriddom/issues/1100
-    console.log((realgridRef.current?.firstChild as HTMLDivElement).removeAttribute('tabIndex'));
 
-    // grid.container.disabled = true;
     // }
   }, []);
 
-  const handleFocused = (e: React.FocusEvent) => {
-    console.log(e.currentTarget, e.type);
-    const fType = e.type;
-    if (focused !== fType) setFocused(fType);
-    /** 포커스로 하는게 아니라 block type을 가지고 해야 겠다. */
-    // if (fType === 'blur') blockProps.onRichCommand('change-ext-mode', undefined);
-    if (fType === 'focus') blockProps.onRichCommand('select-block', { block });
+  // console.log(grid?.container);
+  const [value, setValue] = React.useState(2);
+
+  const handleChange = (event: React.ChangeEvent<{}>, v: any) => {
+    setValue(v);
   };
 
-  // const handleShowExt = () => {
-  //   blockProps.onRichCommand('change-ext-mode', { mode: 'realgrid' });
-  //   // blockProps.onRichCommand('select-block', block);
-  // };
-
-  // const handleRemoveClick = () => {
-  //   blockProps.onRichCommand('remove-realgrid', { block });
-  // };
+  const handleFocus = (e: React.FocusEvent) => {
+    console.log(e.type, e.currentTarget);
+  };
 
   return (
-    <div
-      className={`public-DraftStyleDefault-ltr ${classes.root} ${
-        focused === 'focus' ? classes.focused : ''
-      }`}
-    >
-      <div
-        onFocus={handleFocused}
-        onBlur={handleFocused}
+    <>
+      {/* <div
+        style={{ width: '500px', height: '500px' }}
         tabIndex={0}
+        onFocus={handleFocus}
+        onBlur={handleFocus}
+      > */}
+      <div
+        id="grid"
+        tabIndex={1}
+        onFocus={handleFocus}
+        onBlur={handleFocus}
+        style={{ width: '500px', height: '500px' }}
         ref={realgridRef}
-        className={classes.grid}
-        contentEditable={false}
+        className="App"
       />
-      {/* {focused === 'focus' ? (
-        <div className={classes.toolbar}>
-          <Button onClick={handleShowExt}>RealGrid</Button>
-          <Button onClick={handleRemoveClick}>Remove Grid</Button>{' '}
-        </div>
-      ) : null} */}
-    </div>
+      {/* </div> */}
+    </>
   );
 };
 
-export default RichRealGrid;
+export default RealGridSamplePage;

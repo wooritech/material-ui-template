@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import None from '~/components/None';
 import LandingLayout from '~/layouts/LandingLayout';
 
-interface LandingPageProps {}
+interface LandingPageProps { }
 
 const LandingPage: NextPage<LandingPageProps> = () => {
   return (

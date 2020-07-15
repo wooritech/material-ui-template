@@ -17,6 +17,10 @@ interface RichEditorProps {
   blockStyleFn?: (block: ContentBlock) => string;
   blockRendererFn?: (block: ContentBlock) => any;
   onChange: (editorState: EditorState) => void;
+  /**
+   * 현재블럭의 anchor key 가 변경될때 발생하는 이벤트.
+   * 인자로 선택된 블럭이 넘어온다.
+   * */
   onChangeBlock?: (block: ContentBlock) => void;
   readOnly?: boolean | undefined;
   // ref?: string | ((instance: Editor | null) => void) | React.RefObject<Editor> | null | undefined;
@@ -31,7 +35,7 @@ const RichEditor: React.FC<RichEditorProps> = (props) => {
     /** 선택된 anchor 블럭의 키가 달라지면 onChangeBlock 호출 */
     const block = BlockUtils.getCurrentAnchorBlock(state);
     if (currentBlock?.getKey() !== block.getKey()) {
-      console.log('onChangeBlock:', currentBlock?.getKey(), ' ==> ', block.getKey());
+      // console.log('onChangeBlock:', currentBlock?.getKey(), ' ==> ', block.getKey());
       if (onChangeBlock) onChangeBlock(block);
       setCurrentBlock(block);
     }

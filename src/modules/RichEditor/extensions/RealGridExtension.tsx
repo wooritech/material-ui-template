@@ -1,7 +1,10 @@
 import React from 'react';
+import { ContentBlock } from 'draft-js';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { ContentBlock } from 'draft-js';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import { RichEditorState } from '../modules';
 
 const useStyles = makeStyles(() => ({
@@ -26,21 +29,27 @@ interface RealGridExtensionProps {
 const RealGridExtension: React.FC<RealGridExtensionProps> = (props) => {
   const classes = useStyles();
   const { editorState, onStateChange, block } = props;
+  const [value, setValue] = React.useState(2);
+
+  const handleChange = (event: React.ChangeEvent<{}>, v: any) => {
+    setValue(v);
+  };
 
   return (
     <div className={classes.root}>
-      <div className={classes.toolbar}>Tab</div>
-      <TextField
-        label="Fields"
-        multiline
-        rows={15}
-        fullWidth
-        variant="outlined"
-        value={block?.getKey()}
-        // onChange={handleChangeMd}
-        // helperText="마크다운 문서입력 후 변환 버튼을 누르면 변환 됩니다."
-        // autoFocus
-      />
+      <Paper square>
+        <Tabs
+          value={value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleChange}
+          aria-label="disabled tabs example"
+        >
+          <Tab label="필드" />
+          <Tab label="컬럼" />
+          <Tab label="데이터" />
+        </Tabs>
+      </Paper>
     </div>
   );
 };
