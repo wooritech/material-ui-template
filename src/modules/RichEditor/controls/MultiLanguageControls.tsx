@@ -12,29 +12,14 @@ const MultiLanguageControls: React.FC<EditorControlsProps> = (props) => {
     return selectedLanguage;
   };
 
-  // - TODO REFACTORING
+  /** 언어 선택 버튼 클릭 이벤트 */
   const handleChange = (value: string) => {
-    if (richConfig.defaultLanguage === value || richConfig.currentLanguage === value) {
-      setSelectedLanguage(richConfig.defaultLanguage);
-      if (richConfig.defaultLanguage !== richConfig.currentLanguage) {
-        if (onRichCommand) onRichCommand('close-editing-language', value);
-      }
-      return;
-    }
+    setSelectedLanguage(value);
+    /** config 의 기본 언어와 선택한 언어가 동일한 경우 확장 패널을 닫아준다. */
+    const mode = richConfig.defaultLanguage === value ? undefined : 'lang';
+    const commandValue = { mode, lang: value };
 
-    if (
-      richConfig.defaultLanguage === richConfig.currentLanguage &&
-      richConfig.defaultLanguage !== value
-    ) {
-      setSelectedLanguage(value);
-      if (onRichCommand) onRichCommand('open-editing-language', value);
-      return;
-    }
-
-    if (richConfig.currentLanguage !== value) {
-      setSelectedLanguage(value);
-      if (onRichCommand) onRichCommand('change-editing-language', value);
-    }
+    if (onRichCommand) onRichCommand('change-language-mode', commandValue);
   };
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { ContentBlock } from 'draft-js';
 import MarkdownExtension from './MarkdownExtension';
@@ -5,16 +6,17 @@ import RealGridExtension from './RealGridExtension';
 import RawViewExtension from './RawViewExtension';
 import PreviewExtension from './PreviewExtension';
 import { RichEditorState } from '../modules';
+import DefaultLanguageViewExtension from './DefaultLanguageViewExtension';
 
 interface ExtensionPanelProps {
-  extensionBlock: ContentBlock | undefined;
+  extensionValue: any;
   extensionType: string | undefined;
   richState: RichEditorState;
   onStateChange: (state: RichEditorState) => void;
 }
 
 const ExtensionPanel: React.FC<ExtensionPanelProps> = (props) => {
-  const { extensionType, richState, onStateChange, extensionBlock } = props;
+  const { extensionType, richState, onStateChange, extensionValue } = props;
 
   return (
     <>
@@ -32,8 +34,11 @@ const ExtensionPanel: React.FC<ExtensionPanelProps> = (props) => {
         <RealGridExtension
           editorState={richState}
           onStateChange={onStateChange}
-          block={extensionBlock}
+          block={extensionValue?.block as ContentBlock}
         />
+      ) : null}
+      {extensionType === 'lang' ? (
+        <DefaultLanguageViewExtension extensionValue={extensionValue} />
       ) : null}
     </>
   );
